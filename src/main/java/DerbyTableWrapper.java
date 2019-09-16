@@ -26,8 +26,8 @@ public class DerbyTableWrapper {
             "create=true;" +
             "user=USER_NAME;" +
             "password=PASSWORD";
-    private static final String JDBC_DRIVER = "org.apache.derby.jdbc.ClientDriver";
-    //private static final String JDBC_DRIVER = "org.apache.derby.jdbc.EmbeddedDriver";
+    //private static final String JDBC_DRIVER = "org.apache.derby.jdbc.ClientDriver";
+    private static final String JDBC_DRIVER = "org.apache.derby.jdbc.EmbeddedDriver";
 
     Statement statement;
     Connection connection;

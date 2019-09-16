@@ -14,10 +14,10 @@ repositories {
 dependencies {
     // derby dependency for JDBC database connections
     // https://mvnrepository.com/artifact/org.apache.derby/derby
-    testCompile group: 'org.apache.derby', name: 'derby', version: '10.15.1.3'
+    compile group: 'org.apache.derby', name: 'derby', version: '10.15.1.3'
 
 
     // JUnit dependency for testing
     // https://mvnrepository.com/artifact/junit/junit
-    testCompile group: 'junit', name: 'junit', version: '4.4'
+    compile group: 'junit', name: 'junit', version: '4.4'
 }
