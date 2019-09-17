@@ -80,6 +80,7 @@ public class DerbyTableWrapper {
             connection = DriverManager.getConnection(DATABASE_URL);
             statement = connection.createStatement();
             statement.executeUpdate(DROP_TABLE_SQL);
+            connection.close();
         } catch (SQLException e){
             //e.printStackTrace();
             System.out.println(e.getMessage());
