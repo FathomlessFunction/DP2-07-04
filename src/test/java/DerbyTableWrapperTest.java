@@ -1,7 +1,14 @@
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 
 public class DerbyTableWrapperTest {
+
+    @Before
+    public void setup(){
+        DerbyTableWrapper wrapper = new DerbyTableWrapper();
+        wrapper.deleteSalesTable();
+    }
 
 
     @Test
@@ -11,6 +18,19 @@ public class DerbyTableWrapperTest {
             Assert.assertTrue(wrapper.createSalesTable());
         } catch (Exception e){
             Assert.fail("exception was thrown while creating product table.");
+        }
+    }
+
+    @Test
+    public void ifCantCreateTableShouldReturnFalse(){
+        DerbyTableWrapper wrapper = new DerbyTableWrapper();
+        try{
+            // creating table twice - second time should definitely return false
+            // as table should already be created
+            wrapper.createSalesTable();
+            Assert.assertFalse(wrapper.createSalesTable());
+        } catch (Exception e){
+            Assert.fail();
         }
     }
 
@@ -26,24 +46,16 @@ public class DerbyTableWrapperTest {
     }
 
     @Test
-    public void doesSalesTableExistShouldReturnTrueWhenTableCreated(){
+    public void ifCantDeleteTableShouldReturnFalse(){
         DerbyTableWrapper wrapper = new DerbyTableWrapper();
         try{
-            wrapper.createSalesTable();
-            Assert.assertTrue(wrapper.doesSalesTableExist());
-        } catch(Exception e){
-            Assert.fail("exception was thrown while creating product table.");
-        }
-    }
-
-    @Test
-    public void doesSalesTableExistShouldReturnFalseWhenTableDropped(){
-        DerbyTableWrapper wrapper = new DerbyTableWrapper();
-        try{
+            // deleting table twice - second time should definitely return false
+            // as table should already be dropped.
             wrapper.deleteSalesTable();
-            Assert.assertFalse(wrapper.doesSalesTableExist());
-        } catch(Exception e){
-            Assert.fail("exception was thrown while creating product table.");
+            Assert.assertFalse(wrapper.deleteSalesTable());
+        } catch (Exception e){
+            Assert.fail();
         }
+
     }
 }

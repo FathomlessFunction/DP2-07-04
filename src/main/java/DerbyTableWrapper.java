@@ -1,7 +1,5 @@
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
-import java.sql.Statement;
+
+import java.sql.*;
 
 /**
  *
@@ -20,74 +18,61 @@ import java.sql.Statement;
 public class DerbyTableWrapper {
 
     private static String DATABASE_NAME="PHARMACY";
-    private static String SALES_TABLE_NAME="sales";
+    private static String SALES_TABLE_NAME="pharmacy.sales";
 
-    private static final String DATABASE_URL = "jdbc:derby://localhost:1527/"+DATABASE_NAME+";" +
-            "create=true;" +
-            "user=USER_NAME;" +
-            "password=PASSWORD";
-    //private static final String JDBC_DRIVER = "org.apache.derby.jdbc.ClientDriver";
+    // this is the directory in which the table information will be stored
+    // so it'll appear in your C/Users/MyDB folder.
+    private static final String DATABASE_URL="jdbc:derby:c\\Users\\MyDB\\Demo;create=true";
+
     private static final String JDBC_DRIVER = "org.apache.derby.jdbc.EmbeddedDriver";
 
     Statement statement;
     Connection connection;
 
     private static final String CREATE_TABLE_SQL=
-            "create table pharmacy."+SALES_TABLE_NAME+"(" +
+            "create table "+SALES_TABLE_NAME+"(" +
             "NAME VARCHAR(10) NOT NULL," +
-            "AGE INT NOT NULL";
+            "AGE INT NOT NULL)";
 
     private static final String DROP_TABLE_SQL=
-            "";
+            "DROP TABLE "+SALES_TABLE_NAME;
 
     // silly table SQL for now just to check functionality
 
     public DerbyTableWrapper(){
-        // what is table structure
+
         try {
-            Class.forName(JDBC_DRIVER);
-        } catch (ClassNotFoundException e) {
-            //Log.print("ERROR: BAD JDBC DRIVER NAME IN DERBYTABLEWRAPPER");
+            connection = DriverManager.getConnection(DATABASE_URL);
+        } catch (SQLException e) {
             e.printStackTrace();
         }
 
     }
 
     /**
-     * Checks if the sales table has been created or not
-     * @return true if sales table exists.
-     */
-    public boolean doesSalesTableExist(){
-        // TODO: implement
-        return false;
-    }
-
-    /**
      * Creates a product table with name PRODUCT_TABLE_NAME
-     * @return true if successful
+     * @return true if successful (false if table already exists)
      */
     public boolean createSalesTable(){
-
         try {
-
             connection = DriverManager.getConnection(DATABASE_URL); // no username or password
             statement = connection.createStatement();
             statement.executeUpdate(CREATE_TABLE_SQL);
             connection.close();
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            //e.printStackTrace();
+            System.out.println(e.getMessage());
+            System.out.println("(probably) Couldn't create sales table again as it already existed.\n");
             return false;
         }
-
-         System.out.println("made a table c:");
         return true;
     }
 
     /**
      * Completely removes the product table.
      * It's here for testing purposes. I don't recommend using this in production.
-     * @return true if successful
+     * @return true if successful (false if table does not exist)
      */
     public boolean deleteSalesTable(){
 
@@ -96,7 +81,9 @@ public class DerbyTableWrapper {
             statement = connection.createStatement();
             statement.executeUpdate(DROP_TABLE_SQL);
         } catch (SQLException e){
-            e.printStackTrace();
+            //e.printStackTrace();
+            System.out.println(e.getMessage());
+            System.out.println("(probably) Couldn't delete sales table as it didn't exist.\n");
             return false;
         }
         return true;
