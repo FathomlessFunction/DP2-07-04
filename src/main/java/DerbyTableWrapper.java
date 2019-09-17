@@ -22,13 +22,15 @@ public class DerbyTableWrapper {
 
     // this is the directory in which the table information will be stored
     // so it'll appear in your C/Users/MyDB folder.
-    private static final String DATABASE_URL="jdbc:derby:c\\Users\\MyDB\\Demo;create=true";
+    private static final String DATABASE_URL="jdbc:derby:MyDB\\Demo;create=true";
 
     private static final String JDBC_DRIVER = "org.apache.derby.jdbc.EmbeddedDriver";
 
     Statement statement;
     Connection connection;
 
+    // TODO: come up with table structure
+    // TODO: then update this table creation logic
     private static final String CREATE_TABLE_SQL=
             "create table "+SALES_TABLE_NAME+"(" +
             "NAME VARCHAR(10) NOT NULL," +
