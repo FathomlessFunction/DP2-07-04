@@ -8,9 +8,28 @@ version '1.0-SNAPSHOT'
 sourceCompatibility = 1.8
 
 repositories {
+    mavenLocal()
     mavenCentral()
 }
 
 dependencies {
-    testCompile group: 'junit', name: 'junit', version: '4.12'
+    // derby dependency for JDBC database connections
+    // https://mvnrepository.com/artifact/org.apache.derby/derby
+    compile group: 'org.apache.derby', name: 'derby', version: '10.11.1.1'
+
+    // https://mvnrepository.com/artifact/org.apache.derby/derby
+    testCompile group: 'org.apache.derby', name: 'derby', version: '10.11.1.1'
+
+
+    // https://mvnrepository.com/artifact/org.apache.derby/derby
+    //compile group: 'org.apache.derby', name: 'derby', version: '10.5.3.0'
+
+
+    // JUnit dependency for testing
+    // https://mvnrepository.com/artifact/junit/junit
+    compile group: 'junit', name: 'junit', version: '4.4'
+
+    // add local libraries in 'lib' folder
+    compile fileTree(dir: 'lib', include: '*.jar')
+    testCompile fileTree(dir: 'lib', include: '*.jar')
 }
