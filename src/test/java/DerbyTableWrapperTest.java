@@ -10,7 +10,6 @@ public class DerbyTableWrapperTest {
         wrapper.deleteSalesTable();
     }
 
-
     @Test
     public void shouldCreateProductTableWithoutException() {
         DerbyTableWrapper wrapper = new DerbyTableWrapper();

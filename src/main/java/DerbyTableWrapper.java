@@ -17,17 +17,21 @@ import java.sql.*;
 
 public class DerbyTableWrapper {
 
-    private static String DATABASE_NAME="PHARMACY";
+    // pharmacy = schema name
+    // sales = table name
     private static String SALES_TABLE_NAME="pharmacy.sales";
 
     // this is the directory in which the table information will be stored
-    // so it'll appear in your C/Users/MyDB folder.
+    // so it'll appear in a MyDB folder in the root of this project.
+    // it's gitignored so it won't spam up our repo.
     private static final String DATABASE_URL="jdbc:derby:MyDB\\Demo;create=true";
 
-    private static final String JDBC_DRIVER = "org.apache.derby.jdbc.EmbeddedDriver";
+    // we don't need this anymore C:::
+    //private static final String JDBC_DRIVER = "org.apache.derby.jdbc.EmbeddedDriver";
 
-    Statement statement;
-    Connection connection;
+    // here for injection for testing. (eg create connection class that just saves the SQL string and checks)
+    private Statement statement;
+    private Connection connection;
 
     // TODO: come up with table structure
     // TODO: then update this table creation logic
@@ -39,16 +43,16 @@ public class DerbyTableWrapper {
     private static final String DROP_TABLE_SQL=
             "DROP TABLE "+SALES_TABLE_NAME;
 
-    // silly table SQL for now just to check functionality
 
     public DerbyTableWrapper(){
 
+        // just here to ensure the connection works. can be deleted.
         try {
             connection = DriverManager.getConnection(DATABASE_URL);
+            connection.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
     }
 
     /**
@@ -72,7 +76,7 @@ public class DerbyTableWrapper {
     }
 
     /**
-     * Completely removes the product table.
+     * Completely removes/drops the product table.
      * It's here for testing purposes. I don't recommend using this in production.
      * @return true if successful (false if table does not exist)
      */
