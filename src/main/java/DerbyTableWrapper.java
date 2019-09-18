@@ -27,20 +27,11 @@ public class DerbyTableWrapper {
     // it's gitignored so it won't spam up our repo.
     private static final String DATABASE_URL="jdbc:derby:MyDB\\Demo;create=true";
 
-    // we don't need this anymore C:::
-    //private static final String JDBC_DRIVER = "org.apache.derby.jdbc.EmbeddedDriver";
-
     // here for injection for testing. (eg create connection class that just saves the SQL string and checks)
     private Statement statement;
     private Connection connection;
 
-    // TODO: come up with table structure
-    // TODO: then update this table creation logic
     private static final String CREATE_SALES_TABLE_SQL=
-    //        "create table "+SALES_TABLE_NAME+"(" +
-    //        "NAME VARCHAR(10) NOT NULL," +
-    //        "AGE INT NOT NULL)";
-
             "create table "+SALES_TABLE_NAME+"("+ //28
             "EntryID INT NOT NULL GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1),"+ //AUTO_INCREMENT //21
             "SaleID VARCHAR(10) NOT NULL,"+ //28
@@ -83,6 +74,9 @@ public class DerbyTableWrapper {
 
     /**
      * Creates a product table with name PRODUCT_TABLE_NAME
+     *
+     * NOTE: to create sales table, the product table must be created first!
+     *
      * @return true if successful (false if table already exists)
      */
     public boolean createSalesTable(){
@@ -111,7 +105,7 @@ public class DerbyTableWrapper {
         } catch (SQLException e) {
             //e.printStackTrace();
             System.out.println(e.getMessage());
-            System.out.println("(probably) Couldn't create sales table again as it already existed.\n");
+            System.out.println("(probably) Couldn't create products table again as it already existed.\n");
             return false;
         }
         return true;
@@ -125,34 +119,56 @@ public class DerbyTableWrapper {
     public boolean deleteSalesTable(){
 
         try {
-            connection = DriverManager.getConnection(DATABASE_URL);
+            connection = DriverManager.getConnection(DATABASE_URL); // no username or password
             statement = connection.createStatement();
             statement.executeUpdate(DROP_SALES_TABLE_SQL);
             connection.close();
-        } catch (SQLException e){
+
+        } catch (SQLException e) {
             //e.printStackTrace();
             System.out.println(e.getMessage());
             System.out.println("(probably) Couldn't delete sales table as it didn't exist.\n");
             return false;
         }
-        System.out.println("Successfully Removed the Table");
         return true;
     }
 
     public boolean deleteProductsTable(){
 
         try {
-            connection = DriverManager.getConnection(DATABASE_URL);
+            connection = DriverManager.getConnection(DATABASE_URL); // no username or password
             statement = connection.createStatement();
             statement.executeUpdate(DROP_PRODUCTS_TABLE_SQL);
+            connection.close();
+
+        } catch (SQLException e) {
+            //e.printStackTrace();
+            System.out.println(e.getMessage());
+            System.out.println("(probably) Couldn't delete product table as it didn't exist.\n");
+            return false;
+        }
+        return true;
+    }
+
+    /**
+     * to remove code duplication
+     *
+     * @param sqlString to execute
+     * @param errorMessage message in the case of an SQL Exception
+     * @return true if successful
+     */
+    private boolean executeUpdateWithSQLString(String sqlString, String errorMessage){
+        try {
+            connection = DriverManager.getConnection(DATABASE_URL);
+            statement = connection.createStatement();
+            statement.executeUpdate(sqlString);
             connection.close();
         } catch (SQLException e){
             //e.printStackTrace();
             System.out.println(e.getMessage());
-            System.out.println("(probably) Couldn't delete sales table as it didn't exist.\n");
+            System.out.println(errorMessage);
             return false;
         }
-        System.out.println("Successfully Removed the Table");
         return true;
     }
 
