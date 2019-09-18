@@ -42,7 +42,7 @@ public class DerbyTableWrapper {
     //        "AGE INT NOT NULL)";
 
             "create table "+SALES_TABLE_NAME+"("+ //28
-            "EntryID INT NOT NULL,"+ //AUTO_INCREMENT //21
+            "EntryID INT NOT NULL GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1),"+ //AUTO_INCREMENT //21
             "SaleID VARCHAR(10) NOT NULL,"+ //28
             "ProductID INT NOT NULL,"+ //23
             "DateOfSale VARCHAR(10),"+ //23
@@ -55,7 +55,7 @@ public class DerbyTableWrapper {
 
     private static final String CREATE_PRODUCTS_TABLE_SQL=
             "create table "+PRODUCTS_TABLE_NAME+" ("+
-            "ProductID INT NOT NULL,"+ //AUTO_INCREMENT
+            "ProductID INT NOT NULL GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1),"+ //AUTO_INCREMENT
             "ProductName VARCHAR(32),"+
             "PricePerUnit FLOAT NOT NULL,"+
             "ProductCategory VARCHAR(16),"+
