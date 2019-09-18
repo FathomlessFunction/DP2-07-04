@@ -3,6 +3,11 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+/**
+ * for testing derby wrapper table creation and deletion
+ *
+ * note: this deletes and re-creates tables.
+ */
 public class DerbyTableWrapperTest {
 
     @Before

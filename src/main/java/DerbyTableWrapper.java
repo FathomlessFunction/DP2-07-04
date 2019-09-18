@@ -1,5 +1,10 @@
+import DataObjects.Product;
+import DataObjects.Sale;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import java.sql.Statement;
 
 /**
  *
@@ -72,6 +77,10 @@ public class DerbyTableWrapper {
         }
     }
 
+    public void setTestMode(){
+
+    }
+
     /**
      * Creates a product table with name PRODUCT_TABLE_NAME
      *
@@ -112,6 +121,24 @@ public class DerbyTableWrapper {
     }
 
     /**
+     * Adds a product to the product table
+     *
+     * @return true if successful
+     */
+    public boolean addProduct(Product productToAdd) {
+        return false;
+    }
+
+    /**
+     * adds a sale to the sales table
+     *
+     * @return true if successful
+     */
+    public boolean addSale(Sale saleToAdd){
+        return false;
+    }
+
+    /**
      * to remove code duplication
      *
      * @param sqlString to execute
@@ -133,11 +160,5 @@ public class DerbyTableWrapper {
         return true;
     }
 
-    /**
-     * injection for testing
-     */
-    public void setConnection(Connection connection){
-        this.connection = connection;
-    }
 
 }
