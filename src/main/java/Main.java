@@ -5,7 +5,12 @@ public class Main {
         System.out.println("Hello there Quizmo");
 
         DerbyTableWrapper wrapper = new DerbyTableWrapper();
+        wrapper.createProductsTable();
         wrapper.createSalesTable();
+
+        // Cody: This is just here for testing, it can be removed
+        wrapper.deleteSalesTable();
+        wrapper.deleteProductsTable();
 
     }
 }
