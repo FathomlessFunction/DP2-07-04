@@ -80,35 +80,16 @@ public class DerbyTableWrapper {
      * @return true if successful (false if table already exists)
      */
     public boolean createSalesTable(){
-        try {
-            connection = DriverManager.getConnection(DATABASE_URL); // no username or password
-            statement = connection.createStatement();
-            statement.executeUpdate(CREATE_SALES_TABLE_SQL);
-            connection.close();
 
-        } catch (SQLException e) {
-            //e.printStackTrace();
-            System.out.println(e.getMessage());
-            System.out.println("(probably) Couldn't create sales table again as it already existed.\n");
-            return false;
-        }
-        return true;
+        return executeUpdateWithSQLString(CREATE_SALES_TABLE_SQL,
+                "(probably) Couldn't create sales table again as it already existed.\n");
     }
 
     public boolean createProductsTable(){
-        try {
-            connection = DriverManager.getConnection(DATABASE_URL); // no username or password
-            statement = connection.createStatement();
-            statement.executeUpdate(CREATE_PRODUCTS_TABLE_SQL);
-            connection.close();
 
-        } catch (SQLException e) {
-            //e.printStackTrace();
-            System.out.println(e.getMessage());
-            System.out.println("(probably) Couldn't create products table again as it already existed.\n");
-            return false;
-        }
-        return true;
+        return executeUpdateWithSQLString(CREATE_PRODUCTS_TABLE_SQL,
+                "(probably) Couldn't create products table again as it already existed.\n");
+
     }
 
     /**
@@ -118,36 +99,16 @@ public class DerbyTableWrapper {
      */
     public boolean deleteSalesTable(){
 
-        try {
-            connection = DriverManager.getConnection(DATABASE_URL); // no username or password
-            statement = connection.createStatement();
-            statement.executeUpdate(DROP_SALES_TABLE_SQL);
-            connection.close();
+        return executeUpdateWithSQLString(DROP_SALES_TABLE_SQL,
+                "(probably) Couldn't delete sales table as it didn't exist.\n");
 
-        } catch (SQLException e) {
-            //e.printStackTrace();
-            System.out.println(e.getMessage());
-            System.out.println("(probably) Couldn't delete sales table as it didn't exist.\n");
-            return false;
-        }
-        return true;
     }
 
     public boolean deleteProductsTable(){
 
-        try {
-            connection = DriverManager.getConnection(DATABASE_URL); // no username or password
-            statement = connection.createStatement();
-            statement.executeUpdate(DROP_PRODUCTS_TABLE_SQL);
-            connection.close();
+        return executeUpdateWithSQLString(DROP_PRODUCTS_TABLE_SQL,
+                "(probably) Couldn't delete product table as it didn't exist.\n");
 
-        } catch (SQLException e) {
-            //e.printStackTrace();
-            System.out.println(e.getMessage());
-            System.out.println("(probably) Couldn't delete product table as it didn't exist.\n");
-            return false;
-        }
-        return true;
     }
 
     /**
