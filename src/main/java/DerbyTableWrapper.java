@@ -2,6 +2,7 @@ import DataObjects.Product;
 import DataObjects.Sale;
 
 import java.sql.*;
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -222,13 +223,59 @@ public class DerbyTableWrapper {
         return true;
     }
 
-
     public List<Product> getProducts() {
-        return null;
+        String selectProductSQL = "SELECT * FROM "+PRODUCTS_TABLE_NAME;
+        List<Product> products = new LinkedList<Product>();
+        try {
+            connection = DriverManager.getConnection(DATABASE_URL);
+            statement = connection.createStatement();
+            ResultSet results = statement.executeQuery(selectProductSQL);
+
+            // int productID, String productName, Float pricePerUnit, String productCategory
+            while (results.next()){
+                Product result = new Product(results.getInt("productID"),
+                        results.getString("ProductName"),
+                        results.getFloat("PricePerUnit"),
+                        results.getString("ProductCategory"));
+                products.add(result);
+            }
+            return products;
+
+        } catch (SQLException e){
+            System.out.println(e.getMessage());
+            System.out.println("Could not retrieve products from product table.");
+            return null; // returning null as the program should probably crash if this happens.
+            //return products;
+        }
     }
 
     public List<Sale> getSales() {
-        return null;
+        String selectSaleSQL = "SELECT * FROM "+SALES_TABLE_NAME;
+        List<Sale> sales = new LinkedList<Sale>();
+        try{
+            connection = DriverManager.getConnection(DATABASE_URL);
+            statement = connection.createStatement();
+            ResultSet results = statement.executeQuery(selectSaleSQL);
+
+            while (results.next()){
+                Sale result = new Sale(
+                        results.getInt("EntryID"),
+                        results.getString("SaleID"),
+                        results.getInt("ProductID"),
+                        results.getString("DateOfSale"),
+                        results.getInt("NumberSold"),
+                        results.getFloat("AmountPaid"),
+                        results.getString("SaleStatus")
+                );
+                sales.add(result);
+            }
+            return sales;
+
+        } catch (SQLException e){
+            System.out.println(e.getMessage());
+            System.out.println("Could not retrieve sales from sales table.");
+            return null;
+        }
     }
 
     // this might not work with strings.

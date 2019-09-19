@@ -66,39 +66,62 @@ public class DerbyTableWrapper_CRUDTest {
     @Test
     public void shouldRetrieveProductCorrectly(){
         DerbyTableWrapper wrapper = new DerbyTableWrapper();
+        wrapper.deleteSalesTable();
+        wrapper.deleteProductsTable();
+        wrapper.createProductsTable();
+        wrapper.createSalesTable();
+        // fresh start
 
         wrapper.addProduct(dummyProduct);
 
         // check all traits of added product are retrieved as they were sent.
         List<Product> products = wrapper.getProducts();
-        Assert.assertEquals(1, products.size());
+        Assert.assertEquals("result list size mismatch.",
+                1, products.size());
 
         // check retrieved product is correct
-        Assert.assertEquals(dummyProduct.getProductCategory(), products.get(0).getProductCategory());
-        Assert.assertEquals(dummyProduct.getProductName(), products.get(0).getProductName());
-        Assert.assertEquals(dummyProduct.getProductID(), products.get(0).getProductID());
-        Assert.assertEquals(dummyProduct.getPricePerUnit(), products.get(0).getPricePerUnit());
+        Assert.assertEquals("product category mismatch",
+                dummyProduct.getProductCategory(), products.get(0).getProductCategory());
+        Assert.assertEquals("product name mismatch.",
+                dummyProduct.getProductName(), products.get(0).getProductName());
+        Assert.assertEquals("product ID mismatch",
+                1, products.get(0).getProductID());
+        // productID is auto generated. will be 1 if first entry in table.
+
+        Assert.assertEquals("price per uni mismatch",
+                dummyProduct.getPricePerUnit(), products.get(0).getPricePerUnit(), 0.1);
         // note: the float assertion may not work because float.
     }
 
     @Test
     public void shouldRetrieveSalesCorrectly(){
         DerbyTableWrapper wrapper = new DerbyTableWrapper();
+        wrapper.deleteSalesTable();
+        wrapper.createSalesTable();
 
+        wrapper.addProduct(dummyProduct); // must exist to add sale referencing its productID
         wrapper.addSale(dummySale);
 
         // check all traits of added product are retrieved as they were sent.
         List<Sale> sales = wrapper.getSales();
-        Assert.assertEquals(1, sales.size()); // 1 sale should be retrieved
+        Assert.assertEquals("sales list size mismatch."
+                ,1, sales.size()); // 1 sale should be retrieved
 
         // check retrieved product is correct
-        Assert.assertEquals(dummySale.getSaleStatus(), sales.get(0).getSaleStatus());
-        Assert.assertEquals(dummySale.getDateOfSale(), sales.get(0).getDateOfSale());
-        Assert.assertEquals(dummySale.getNumberSold(), sales.get(0).getNumberSold());
-        Assert.assertEquals(dummySale.getProductID(), sales.get(0).getProductID());
-        Assert.assertEquals(dummySale.getSaleID(), sales.get(0).getSaleID());
-        Assert.assertEquals(dummySale.getEntryID(), sales.get(0).getEntryID());
-        Assert.assertEquals(dummySale.getAmountPaid(), sales.get(0).getAmountPaid());
+        Assert.assertEquals("sale status mismatch.",
+                dummySale.getSaleStatus(), sales.get(0).getSaleStatus());
+        Assert.assertEquals("date of sale mismatch.",
+                dummySale.getDateOfSale(), sales.get(0).getDateOfSale());
+        Assert.assertEquals("number sold mismatch.",
+                dummySale.getNumberSold(), sales.get(0).getNumberSold());
+        Assert.assertEquals("product ID mismatch.",
+                dummySale.getProductID(), sales.get(0).getProductID());
+        Assert.assertEquals("sales ID mismatch.",
+                dummySale.getSaleID(), sales.get(0).getSaleID());
+        Assert.assertEquals("entry ID mismatch.",
+                1, sales.get(0).getEntryID()); // auto generated
+        Assert.assertEquals("amount paid mismatch.",
+                dummySale.getAmountPaid(), sales.get(0).getAmountPaid(), 0.1);
     }
 
     @Test
