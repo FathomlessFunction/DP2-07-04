@@ -1,17 +1,31 @@
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+/**
+ * for testing derby wrapper table creation and deletion
+ *
+ * note: this deletes and re-creates tables.
+ */
 public class DerbyTableWrapperTest {
 
     @Before
     public void setup(){
         DerbyTableWrapper wrapper = new DerbyTableWrapper();
+        wrapper.createProductsTable(); // products table must exist for sales table to be created.
+        wrapper.deleteSalesTable();
+    }
+
+    @After
+    public void cleanup(){
+        DerbyTableWrapper wrapper = new DerbyTableWrapper();
+        wrapper.deleteProductsTable(); // products table must exist for sales table to be created.
         wrapper.deleteSalesTable();
     }
 
     @Test
-    public void shouldCreateProductTableWithoutException() {
+    public void shouldCreateSalesTableWithoutException() {
         DerbyTableWrapper wrapper = new DerbyTableWrapper();
         try {
             Assert.assertTrue(wrapper.createSalesTable());
@@ -34,7 +48,7 @@ public class DerbyTableWrapperTest {
     }
 
     @Test
-    public void shouldDeleteProductTableWithoutException() {
+    public void shouldDeleteSalesTableWithoutException() {
         DerbyTableWrapper wrapper = new DerbyTableWrapper();
         try{
             wrapper.createSalesTable();
