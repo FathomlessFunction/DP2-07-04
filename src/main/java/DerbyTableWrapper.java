@@ -2,6 +2,10 @@ import DataObjects.Product;
 import DataObjects.Sale;
 
 import java.sql.*;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.LinkedList;
+import java.util.List;
 
 /**
  *
@@ -38,7 +42,7 @@ public class DerbyTableWrapper {
             "EntryID INT NOT NULL GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1),"+ //AUTO_INCREMENT //21
             "SaleID VARCHAR(10) NOT NULL,"+ //28
             "ProductID INT NOT NULL,"+ //23
-            "DateOfSale VARCHAR(10),"+ //23
+            "DateOfSale DATE,"+ //23
             "NumberSold INT NOT NULL,"+ //24
             "AmountPaid FLOAT NOT NULL,"+ //26
             "SaleStatus VARCHAR(16),"+ //23
@@ -72,10 +76,6 @@ public class DerbyTableWrapper {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-    }
-
-    public void setTestMode(){
-
     }
 
     /**
@@ -175,7 +175,7 @@ public class DerbyTableWrapper {
 
             preparedStatement.setString(1, saleToAdd.getSaleID());
             preparedStatement.setInt(2, saleToAdd.getProductID());
-            preparedStatement.setString(3, saleToAdd.getDateOfSale());
+            preparedStatement.setDate(3, saleToAdd.getDateOfSale());
             preparedStatement.setInt(4, saleToAdd.getNumberSold());
             preparedStatement.setFloat(5, saleToAdd.getAmountPaid());
             preparedStatement.setString(6, saleToAdd.getSaleStatus());
@@ -200,6 +200,173 @@ public class DerbyTableWrapper {
     }
 
     /**
+     * selects all from product table
+     * returns results as a list of Product objects
+     */
+    public List<Product> getProducts() {
+        String selectProductSQL = "SELECT * FROM "+PRODUCTS_TABLE_NAME;
+        return getProductWithSQLString(selectProductSQL);
+    }
+
+    /**
+     * selects all from sales table,
+     * returns results as a list of Sale objects
+     */
+    public List<Sale> getSales() {
+        String selectSaleSQL = "SELECT * FROM "+SALES_TABLE_NAME;
+        return getSalesWithSQLString(selectSaleSQL);
+    }
+
+    /**
+     * selects all sales from the table between the provided date range
+     * format of date is dd-MM-yyyy
+     */
+    public List<Sale> getSalesByDateRange(String startDateString, String endDateString) {
+        // convert date strings
+        Date startDate = convertDateStringToDate(startDateString);
+        Date endDate = convertDateStringToDate(endDateString);
+
+        String selectSaleSQL = "SELECT * FROM "+SALES_TABLE_NAME+" WHERE DateOfSale " +
+                "BETWEEN '"+startDate+"' AND '"+endDate+"'";
+        return getSalesWithSQLString(selectSaleSQL);
+    }
+
+    /**
+     * selects all sales from the sales table that are of the passed category string.
+     * returned sales items will include product category.
+     */
+    public List<Sale> getSalesByProductCategory(String category) {
+        String selectSaleSQL = "select a.EntryID, a.SaleID, a.DateOfSale, a.NumberSold, " +
+                "a.AmountPaid, a.SaleStatus, a.ProductID, b.ProductCategory " +
+                "from "+SALES_TABLE_NAME+" as a " +
+                "INNER JOIN "+PRODUCTS_TABLE_NAME+" as b ON "
+                +"a.ProductID=b.ProductID " +
+                "WHERE ProductCategory LIKE '%"+category+"%'";
+
+        return getSalesWithSQLString(selectSaleSQL);
+    }
+
+    /**
+     * searches for sales with corresponding product category that is within the date range.
+     * returned sales items will include product category.
+     */
+    public List<Sale> getSalesByProductCategoryAndDateRange(String category,
+                                                            String startDateString, String endDateString){
+        // convert date strings
+        Date startDate = convertDateStringToDate(startDateString);
+        Date endDate = convertDateStringToDate(endDateString);
+
+        String selectSaleSQL = "SELECT * FROM (select a.EntryID, a.SaleID, a.DateOfSale, a.NumberSold, " +
+                "a.AmountPaid, a.SaleStatus, a.ProductID, b.ProductCategory " +
+                "from "+SALES_TABLE_NAME+" as a " +
+                "INNER JOIN "+PRODUCTS_TABLE_NAME+" as b ON "
+                +"a.ProductID=b.ProductID " +
+                "WHERE ProductCategory LIKE '%"+category+"%') c " +
+                "WHERE DateOfSale " +
+                "BETWEEN '"+startDate+"' AND '"+endDate+"'";
+
+        return getSalesWithSQLString(selectSaleSQL);
+    }
+
+    private Date convertDateStringToDate(String dateString){
+        SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy");
+        try {
+            java.util.Date date = format.parse(dateString);
+            java.sql.Date sqlDate = new java.sql.Date(date.getTime());
+            return sqlDate;
+        } catch (ParseException e) {
+            e.printStackTrace();
+            System.out.println(e.getMessage());
+            System.out.println("failed to convert date string to sql date\n" +
+                    "datestring= "+dateString);
+            return null;
+        }
+    }
+
+    /**
+     * executes passed SQL string as a query
+     * converts resultset to list of sale
+     * returns result
+     */
+    private List<Sale> getSalesWithSQLString(String selectSaleSQL){
+        try{
+            connection = DriverManager.getConnection(DATABASE_URL);
+            statement = connection.createStatement();
+            ResultSet results = statement.executeQuery(selectSaleSQL);
+
+            return getSaleListFromResultSet(results);
+
+        } catch (SQLException e){
+            System.out.println(e.getMessage());
+            System.out.println("Could not retrieve sales from sales table.");
+            return null;
+        }
+    }
+
+    /**
+     * executes passed SQL string as query
+     * converts result set to list of product
+     * returns list as result
+     */
+    private List<Product> getProductWithSQLString(String selectProductSQL){
+        try {
+            connection = DriverManager.getConnection(DATABASE_URL);
+            statement = connection.createStatement();
+            ResultSet results = statement.executeQuery(selectProductSQL);
+
+            return getProductListFromResultSet(results);
+
+        } catch (SQLException e){
+            System.out.println(e.getMessage());
+            System.out.println("Could not retrieve products from product table.");
+            return null; // returning null as the program should probably crash if this happens.
+            //return products;
+        }
+    }
+
+    /**
+     * converts passed resultset to a list of product objects
+     */
+    private List<Product> getProductListFromResultSet(ResultSet results) throws SQLException {
+        List<Product> products = new LinkedList<Product>();
+        // int productID, String productName, Float pricePerUnit, String productCategory
+        while (results.next()) {
+            Product result = new Product(results.getInt("productID"),
+                    results.getString("ProductName"),
+                    results.getFloat("PricePerUnit"),
+                    results.getString("ProductCategory"));
+            products.add(result);
+        }
+        return products;
+    }
+
+    /**
+     * converts passed resultset to a list of sale objects
+     */
+    private List<Sale> getSaleListFromResultSet(ResultSet results) throws SQLException {
+        List<Sale> sales = new LinkedList<>();
+        while (results.next()){
+            Sale result = new Sale(
+                    results.getInt("EntryID"),
+                    results.getString("SaleID"),
+                    results.getInt("ProductID"),
+                    results.getDate("DateOfSale"),
+                    results.getInt("NumberSold"),
+                    results.getFloat("AmountPaid"),
+                    results.getString("SaleStatus")
+            );
+            try{
+                result.setProductCategory(results.getString("ProductCategory"));
+            } catch(SQLException e){
+                // just means this wasn't a join against Product table. All g.
+                // (I'm being lazy here)
+            }
+            sales.add(result);
+        }
+        return sales;
+    }
+
+    /**
      * to remove code duplication
      *
      * @param sqlString to execute
@@ -220,6 +387,4 @@ public class DerbyTableWrapper {
         }
         return true;
     }
-
-
 }
