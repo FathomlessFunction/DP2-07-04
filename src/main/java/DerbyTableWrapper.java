@@ -242,6 +242,22 @@ public class DerbyTableWrapper {
         return getSalesWithSQLString(selectSaleSQL);
     }
 
+    // TODO: make test for this monstrosity
+    //TODO: should probably make third function that combines date range + product category filters.
+    public List<Sale> getSalesByProductCategoryAndDateRange(String category,
+                                                            String startDate, String endDate){
+        String selectSaleSQL = "SELECT * FROM (select a.EntryID, a.SaleID, a.DateOfSale, a.NumberSold, " +
+                "a.AmountPaid, a.SaleStatus, a.ProductID, b.ProductCategory " +
+                "from "+SALES_TABLE_NAME+" as a " +
+                "INNER JOIN "+PRODUCTS_TABLE_NAME+" as b ON "
+                +"a.ProductID=b.ProductID " +
+                "WHERE ProductCategory LIKE '%"+category+"%') c " +
+                "WHERE DateOfSale " +
+                "BETWEEN '"+startDate+"' AND '"+endDate+"'";
+
+        return getSalesWithSQLString(selectSaleSQL);
+    }
+
     /**
      * executes passed SQL string as a query
      * converts resultset to list of sale
