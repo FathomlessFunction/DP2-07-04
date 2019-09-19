@@ -202,6 +202,130 @@ public class DerbyTableWrapper {
     }
 
     /**
+     * selects all from product table
+     * returns results as a list of Product objects
+     */
+    public List<Product> getProducts() {
+        String selectProductSQL = "SELECT * FROM "+PRODUCTS_TABLE_NAME;
+        return getProductWithSQLString(selectProductSQL);
+    }
+
+    /**
+     * selects all from sales table,
+     * returns results as a list of Sale objects
+     */
+    public List<Sale> getSales() {
+        String selectSaleSQL = "SELECT * FROM "+SALES_TABLE_NAME;
+        return getSalesWithSQLString(selectSaleSQL);
+    }
+
+    /**
+     * selects all sales from the table between the provided date range
+     */
+    public List<Sale> getSalesByDateRange(String startDate, String endDate) {
+        String selectSaleSQL = "SELECT * FROM "+SALES_TABLE_NAME+" WHERE DateOfSale " +
+                "BETWEEN '"+startDate+"' AND '"+endDate+"'";
+        return getSalesWithSQLString(selectSaleSQL);
+    }
+
+    /**
+     * selects all sales from the sales table that are of the passed category string.
+     */
+    public List<Sale> getSalesByProductCategory(String category) {
+        String selectSaleSQL = "select a.EntryID, a.SaleID, a.DateOfSale, a.NumberSold, " +
+                "a.AmountPaid, a.SaleStatus, a.ProductID, b.ProductCategory " +
+                "from "+SALES_TABLE_NAME+" as a " +
+                "INNER JOIN "+PRODUCTS_TABLE_NAME+" as b ON "
+                +"a.ProductID=b.ProductID " +
+                "WHERE ProductCategory LIKE '%"+category+"%'";
+
+        return getSalesWithSQLString(selectSaleSQL);
+    }
+
+    /**
+     * executes passed SQL string as a query
+     * converts resultset to list of sale
+     * returns result
+     */
+    private List<Sale> getSalesWithSQLString(String selectSaleSQL){
+        try{
+            connection = DriverManager.getConnection(DATABASE_URL);
+            statement = connection.createStatement();
+            ResultSet results = statement.executeQuery(selectSaleSQL);
+
+            return getSaleListFromResultSet(results);
+
+        } catch (SQLException e){
+            System.out.println(e.getMessage());
+            System.out.println("Could not retrieve sales from sales table.");
+            return null;
+        }
+    }
+
+    /**
+     * executes passed SQL string as query
+     * converts result set to list of product
+     * returns list as result
+     */
+    private List<Product> getProductWithSQLString(String selectProductSQL){
+        try {
+            connection = DriverManager.getConnection(DATABASE_URL);
+            statement = connection.createStatement();
+            ResultSet results = statement.executeQuery(selectProductSQL);
+
+            return getProductListFromResultSet(results);
+
+        } catch (SQLException e){
+            System.out.println(e.getMessage());
+            System.out.println("Could not retrieve products from product table.");
+            return null; // returning null as the program should probably crash if this happens.
+            //return products;
+        }
+    }
+
+    /**
+     * converts passed resultset to a list of product objects
+     */
+    private List<Product> getProductListFromResultSet(ResultSet results) throws SQLException {
+        List<Product> products = new LinkedList<Product>();
+        // int productID, String productName, Float pricePerUnit, String productCategory
+        while (results.next()) {
+            Product result = new Product(results.getInt("productID"),
+                    results.getString("ProductName"),
+                    results.getFloat("PricePerUnit"),
+                    results.getString("ProductCategory"));
+            products.add(result);
+        }
+        return products;
+    }
+
+    /**
+     * converts passed resultset to a list of sale objects
+     */
+    private List<Sale> getSaleListFromResultSet(ResultSet results) throws SQLException {
+        List<Sale> sales = new LinkedList<>();
+        while (results.next()){
+            Sale result = new Sale(
+                    results.getInt("EntryID"),
+                    results.getString("SaleID"),
+                    results.getInt("ProductID"),
+                    results.getString("DateOfSale"),
+                    results.getInt("NumberSold"),
+                    results.getFloat("AmountPaid"),
+                    results.getString("SaleStatus")
+            );
+            try{
+                result.setProductCategory(results.getString("ProductCategory"));
+            } catch(SQLException e){
+                // just means this wasn't a join against Product table. All g.
+                // (I'm being lazy here)
+            }
+            sales.add(result);
+        }
+        return sales;
+    }
+
+    /**
      * to remove code duplication
      *
      * @param sqlString to execute
@@ -221,69 +345,5 @@ public class DerbyTableWrapper {
             return false;
         }
         return true;
-    }
-
-    public List<Product> getProducts() {
-        String selectProductSQL = "SELECT * FROM "+PRODUCTS_TABLE_NAME;
-        List<Product> products = new LinkedList<Product>();
-        try {
-            connection = DriverManager.getConnection(DATABASE_URL);
-            statement = connection.createStatement();
-            ResultSet results = statement.executeQuery(selectProductSQL);
-
-            // int productID, String productName, Float pricePerUnit, String productCategory
-            while (results.next()){
-                Product result = new Product(results.getInt("productID"),
-                        results.getString("ProductName"),
-                        results.getFloat("PricePerUnit"),
-                        results.getString("ProductCategory"));
-                products.add(result);
-            }
-            return products;
-
-        } catch (SQLException e){
-            System.out.println(e.getMessage());
-            System.out.println("Could not retrieve products from product table.");
-            return null; // returning null as the program should probably crash if this happens.
-            //return products;
-        }
-    }
-
-    public List<Sale> getSales() {
-        String selectSaleSQL = "SELECT * FROM "+SALES_TABLE_NAME;
-        List<Sale> sales = new LinkedList<Sale>();
-        try{
-            connection = DriverManager.getConnection(DATABASE_URL);
-            statement = connection.createStatement();
-            ResultSet results = statement.executeQuery(selectSaleSQL);
-
-            while (results.next()){
-                Sale result = new Sale(
-                        results.getInt("EntryID"),
-                        results.getString("SaleID"),
-                        results.getInt("ProductID"),
-                        results.getString("DateOfSale"),
-                        results.getInt("NumberSold"),
-                        results.getFloat("AmountPaid"),
-                        results.getString("SaleStatus")
-                );
-                sales.add(result);
-            }
-            return sales;
-
-        } catch (SQLException e){
-            System.out.println(e.getMessage());
-            System.out.println("Could not retrieve sales from sales table.");
-            return null;
-        }
-    }
-
-    // this might not work with strings.
-    public List<Sale> getSalesByDateRange(String startDate, String endDate) {
-        return null;
-    }
-
-    public List<Sale> getSalesByProductCategory(String category) {
-        return null;
     }
 }
