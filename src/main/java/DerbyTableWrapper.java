@@ -2,6 +2,8 @@ import DataObjects.Product;
 import DataObjects.Sale;
 
 import java.sql.*;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -40,7 +42,7 @@ public class DerbyTableWrapper {
             "EntryID INT NOT NULL GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1),"+ //AUTO_INCREMENT //21
             "SaleID VARCHAR(10) NOT NULL,"+ //28
             "ProductID INT NOT NULL,"+ //23
-            "DateOfSale VARCHAR(10),"+ //23
+            "DateOfSale DATE,"+ //23
             "NumberSold INT NOT NULL,"+ //24
             "AmountPaid FLOAT NOT NULL,"+ //26
             "SaleStatus VARCHAR(16),"+ //23
@@ -177,7 +179,7 @@ public class DerbyTableWrapper {
 
             preparedStatement.setString(1, saleToAdd.getSaleID());
             preparedStatement.setInt(2, saleToAdd.getProductID());
-            preparedStatement.setString(3, saleToAdd.getDateOfSale());
+            preparedStatement.setDate(3, saleToAdd.getDateOfSale());
             preparedStatement.setInt(4, saleToAdd.getNumberSold());
             preparedStatement.setFloat(5, saleToAdd.getAmountPaid());
             preparedStatement.setString(6, saleToAdd.getSaleStatus());
@@ -221,8 +223,13 @@ public class DerbyTableWrapper {
 
     /**
      * selects all sales from the table between the provided date range
+     * format of date is dd-MM-yyyy
      */
-    public List<Sale> getSalesByDateRange(String startDate, String endDate) {
+    public List<Sale> getSalesByDateRange(String startDateString, String endDateString) {
+        // convert date strings
+        Date startDate = convertDateStringToDate(startDateString);
+        Date endDate = convertDateStringToDate(endDateString);
+
         String selectSaleSQL = "SELECT * FROM "+SALES_TABLE_NAME+" WHERE DateOfSale " +
                 "BETWEEN '"+startDate+"' AND '"+endDate+"'";
         return getSalesWithSQLString(selectSaleSQL);
@@ -242,10 +249,12 @@ public class DerbyTableWrapper {
         return getSalesWithSQLString(selectSaleSQL);
     }
 
-    // TODO: make test for this monstrosity
-    //TODO: should probably make third function that combines date range + product category filters.
     public List<Sale> getSalesByProductCategoryAndDateRange(String category,
-                                                            String startDate, String endDate){
+                                                            String startDateString, String endDateString){
+        // convert date strings
+        Date startDate = convertDateStringToDate(startDateString);
+        Date endDate = convertDateStringToDate(endDateString);
+
         String selectSaleSQL = "SELECT * FROM (select a.EntryID, a.SaleID, a.DateOfSale, a.NumberSold, " +
                 "a.AmountPaid, a.SaleStatus, a.ProductID, b.ProductCategory " +
                 "from "+SALES_TABLE_NAME+" as a " +
@@ -256,6 +265,21 @@ public class DerbyTableWrapper {
                 "BETWEEN '"+startDate+"' AND '"+endDate+"'";
 
         return getSalesWithSQLString(selectSaleSQL);
+    }
+
+    private Date convertDateStringToDate(String dateString){
+        SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy");
+        try {
+            java.util.Date date = format.parse(dateString);
+            java.sql.Date sqlDate = new java.sql.Date(date.getTime());
+            return sqlDate;
+        } catch (ParseException e) {
+            e.printStackTrace();
+            System.out.println(e.getMessage());
+            System.out.println("failed to convert date string to sql date\n" +
+                    "datestring= "+dateString);
+            return null;
+        }
     }
 
     /**
@@ -325,7 +349,7 @@ public class DerbyTableWrapper {
                     results.getInt("EntryID"),
                     results.getString("SaleID"),
                     results.getInt("ProductID"),
-                    results.getString("DateOfSale"),
+                    results.getDate("DateOfSale"),
                     results.getInt("NumberSold"),
                     results.getFloat("AmountPaid"),
                     results.getString("SaleStatus")

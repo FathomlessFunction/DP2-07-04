@@ -140,6 +140,7 @@ public class DerbyTableWrapper_CRUDTest {
         wrapper.addSale(anotherSale1);
         wrapper.addSale(anotherSale2); // should both get filtered out
 
+
         List<Sale> sales = wrapper.getSalesByDateRange("11-10-2000","30-11-2000");
 
         // should only retrieve dummy sale. The others are out of range.
@@ -151,7 +152,6 @@ public class DerbyTableWrapper_CRUDTest {
     public void shouldRetrieveSaleByProductCategoryCorrectly(){
         // currently only designed for 1 product filter. ( 1 string, eg school)
         DerbyTableWrapper wrapper = new DerbyTableWrapper();
-        wrapper.deleteProductsTable();
         wrapper.addProduct(dummyProduct); // category = "food, edible"
 
         wrapper.addProduct(new Product("pencil", Float.parseFloat("12.32"),
@@ -177,6 +177,35 @@ public class DerbyTableWrapper_CRUDTest {
         Assert.assertEquals(saleWithStationary.getDateOfSale(), salesWithStationary.get(0).getDateOfSale());
         Assert.assertEquals(saleWithStationary2.getSaleStatus(), salesWithStationary.get(1).getSaleStatus());
         Assert.assertEquals("stationary", salesWithStationary.get(0).getProductCategory());
+    }
+
+    @Test
+    public void shouldRetrieveSaleByProductAndDateRangeCorrectly(){
+        DerbyTableWrapper wrapper = new DerbyTableWrapper();
+        wrapper.addProduct(dummyProduct);
+        wrapper.addProduct(new Product("balloon", Float.parseFloat("12.31"), "categoryX"));
+        wrapper.addSale(new Sale("12345", 2, "19-08-2019", 1, Float.parseFloat("12.99"), "Processed1"));
+        wrapper.addSale(new Sale("12345",2, "19-09-2019", 1, Float.parseFloat("12.99"), "Processed2"));
+        wrapper.addSale(new Sale("77777",1,"19-09-2019", 1, Float.parseFloat("1.99"), "Processed3"));
+        wrapper.addSale(new Sale("88888", 2, "01-01-1990", 1, Float.parseFloat("42.89"), "Processed4"));
+
+        // first two sales listed here both involved product ID 2 and fall within this year
+        // third should not show up in query as it involves another product
+        // fourth should not show up in query as it does not lie in date range.
+
+        // for ease of use I am using the sale status column to identify each sale entry
+
+        List<Sale> results = wrapper.getSalesByProductCategoryAndDateRange("categoryX", "01-01-2019", "20-12-2019");
+        // size of results
+        Assert.assertEquals("unexpected size of results", 2, results.size());
+
+        // first entry
+        Assert.assertEquals("unexpected returned result value", "Processed1", results.get(0).getSaleStatus());
+        Assert.assertEquals("unexpected returned result value", "categoryX", results.get(0).getProductCategory());
+
+        // second entry
+        Assert.assertEquals("Processed2",results.get(1).getSaleStatus());
+        Assert.assertEquals("categoryX", results.get(1).getProductCategory());
     }
 
 }
