@@ -17,7 +17,7 @@ public class Sale {
     private String saleStatus;
     private String dateOfSaleString;
 
-    private String productCategory; // for searches with product category
+    private String productCategory; // for searches with product category. WILL NOT ALWAYS EXIST.
     private Date dateOfSale;
 
     /**

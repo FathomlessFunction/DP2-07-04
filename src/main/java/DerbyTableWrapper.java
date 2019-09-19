@@ -237,6 +237,7 @@ public class DerbyTableWrapper {
 
     /**
      * selects all sales from the sales table that are of the passed category string.
+     * returned sales items will include product category.
      */
     public List<Sale> getSalesByProductCategory(String category) {
         String selectSaleSQL = "select a.EntryID, a.SaleID, a.DateOfSale, a.NumberSold, " +
@@ -249,6 +250,10 @@ public class DerbyTableWrapper {
         return getSalesWithSQLString(selectSaleSQL);
     }
 
+    /**
+     * searches for sales with corresponding product category that is within the date range.
+     * returned sales items will include product category.
+     */
     public List<Sale> getSalesByProductCategoryAndDateRange(String category,
                                                             String startDateString, String endDateString){
         // convert date strings
