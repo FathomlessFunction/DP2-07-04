@@ -1,10 +1,7 @@
 import DataObjects.Product;
 import DataObjects.Sale;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 
 /**
  *
@@ -126,16 +123,80 @@ public class DerbyTableWrapper {
      * @return true if successful
      */
     public boolean addProduct(Product productToAdd) {
-        return false;
+
+        String sqlInsertProduct =
+                "insert into "+PRODUCTS_TABLE_NAME+" " +
+                "(ProductName, PricePerUnit, ProductCategory) " +
+                "values (?, ?, ?)";
+
+        try {
+            connection = DriverManager.getConnection(DATABASE_URL);
+            PreparedStatement preparedStatement = connection.prepareStatement(sqlInsertProduct);
+
+            preparedStatement.setString(1, productToAdd.getProductName());
+            preparedStatement.setFloat(2, productToAdd.getPricePerUnit());
+            preparedStatement.setString(3, productToAdd.getProductCategory());
+
+            int rowsAffected = preparedStatement.executeUpdate();
+
+            if (rowsAffected == 1) {
+                return true;
+            } else {
+                System.out.println("Attempted to add new product to products table, but " +
+                        "update affected 0 rows in table.\n" +
+                        productToAdd);
+                return false;
+            }
+        } catch (SQLException e){
+            System.out.println(e.getMessage());
+            System.out.println("Failed to add Product to product table\n" +
+                    "Product: "+productToAdd);
+            return false;
+        }
     }
 
     /**
      * adds a sale to the sales table
      *
+     * IMPORTANT: will fail if you try to add a sale with a productID of a product that does not exist.
+     *
      * @return true if successful
      */
     public boolean addSale(Sale saleToAdd){
-        return false;
+
+        String sqlInsertSale =
+                "insert into "+SALES_TABLE_NAME+" " +
+                        "(SaleID, ProductID, DateOfSale, NumberSold, AmountPaid, SaleStatus)" +
+                        "VALUES" +
+                        "(?, ?, ?, ?, ?, ?)";
+        try{
+            connection = DriverManager.getConnection(DATABASE_URL);
+            PreparedStatement preparedStatement = connection.prepareStatement(sqlInsertSale);
+
+            preparedStatement.setString(1, saleToAdd.getSaleID());
+            preparedStatement.setInt(2, saleToAdd.getProductID());
+            preparedStatement.setString(3, saleToAdd.getDateOfSale());
+            preparedStatement.setInt(4, saleToAdd.getNumberSold());
+            preparedStatement.setFloat(5, saleToAdd.getAmountPaid());
+            preparedStatement.setString(6, saleToAdd.getSaleStatus());
+
+            int rowsAffected = preparedStatement.executeUpdate();
+
+            if (rowsAffected == 1){
+                return true;
+            } else {
+                System.out.println("attempted to add new Sale to salesTable but update affected " +
+                        "0 rows in table.\n"
+                        + saleToAdd);
+                return false;
+            }
+
+        } catch (SQLException e){
+            System.out.println(e.getMessage());
+            System.out.println("Failed to add Sale to sales table\n" +
+                    "Sale: "+saleToAdd);
+            return false;
+        }
     }
 
     /**

@@ -45,4 +45,15 @@ public class Product {
         return productCategory;
     }
 
+    @Override
+    public String toString(){
+        String toReturn = "Product( ";
+        toReturn += "\nproductID = "+ productID;
+        toReturn += "\nproductName = "+productName;
+        toReturn += "\npricePerUnit = $"+pricePerUnit;
+        toReturn += "\nproductCategory = "+productCategory;
+        toReturn += ")";
+        return toReturn;
+    }
+
 }

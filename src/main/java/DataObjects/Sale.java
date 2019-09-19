@@ -81,4 +81,18 @@ public class Sale {
     public String getSaleStatus() {
         return saleStatus;
     }
+
+    @Override
+    public String toString(){
+        String toReturn = "Sale (";
+        toReturn += "\nentryID= "+entryID;
+        toReturn += "\nsaleID= "+saleID;
+        toReturn += "\nproductID= "+productID;
+        toReturn +="\ndateOfDale= "+dateOfSale;
+        toReturn +="\nnumberSold= "+numberSold;
+        toReturn += "\namountPaid=" +amountPaid;
+        toReturn += "\nsaleStatus= "+saleStatus;
+        toReturn += ")";
+        return toReturn;
+    }
 }

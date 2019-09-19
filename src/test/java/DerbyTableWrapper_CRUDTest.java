@@ -17,6 +17,7 @@ public class DerbyTableWrapper_CRUDTest {
 
         // must exist for sales table creation
         wrapper.createProductsTable();
+        wrapper.createSalesTable();
     }
 
     Product dummyProduct = new Product("fish",
@@ -37,6 +38,9 @@ public class DerbyTableWrapper_CRUDTest {
     @Test
     public void shouldAddSaleCorrectly(){
         DerbyTableWrapper wrapper = new DerbyTableWrapper();
+
+        // product must exist for sale to exist due to foreign key
+        Assert.assertTrue(wrapper.addProduct(dummyProduct));
 
         // return true on successful addition
         Assert.assertTrue(wrapper.addSale(dummySale));
