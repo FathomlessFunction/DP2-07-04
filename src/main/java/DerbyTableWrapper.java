@@ -78,10 +78,6 @@ public class DerbyTableWrapper {
         }
     }
 
-    public void setTestMode(){
-
-    }
-
     /**
      * Creates a product table with name PRODUCT_TABLE_NAME
      *
