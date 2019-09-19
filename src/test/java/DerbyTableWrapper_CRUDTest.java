@@ -4,6 +4,8 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.List;
+
 /**
  * For testing Create, Retrieve, Update and Delete operations via DerbyTableWrapper
  *
@@ -26,6 +28,8 @@ public class DerbyTableWrapper_CRUDTest {
     // DD-MM-YYYY
     Sale dummySale = new Sale("123",1,"11-11-2000",
             2,Float.parseFloat("12.3"),"PROCESSED");
+
+    ///////////////////////// ADDING RECORDS /////////////////////////////////////
 
     @Test
     public void shouldAddProductCorrectly(){
@@ -55,6 +59,97 @@ public class DerbyTableWrapper_CRUDTest {
 
         Assert.assertFalse(wrapper.addProduct(dummyProduct));
         Assert.assertFalse(wrapper.addSale(dummySale));
+    }
+
+    //////////////////////////////////// DISPLAY RECORDS ////////////////////
+
+    @Test
+    public void shouldRetrieveProductCorrectly(){
+        DerbyTableWrapper wrapper = new DerbyTableWrapper();
+
+        wrapper.addProduct(dummyProduct);
+
+        // check all traits of added product are retrieved as they were sent.
+        List<Product> products = wrapper.getProducts();
+        Assert.assertEquals(1, products.size());
+
+        // check retrieved product is correct
+        Assert.assertEquals(dummyProduct.getProductCategory(), products.get(0).getProductCategory());
+        Assert.assertEquals(dummyProduct.getProductName(), products.get(0).getProductName());
+        Assert.assertEquals(dummyProduct.getProductID(), products.get(0).getProductID());
+        Assert.assertEquals(dummyProduct.getPricePerUnit(), products.get(0).getPricePerUnit());
+        // note: the float assertion may not work because float.
+    }
+
+    @Test
+    public void shouldRetrieveSalesCorrectly(){
+        DerbyTableWrapper wrapper = new DerbyTableWrapper();
+
+        wrapper.addSale(dummySale);
+
+        // check all traits of added product are retrieved as they were sent.
+        List<Sale> sales = wrapper.getSales();
+        Assert.assertEquals(1, sales.size()); // 1 sale should be retrieved
+
+        // check retrieved product is correct
+        Assert.assertEquals(dummySale.getSaleStatus(), sales.get(0).getSaleStatus());
+        Assert.assertEquals(dummySale.getDateOfSale(), sales.get(0).getDateOfSale());
+        Assert.assertEquals(dummySale.getNumberSold(), sales.get(0).getNumberSold());
+        Assert.assertEquals(dummySale.getProductID(), sales.get(0).getProductID());
+        Assert.assertEquals(dummySale.getSaleID(), sales.get(0).getSaleID());
+        Assert.assertEquals(dummySale.getEntryID(), sales.get(0).getEntryID());
+        Assert.assertEquals(dummySale.getAmountPaid(), sales.get(0).getAmountPaid());
+    }
+
+    @Test
+    public void shouldRetrieveSaleByDateRangeCorrectly(){
+        // not sure if this will work with date string....
+        DerbyTableWrapper wrapper = new DerbyTableWrapper();
+
+        wrapper.addSale(dummySale); // "11-11-2000"
+        Sale anotherSale1 = new Sale("22", 1, "11-12-2019",
+                1, Float.parseFloat("11.3"), "Processed");
+        Sale anotherSale2 = new Sale("22", 1, "29-12-2000",
+                1, Float.parseFloat("11.4"), "Processed");
+        wrapper.addSale(anotherSale1);
+        wrapper.addSale(anotherSale2); // should both get filtered out
+
+        List<Sale> sales = wrapper.getSalesByDateRange("11-10-2000","30-11-2000");
+
+        // should only retrieve dummy sale. The others are out of range.
+        Assert.assertEquals(1, sales.size());
+        Assert.assertEquals(sales.get(0).getDateOfSale(), dummySale.getDateOfSale());
+    }
+
+    @Test
+    public void shouldRetrieveSaleByProductCategoryCorrectly(){
+        // currently only designed for 1 product filter. ( 1 string, eg school)
+        DerbyTableWrapper wrapper = new DerbyTableWrapper();
+        wrapper.deleteProductsTable();
+        wrapper.addProduct(dummyProduct); // category = "food, edible"
+
+        wrapper.addProduct(new Product("pencil", Float.parseFloat("12.32"),
+                "school, stationary, derp"));
+
+        wrapper.addSale(dummySale); // "11-11-2000"
+        Sale saleWithFood = new Sale("22", 1, "11-12-2019",
+                1, Float.parseFloat("11.3"), "Processed");
+        Sale saleWithStationary = new Sale("22", 2, "29-12-2000",
+                1, Float.parseFloat("11.4"), "Processed1");
+        Sale saleWithStationary2 = new Sale("12", 2, "11-12-1900",
+                2, Float.parseFloat("22.52"), "Processed2");
+        wrapper.addSale(saleWithFood);
+        wrapper.addSale(saleWithStationary);
+        wrapper.addSale(saleWithStationary2);
+
+        // check all traits of added product are retrieved as they were sent.
+        List<Sale> salesWithStationary = wrapper.getSalesByProductCategory("stationary");
+
+        // should only retrieve dummy sale. The others are out of range.
+        Assert.assertEquals(2, salesWithStationary.size());
+        // check the retrieved records are the ones we expect by checking a random, unique field.
+        Assert.assertEquals(salesWithStationary.get(0).getDateOfSale(), saleWithStationary.getDateOfSale());
+        Assert.assertEquals(salesWithStationary.get(1).getSaleStatus(), saleWithStationary2.getSaleStatus());
     }
 
 }

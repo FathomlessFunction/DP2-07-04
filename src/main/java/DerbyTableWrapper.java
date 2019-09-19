@@ -2,6 +2,7 @@ import DataObjects.Product;
 import DataObjects.Sale;
 
 import java.sql.*;
+import java.util.List;
 
 /**
  *
@@ -222,4 +223,20 @@ public class DerbyTableWrapper {
     }
 
 
+    public List<Product> getProducts() {
+        return null;
+    }
+
+    public List<Sale> getSales() {
+        return null;
+    }
+
+    // this might not work with strings.
+    public List<Sale> getSalesByDateRange(String startDate, String endDate) {
+        return null;
+    }
+
+    public List<Sale> getSalesByProductCategory(String category) {
+        return null;
+    }
 }
