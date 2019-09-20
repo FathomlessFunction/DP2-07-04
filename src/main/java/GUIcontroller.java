@@ -22,7 +22,7 @@ public class GUIcontroller extends JFrame {
         setLayout(new BorderLayout());
 
         //This sets the default size of the window, but is not actually required (but very recommended)
-        setSize(800,600);
+        setSize(900,600);
 
         //These are required for us to be able to see and close the program.
         setVisible(true);
