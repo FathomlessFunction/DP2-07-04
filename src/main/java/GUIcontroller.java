@@ -22,7 +22,7 @@ public class GUIcontroller extends JFrame {
         setLayout(new BorderLayout());
 
         //This sets the default size of the window, but is not actually required (but very recommended)
-        setSize(900,600);
+        setSize(800,600);
 
         //These are required for us to be able to see and close the program.
         setVisible(true);
@@ -42,8 +42,8 @@ public class GUIcontroller extends JFrame {
         });
 
         //The add command adds a Swing component into the current panel (or, in this case, the default frame)
-        add(textPanel, BorderLayout.CENTER);
-        add(buttonPanel, BorderLayout.NORTH);
+        //add(textPanel, BorderLayout.CENTER);
+        add(buttonPanel);
     }
 
 

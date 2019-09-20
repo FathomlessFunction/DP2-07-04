@@ -35,6 +35,7 @@ public class ButtonPanel extends JPanel implements ActionListener {
         setLayout(new FlowLayout(FlowLayout.LEFT));
 
         //no layout location needs to be specified here, as FlowLayout is used.
+
         add(helloButton);
         add(worldButton);
     }
