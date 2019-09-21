@@ -4,6 +4,8 @@
     <bytecodeTargetLevel>
       <module name="developmentproject2-2019.au.edu.swinburne.DP2-07-04.main" target="1.8" />
       <module name="developmentproject2-2019.au.edu.swinburne.DP2-07-04.test" target="1.8" />
+      <module name="DP2-07-04.main" target="1.8" />
+      <module name="DP2-07-04.test" target="1.8" />
     </bytecodeTargetLevel>
   </component>
 </project>
