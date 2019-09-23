@@ -23,10 +23,7 @@ import java.util.List;
 
 public class DerbyTableWrapper {
 
-    // pharmacy = schema name
-    // sales = table name
-    private static String SALES_TABLE_NAME="pharmacy.sales";//14
-    private static String PRODUCTS_TABLE_NAME="pharmacy.products";
+    private boolean testMode = false;
 
     // this is the directory in which the table information will be stored
     // so it'll appear in a MyDB folder in the root of this project.
@@ -37,42 +34,29 @@ public class DerbyTableWrapper {
     private Statement statement;
     private Connection connection;
 
-    private static final String CREATE_SALES_TABLE_SQL=
-            "create table "+SALES_TABLE_NAME+"("+ //28
-            "EntryID INT NOT NULL GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1),"+ //AUTO_INCREMENT //21
-            "SaleID VARCHAR(10) NOT NULL,"+ //28
-            "ProductID INT NOT NULL,"+ //23
-            "DateOfSale DATE,"+ //23
-            "NumberSold INT NOT NULL,"+ //24
-            "AmountPaid FLOAT NOT NULL,"+ //26
-            "SaleStatus VARCHAR(16),"+ //23
-            "PRIMARY KEY (EntryID),"+ //22
-            "FOREIGN KEY (ProductID) REFERENCES "+PRODUCTS_TABLE_NAME+""+ //45
-            ")";
-
-    private static final String CREATE_PRODUCTS_TABLE_SQL=
-            "create table "+PRODUCTS_TABLE_NAME+" ("+
-            "ProductID INT NOT NULL GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1),"+ //AUTO_INCREMENT
-            "ProductName VARCHAR(32),"+
-            "PricePerUnit FLOAT NOT NULL,"+
-            "ProductCategory VARCHAR(16),"+
-            "PRIMARY KEY (ProductID)"+
-            ")";
-
-
-    private static final String DROP_SALES_TABLE_SQL=
-            "DROP TABLE "+SALES_TABLE_NAME;
-
-    private static final String DROP_PRODUCTS_TABLE_SQL=
-            "DROP TABLE "+PRODUCTS_TABLE_NAME;
-
+    /**
+     * returns the current sales table name, based off of the wrapper's mode.
+     * @return
+     */
     public String getSalesTableName(){
-        // TODO: implement
+        String TEST_SALES_TABLE_NAME="test.sales";
+        String SALES_TABLE_NAME="pharmacy.sales";//14
+        if (testMode)
+            return TEST_SALES_TABLE_NAME;
         return SALES_TABLE_NAME;
+        // to ensure this logic holds for the operation of the wrapper, this method must always be queried to get
+        // sales table name.
     }
 
+    /**
+     * returns the current product table name, based off of the wrapper's mode.
+     * @return
+     */
     public String getProductsTableName(){
-        // TODO: implement
+        String PRODUCTS_TABLE_NAME="pharmacy.products";
+        String TEST_PRODUCTS_TABLE_NAME="test.products";
+        if (testMode)
+            return TEST_PRODUCTS_TABLE_NAME;
         return PRODUCTS_TABLE_NAME;
     }
 
@@ -94,6 +78,7 @@ public class DerbyTableWrapper {
      * As such, this should only ever get called in the Junit files. Do not call it anywhere else.
      */
     public void setTestMode() {
+        this.testMode = true;
         // TODO: implement
     }
 
@@ -106,13 +91,35 @@ public class DerbyTableWrapper {
      */
     public boolean createSalesTable(){
 
-        return executeUpdateWithSQLString(CREATE_SALES_TABLE_SQL,
+        String CreateSalesTableSql=
+                "create table "+getSalesTableName()+"("+ //28
+                        "EntryID INT NOT NULL GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1),"+ //AUTO_INCREMENT //21
+                        "SaleID VARCHAR(10) NOT NULL,"+ //28
+                        "ProductID INT NOT NULL,"+ //23
+                        "DateOfSale DATE,"+ //23
+                        "NumberSold INT NOT NULL,"+ //24
+                        "AmountPaid FLOAT NOT NULL,"+ //26
+                        "SaleStatus VARCHAR(16),"+ //23
+                        "PRIMARY KEY (EntryID),"+ //22
+                        "FOREIGN KEY (ProductID) REFERENCES "+getProductsTableName()+""+ //45
+                        ")";
+
+        return executeUpdateWithSQLString(CreateSalesTableSql,
                 "(probably) Couldn't create sales table again as it already existed.\n");
     }
 
     public boolean createProductsTable(){
 
-        return executeUpdateWithSQLString(CREATE_PRODUCTS_TABLE_SQL,
+        String CreateProductTableSql=
+                "create table "+getProductsTableName()+" ("+
+                        "ProductID INT NOT NULL GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1),"+ //AUTO_INCREMENT
+                        "ProductName VARCHAR(32),"+
+                        "PricePerUnit FLOAT NOT NULL,"+
+                        "ProductCategory VARCHAR(16),"+
+                        "PRIMARY KEY (ProductID)"+
+                        ")";
+
+        return executeUpdateWithSQLString(CreateProductTableSql,
                 "(probably) Couldn't create products table again as it already existed.\n");
 
     }
@@ -124,14 +131,20 @@ public class DerbyTableWrapper {
      */
     public boolean deleteSalesTable(){
 
-        return executeUpdateWithSQLString(DROP_SALES_TABLE_SQL,
+        String DropSalesTableSql=
+                "DROP TABLE "+getSalesTableName();
+
+        return executeUpdateWithSQLString(DropSalesTableSql,
                 "(probably) Couldn't delete sales table as it didn't exist.\n");
 
     }
 
     public boolean deleteProductsTable(){
 
-        return executeUpdateWithSQLString(DROP_PRODUCTS_TABLE_SQL,
+        String DropProductsTableSql=
+                "DROP TABLE "+getProductsTableName();
+
+        return executeUpdateWithSQLString(DropProductsTableSql,
                 "(probably) Couldn't delete product table as it didn't exist.\n");
 
     }
@@ -144,7 +157,7 @@ public class DerbyTableWrapper {
     public boolean addProduct(Product productToAdd) {
 
         String sqlInsertProduct =
-                "insert into "+PRODUCTS_TABLE_NAME+" " +
+                "insert into "+getProductsTableName()+" " +
                 "(ProductName, PricePerUnit, ProductCategory) " +
                 "values (?, ?, ?)";
 
@@ -184,7 +197,7 @@ public class DerbyTableWrapper {
     public boolean addSale(Sale saleToAdd){
 
         String sqlInsertSale =
-                "insert into "+SALES_TABLE_NAME+" " +
+                "insert into "+getSalesTableName()+" " +
                         "(SaleID, ProductID, DateOfSale, NumberSold, AmountPaid, SaleStatus)" +
                         "VALUES" +
                         "(?, ?, ?, ?, ?, ?)";
@@ -223,7 +236,7 @@ public class DerbyTableWrapper {
      * returns results as a list of Product objects
      */
     public List<Product> getProducts() {
-        String selectProductSQL = "SELECT * FROM "+PRODUCTS_TABLE_NAME;
+        String selectProductSQL = "SELECT * FROM "+getProductsTableName();
         return getProductWithSQLString(selectProductSQL);
     }
 
@@ -232,7 +245,7 @@ public class DerbyTableWrapper {
      * returns results as a list of Sale objects
      */
     public List<Sale> getSales() {
-        String selectSaleSQL = "SELECT * FROM "+SALES_TABLE_NAME;
+        String selectSaleSQL = "SELECT * FROM "+getSalesTableName();
         return getSalesWithSQLString(selectSaleSQL);
     }
 
@@ -245,7 +258,7 @@ public class DerbyTableWrapper {
         Date startDate = convertDateStringToDate(startDateString);
         Date endDate = convertDateStringToDate(endDateString);
 
-        String selectSaleSQL = "SELECT * FROM "+SALES_TABLE_NAME+" WHERE DateOfSale " +
+        String selectSaleSQL = "SELECT * FROM "+getSalesTableName()+" WHERE DateOfSale " +
                 "BETWEEN '"+startDate+"' AND '"+endDate+"'";
         return getSalesWithSQLString(selectSaleSQL);
     }
@@ -257,8 +270,8 @@ public class DerbyTableWrapper {
     public List<Sale> getSalesByProductCategory(String category) {
         String selectSaleSQL = "select a.EntryID, a.SaleID, a.DateOfSale, a.NumberSold, " +
                 "a.AmountPaid, a.SaleStatus, a.ProductID, b.ProductCategory " +
-                "from "+SALES_TABLE_NAME+" as a " +
-                "INNER JOIN "+PRODUCTS_TABLE_NAME+" as b ON "
+                "from "+getSalesTableName()+" as a " +
+                "INNER JOIN "+getProductsTableName()+" as b ON "
                 +"a.ProductID=b.ProductID " +
                 "WHERE ProductCategory LIKE '%"+category+"%'";
 
@@ -277,8 +290,8 @@ public class DerbyTableWrapper {
 
         String selectSaleSQL = "SELECT * FROM (select a.EntryID, a.SaleID, a.DateOfSale, a.NumberSold, " +
                 "a.AmountPaid, a.SaleStatus, a.ProductID, b.ProductCategory " +
-                "from "+SALES_TABLE_NAME+" as a " +
-                "INNER JOIN "+PRODUCTS_TABLE_NAME+" as b ON "
+                "from "+getSalesTableName()+" as a " +
+                "INNER JOIN "+getProductsTableName()+" as b ON "
                 +"a.ProductID=b.ProductID " +
                 "WHERE ProductCategory LIKE '%"+category+"%') c " +
                 "WHERE DateOfSale " +

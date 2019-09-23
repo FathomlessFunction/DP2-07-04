@@ -13,9 +13,12 @@ import java.util.List;
  */
 public class DerbyTableWrapper_CRUDTest {
 
+    DerbyTableWrapper wrapper;
+
     @Before
     public void setup(){
-        DerbyTableWrapper wrapper = new DerbyTableWrapper();
+        wrapper = new DerbyTableWrapper();
+        wrapper.setTestMode();
 
         // must exist for sales table creation
         wrapper.deleteSalesTable();
@@ -35,15 +38,12 @@ public class DerbyTableWrapper_CRUDTest {
 
     @Test
     public void shouldAddProductCorrectly(){
-        DerbyTableWrapper wrapper = new DerbyTableWrapper();
-
         // returns true on successful addition
         Assert.assertTrue(wrapper.addProduct(dummyProduct));
     }
 
     @Test
     public void shouldAddSaleCorrectly(){
-        DerbyTableWrapper wrapper = new DerbyTableWrapper();
 
         // product must exist for sale to exist due to foreign key
         Assert.assertTrue(wrapper.addProduct(dummyProduct));
@@ -55,7 +55,6 @@ public class DerbyTableWrapper_CRUDTest {
     /*
     @Test
     public void shouldFailAddingIfTableDoesntExist(){
-        DerbyTableWrapper wrapper = new DerbyTableWrapper();
 
         wrapper.deleteSalesTable();
         wrapper.deleteProductsTable();
@@ -68,7 +67,6 @@ public class DerbyTableWrapper_CRUDTest {
 
     @Test
     public void shouldRetrieveProductCorrectly(){
-        DerbyTableWrapper wrapper = new DerbyTableWrapper();
         wrapper.deleteSalesTable();
         wrapper.deleteProductsTable();
         wrapper.createProductsTable();
@@ -98,7 +96,6 @@ public class DerbyTableWrapper_CRUDTest {
 
     @Test
     public void shouldRetrieveSalesCorrectly(){
-        DerbyTableWrapper wrapper = new DerbyTableWrapper();
 
         wrapper.addProduct(dummyProduct); // must exist to add sale referencing its productID
         wrapper.addSale(dummySale);
@@ -127,8 +124,6 @@ public class DerbyTableWrapper_CRUDTest {
 
     @Test
     public void shouldRetrieveSaleByDateRangeCorrectly(){
-        // not sure if this will work with date string....
-        DerbyTableWrapper wrapper = new DerbyTableWrapper();
 
         wrapper.addProduct(dummyProduct);
         wrapper.addSale(dummySale); // "11-11-2000"
@@ -151,7 +146,6 @@ public class DerbyTableWrapper_CRUDTest {
     @Test
     public void shouldRetrieveSaleByProductCategoryCorrectly(){
         // currently only designed for 1 product filter. ( 1 string, eg school)
-        DerbyTableWrapper wrapper = new DerbyTableWrapper();
         wrapper.addProduct(dummyProduct); // category = "food, edible"
 
         wrapper.addProduct(new Product("pencil", Float.parseFloat("12.32"),
@@ -181,7 +175,6 @@ public class DerbyTableWrapper_CRUDTest {
 
     @Test
     public void shouldRetrieveSaleByProductAndDateRangeCorrectly(){
-        DerbyTableWrapper wrapper = new DerbyTableWrapper();
         wrapper.addProduct(dummyProduct);
         wrapper.addProduct(new Product("balloon", Float.parseFloat("12.31"), "categoryX"));
         wrapper.addSale(new Sale("12345", 2, "19-08-2019", 1, Float.parseFloat("12.99"), "Processed1"));
