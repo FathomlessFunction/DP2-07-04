@@ -330,8 +330,32 @@ public class DerbyTableWrapper {
      * @return true if successful
      */
     public boolean editSalesRecord(int entryID, Sale sale) {
-        // TODO: implement
-        return false;
+        String updateSalesSql = "update "+getSalesTableName()+
+                " set SaleID = ?, ProductID = ?, DateOfSale = ?, NumberSold = ?, AmountPaid = ?, SaleStatus = ?" +
+                " where EntryID = ?";
+
+        try{
+            connection = DriverManager.getConnection(DATABASE_URL);
+            PreparedStatement preparedStatement = connection.prepareStatement(updateSalesSql);
+
+            preparedStatement.setInt(7, entryID);
+
+            preparedStatement.setString(1, sale.getSaleID());
+            preparedStatement.setInt(2, sale.getProductID());
+            preparedStatement.setDate(3, sale.getDateOfSale());
+            preparedStatement.setInt(4, sale.getNumberSold());
+            preparedStatement.setFloat(5, sale.getAmountPaid());
+            preparedStatement.setString(6, sale.getSaleStatus());
+
+            preparedStatement.executeUpdate();
+
+            connection.close();
+
+            return true;
+
+        } catch (SQLException e){
+            return false;
+        }
     }
 
     /**
@@ -343,7 +367,30 @@ public class DerbyTableWrapper {
      * @return true if successful
      */
     public boolean editProductRecord(int productID, Product product) {
-        return false;
+
+        String updateProductSql = "update "+getProductsTableName()+"" +
+                " set ProductName = ?, PricePerUnit = ?, ProductCategory = ?" +
+                " where ProductID = ?";
+
+        try{
+            connection = DriverManager.getConnection(DATABASE_URL);
+            PreparedStatement preparedStatement = connection.prepareStatement(updateProductSql);
+
+            preparedStatement.setInt(4, productID);
+
+            preparedStatement.setString(1, product.getProductName());
+            preparedStatement.setFloat(2, product.getPricePerUnit());
+            preparedStatement.setString(3, product.getProductCategory());
+
+            preparedStatement.executeUpdate();
+
+            connection.close();
+
+            return true;
+
+        } catch (SQLException e){
+            return false;
+        }
     }
 
     private Date convertDateStringToDate(String dateString){
@@ -372,7 +419,9 @@ public class DerbyTableWrapper {
             statement = connection.createStatement();
             ResultSet results = statement.executeQuery(selectSaleSQL);
 
-            return getSaleListFromResultSet(results);
+            List<Sale> toReturn = getSaleListFromResultSet(results);
+            connection.close();
+            return toReturn;
 
         } catch (SQLException e){
             System.out.println(e.getMessage());
@@ -392,7 +441,10 @@ public class DerbyTableWrapper {
             statement = connection.createStatement();
             ResultSet results = statement.executeQuery(selectProductSQL);
 
-            return getProductListFromResultSet(results);
+            List<Product> toReturn = getProductListFromResultSet(results);
+            connection.close();
+
+            return toReturn;
 
         } catch (SQLException e){
             System.out.println(e.getMessage());
