@@ -7,6 +7,7 @@ import org.junit.Test;
  * for testing derby wrapper table creation and deletion
  *
  * note: this deletes and re-creates tables.
+ * IN THE TEST SCHEMA NOW. HOORAY.
  */
 public class DerbyTableWrapperTest {
 
