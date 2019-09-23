@@ -16,11 +16,8 @@ public class Main {
 
         SwingUtilities.invokeLater(new Runnable() {
             public void run() {
-                new InterfaceController();
+                new InterfaceController(wrapper);
             }
         });
-
-
-
     }
 }

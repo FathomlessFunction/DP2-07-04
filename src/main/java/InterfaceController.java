@@ -13,11 +13,16 @@ public class InterfaceController extends JFrame {
     private PredictSalesMenu predictSalesMenu;
     private WeeklySalesPredictionPage weeklySalesPredictionPage;
     private MonthlySalesPredictionPage monthlySalesPredictionPage;
+    private EditRecordPage editRecordPage;
+
+    private DerbyTableWrapper derbyTableWrapper;
 
 
-    public InterfaceController() {
+    public InterfaceController(DerbyTableWrapper tableWrapper) {
         //Unsure what our program name will be, this is just a stopgap
         super("Pharmacy Sales Reporting Software");
+
+        derbyTableWrapper = tableWrapper;
 
         //this can be changed to whatever layout we need
         setLayout(new BorderLayout());
@@ -38,6 +43,9 @@ public class InterfaceController extends JFrame {
         predictSalesMenu = new PredictSalesMenu();
         weeklySalesPredictionPage = new WeeklySalesPredictionPage();
         monthlySalesPredictionPage = new MonthlySalesPredictionPage();
+        editRecordPage = new EditRecordPage();
+
+
 
 
 
