@@ -35,7 +35,9 @@ public class DerbyTableWrapperTest {
 
         // only here to test it in not-test mode for a few lines.
         // this should not happen in any other tests.
+
         DerbyTableWrapper wrapper = new DerbyTableWrapper();
+        // when not in test mode, should use pharmacy schema
         Assert.assertFalse(wrapper.getProductsTableName().toLowerCase().contains("test"));
         Assert.assertTrue(wrapper.getProductsTableName().toLowerCase().contains("pharmacy"));
         Assert.assertFalse(wrapper.getSalesTableName().toLowerCase().contains("test"));
