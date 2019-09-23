@@ -1,3 +1,5 @@
+import javax.swing.*;
+
 public class Main {
     private static DerbyTableWrapper wrapper;
 
@@ -12,5 +14,10 @@ public class Main {
         wrapper.deleteSalesTable();
         wrapper.deleteProductsTable();
 
+        SwingUtilities.invokeLater(new Runnable() {
+            public void run() {
+                new InterfaceController(wrapper);
+            }
+        });
     }
 }
