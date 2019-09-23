@@ -228,7 +228,8 @@ public class DerbyTableWrapper_CRUDTest {
         s.setDateOfSale("01-01-2019");
 
         // then edit the record
-        Assert.assertTrue(wrapper.editSalesRecord(1, s));
+        // should change 1 row
+        Assert.assertEquals(1, wrapper.editSalesRecord(1, s));
 
         // then ensure the record has been updated!
         Assert.assertTrue(wrapper.getSales().get(0).getSaleStatus().equals(gonnaUpdateStatusTo));
@@ -260,13 +261,53 @@ public class DerbyTableWrapper_CRUDTest {
         p.setProductCategory(gonnaUpdateCategoryTo);
         p.setPricePerUnit(Float.parseFloat("99.99"));
         p.setProductName("UPDATE");
+
         // then edit the record
-        Assert.assertTrue(wrapper.editProductRecord(1, p));
+        // should change 1 row
+        Assert.assertEquals(1, wrapper.editProductRecord(1, p));
 
         // then ensure the record has been updated!
         Assert.assertTrue(wrapper.getProducts().get(0).getProductCategory().equals(gonnaUpdateCategoryTo));
         Assert.assertEquals(Float.parseFloat("99.99"), wrapper.getProducts().get(0).getPricePerUnit(), 0.01);
         Assert.assertEquals("UPDATE",wrapper.getProducts().get(0).getProductName());
+    }
+
+    @Test
+    public void editShouldModifyNoRowsIfEntryIDDoesNotExist(){
+        /// fresh start, clean sales table. record should not exist.
+        wrapper.deleteSalesTable();
+        wrapper.createSalesTable();
+
+        Sale s = new Sale("SALEID",1,"23-09-2019",2, Float.parseFloat("12.22"), "SOLD");
+
+        // wrapper.addSale(s); // not adding sale ooo
+
+        Assert.assertEquals("no records should exist in newly created sales table.", 0, wrapper.getSales().size()); // no records should exist in table.
+
+        Assert.assertEquals("should modify zero rows if record does not exist", 0, wrapper.editSalesRecord(1, s));
+
+    }
+
+    @Test
+    public void shouldFailToUpdateIfUpdatingSaleWithProductIDThatDoesNotExist(){
+        wrapper.deleteSalesTable();
+        wrapper.createSalesTable();
+        wrapper.addProduct(dummyProduct);
+
+        Sale s = new Sale("SALEID",1,"23-09-2019",2, Float.parseFloat("12.22"), "SOLD");
+
+        wrapper.addSale(s);
+
+        // update sale with product ID that doesn't exist in product table
+        s.setProductID(1111111);
+
+        Assert.assertEquals("should modify zero rows if editing with invalid product ID", 0, wrapper.editSalesRecord(1, s));
+
+        // should result in message:
+        // an error occured while updating a sale with entryID 1
+        // UPDATE on table 'SALES' caused a violation of foreign key constraint 'SQL190923211610741' for key (1111111).  The statement has been rolled back.
+
+        // as of 23/9/2019 it does. c:
     }
 
 }

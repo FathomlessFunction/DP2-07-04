@@ -34,32 +34,6 @@ public class DerbyTableWrapper {
     private Statement statement;
     private Connection connection;
 
-    /**
-     * returns the current sales table name, based off of the wrapper's mode.
-     * @return
-     */
-    public String getSalesTableName(){
-        String TEST_SALES_TABLE_NAME="test.sales";
-        String SALES_TABLE_NAME="pharmacy.sales";//14
-        if (testMode)
-            return TEST_SALES_TABLE_NAME;
-        return SALES_TABLE_NAME;
-        // to ensure this logic holds for the operation of the wrapper, this method must always be queried to get
-        // sales table name.
-    }
-
-    /**
-     * returns the current product table name, based off of the wrapper's mode.
-     * @return
-     */
-    public String getProductsTableName(){
-        String PRODUCTS_TABLE_NAME="pharmacy.products";
-        String TEST_PRODUCTS_TABLE_NAME="test.products";
-        if (testMode)
-            return TEST_PRODUCTS_TABLE_NAME;
-        return PRODUCTS_TABLE_NAME;
-    }
-
     public DerbyTableWrapper(){
 
         // just here to ensure the connection works. can be deleted.
@@ -71,6 +45,8 @@ public class DerbyTableWrapper {
         }
     }
 
+    ////////////////////////////////// FOR SETTING MODE / TABLE NAMES /////////////////////////////////////////////////
+
     /**
      * sets the wrapper to use the test schema, rather than the production schema (pharmacy)]
      * this is so that the test suite does not destroy our production tables and data.
@@ -80,6 +56,36 @@ public class DerbyTableWrapper {
     public void setTestMode() {
         this.testMode = true;
     }
+
+    /**
+     * returns the current sales table name, based off of the wrapper's mode. (test or production)
+     * @return
+     */
+    public String getSalesTableName(){
+
+        String SalesTableName="pharmacy.sales";
+        String TestSalesTableName="test.sales";
+
+        if (testMode)
+            return TestSalesTableName;
+        return SalesTableName;
+    }
+
+    /**
+     * returns the current product table name, based off of the wrapper's mode.
+     * @return
+     */
+    public String getProductsTableName(){
+
+        String ProductsTableName="pharmacy.products";
+        String TestProductsTableName="test.products";
+
+        if (testMode)
+            return TestProductsTableName;
+        return ProductsTableName;
+    }
+
+    ////////////////////////////////////// CREATE TABLE ////////////////////////////////////////////////////////////
 
     /**
      * Creates a product table with name getSalesTableName()
@@ -128,6 +134,8 @@ public class DerbyTableWrapper {
 
     }
 
+    ////////////////////////////////////// DELETE TABLE ////////////////////////////////////////////////////////////
+
     /**
      * Completely removes/drops the product table.
      * It's here for testing purposes. I don't recommend using this in production.
@@ -153,6 +161,8 @@ public class DerbyTableWrapper {
                 "(probably) Couldn't delete product table as it didn't exist.\n");
 
     }
+
+    ////////////////////////////////////// ADD RECORDS //////////////////////////////////////////////////////////////
 
     /**
      * Adds a product to the product table
@@ -239,6 +249,8 @@ public class DerbyTableWrapper {
         }
     }
 
+    ////////////////////////////////////// RETRIEVING RECORDS ////////////////////////////////////////////////////////
+
     /**
      * selects all from product table.
      *
@@ -321,15 +333,17 @@ public class DerbyTableWrapper {
         return getSalesWithSQLString(selectSaleSQL);
     }
 
+    ////////////////////////////////////// EDITING RECORDS ////////////////////////////////////////////////////////////
+
     /**
      * Edit an existing sale record with the data available in the passed in sale record
      *
      * @param entryID the entry ID of the sales record you wish to update (unique)
      * @param sale Sale object containing the data you wish to update the record with
      *
-     * @return true if successful
+     * @return number of records modified (ideally will be 1)
      */
-    public boolean editSalesRecord(int entryID, Sale sale) {
+    public int editSalesRecord(int entryID, Sale sale) {
         String updateSalesSql = "update "+getSalesTableName()+
                 " set SaleID = ?, ProductID = ?, DateOfSale = ?, NumberSold = ?, AmountPaid = ?, SaleStatus = ?" +
                 " where EntryID = ?";
@@ -347,14 +361,16 @@ public class DerbyTableWrapper {
             preparedStatement.setFloat(5, sale.getAmountPaid());
             preparedStatement.setString(6, sale.getSaleStatus());
 
-            preparedStatement.executeUpdate();
+            int rowsChanged = preparedStatement.executeUpdate();
 
             connection.close();
 
-            return true;
+            return rowsChanged;
 
         } catch (SQLException e){
-            return false;
+            System.out.println("an error occured while updating a sale with entryID "+entryID);
+            System.out.println(e.getMessage());
+            return 0;
         }
     }
 
@@ -364,9 +380,9 @@ public class DerbyTableWrapper {
      * @param productID the ID of the product you wish to edit. Should exist, or you'll get an error
      * @param product contains the up-to-date data you want to update the record with.
      *
-     * @return true if successful
+     * @return number of records modified
      */
-    public boolean editProductRecord(int productID, Product product) {
+    public int editProductRecord(int productID, Product product) {
 
         String updateProductSql = "update "+getProductsTableName()+"" +
                 " set ProductName = ?, PricePerUnit = ?, ProductCategory = ?" +
@@ -382,16 +398,20 @@ public class DerbyTableWrapper {
             preparedStatement.setFloat(2, product.getPricePerUnit());
             preparedStatement.setString(3, product.getProductCategory());
 
-            preparedStatement.executeUpdate();
+            int rowsChanged = preparedStatement.executeUpdate();
 
             connection.close();
 
-            return true;
+            return rowsChanged;
 
         } catch (SQLException e){
-            return false;
+            System.out.println("an error occured while updating a product with productID "+productID);
+            System.out.println(e.getMessage());
+            return 0;
         }
     }
+
+    ////////////////////////////////////// PRIVATE FUNCTIONS //////////////////////////////////////////////////////////
 
     private Date convertDateStringToDate(String dateString){
         SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy");
