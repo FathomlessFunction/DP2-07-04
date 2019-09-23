@@ -321,6 +321,31 @@ public class DerbyTableWrapper {
         return getSalesWithSQLString(selectSaleSQL);
     }
 
+    /**
+     * Edit an existing sale record with the data available in the passed in sale record
+     *
+     * @param entryID the entry ID of the sales record you wish to update (unique)
+     * @param sale Sale object containing the data you wish to update the record with
+     *
+     * @return true if successful
+     */
+    public boolean editSalesRecord(int entryID, Sale sale) {
+        // TODO: implement
+        return false;
+    }
+
+    /**
+     * Edit an existing product record with the data from the passed in Product object
+     *
+     * @param productID the ID of the product you wish to edit. Should exist, or you'll get an error
+     * @param product contains the up-to-date data you want to update the record with.
+     *
+     * @return true if successful
+     */
+    public boolean editProductRecord(int productID, Product product) {
+        return false;
+    }
+
     private Date convertDateStringToDate(String dateString){
         SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy");
         try {

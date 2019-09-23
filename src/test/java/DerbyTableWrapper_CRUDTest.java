@@ -201,4 +201,59 @@ public class DerbyTableWrapper_CRUDTest {
         Assert.assertEquals("categoryX", results.get(1).getProductCategory());
     }
 
+    ////////////////////////////////////// UPDATE RECORDS ////////////////////////////////////////
+
+    @Test
+    public void shouldUpdateSaleCorrectly(){
+
+        /// fresh start, clean sales table
+        wrapper.deleteSalesTable();
+        wrapper.createSalesTable();
+
+        String gonnaUpdateStatusTo = "UPDATE";
+
+        Sale s = new Sale("SALEID",1,"23-09-2019",2, Float.parseFloat("12.22"), "SOLD");
+
+        wrapper.addProduct(dummyProduct);
+        wrapper.addSale(s);
+
+        // first check that our sales record does NOT have the value we're gonna update to.
+        Assert.assertFalse(wrapper.getSales().get(0).getSaleStatus().equals(gonnaUpdateStatusTo));
+
+        // update the object to have the new stuff in it
+        s.setSaleStatus(gonnaUpdateStatusTo);
+        // then edit the record
+        Assert.assertTrue(wrapper.editSalesRecord(1, s));
+
+        // then ensure the record has been updated!
+        Assert.assertTrue(wrapper.getSales().get(0).getSaleStatus().equals(gonnaUpdateStatusTo));
+
+    }
+
+    @Test
+    public void shouldUpdateProductCorrectly(){
+        /// fresh start, clean table
+        wrapper.deleteSalesTable();
+        wrapper.deleteProductsTable();
+        wrapper.createProductsTable();
+        wrapper.createSalesTable();
+
+        String gonnaUpdateCategoryTo = "UPDATE";
+
+        Product p = new Product("FISH", Float.parseFloat("42.99"), "CATEGORY");
+
+        wrapper.addProduct(dummyProduct);
+
+        // first check that our sales record does NOT have the value we're gonna update to.
+        Assert.assertFalse(wrapper.getProducts().get(0).getProductCategory().equals(gonnaUpdateCategoryTo));
+
+        // update the object to have the new stuff in it
+        p.setProductCategory(gonnaUpdateCategoryTo);
+        // then edit the record
+        Assert.assertTrue(wrapper.editProductRecord(1, p));
+
+        // then ensure the record has been updated!
+        Assert.assertTrue(wrapper.getSales().get(0).getSaleStatus().equals(gonnaUpdateCategoryTo));
+    }
+
 }
