@@ -25,6 +25,26 @@ public class DerbyTableWrapperTest {
     }
 
     @Test
+    public void shouldUseDifferentTableForTestMode(){
+        // such that running tests will not delete production tables
+        DerbyTableWrapper wrapper = new DerbyTableWrapper();
+        // by default, should use pharmacy schema
+        Assert.assertFalse(wrapper.getProductsTableName().toLowerCase().contains("test"));
+        Assert.assertTrue(wrapper.getProductsTableName().toLowerCase().contains("pharmacy"));
+        Assert.assertFalse(wrapper.getSalesTableName().toLowerCase().contains("test"));
+        Assert.assertTrue(wrapper.getSalesTableName().toLowerCase().contains("pharmacy"));
+
+        wrapper.setTestMode();
+
+        // after setting test mode, should use test schema
+        Assert.assertTrue(wrapper.getProductsTableName().toLowerCase().contains("test"));
+        Assert.assertFalse(wrapper.getProductsTableName().toLowerCase().contains("pharmacy"));
+        Assert.assertTrue(wrapper.getSalesTableName().toLowerCase().contains("test"));
+        Assert.assertFalse(wrapper.getSalesTableName().toLowerCase().contains("pharmacy"));
+
+    }
+
+    @Test
     public void shouldCreateSalesTableWithoutException() {
         DerbyTableWrapper wrapper = new DerbyTableWrapper();
         try {

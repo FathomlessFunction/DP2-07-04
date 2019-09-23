@@ -66,6 +66,15 @@ public class DerbyTableWrapper {
     private static final String DROP_PRODUCTS_TABLE_SQL=
             "DROP TABLE "+PRODUCTS_TABLE_NAME;
 
+    public String getSalesTableName(){
+        // TODO: implement
+        return SALES_TABLE_NAME;
+    }
+
+    public String getProductsTableName(){
+        // TODO: implement
+        return PRODUCTS_TABLE_NAME;
+    }
 
     public DerbyTableWrapper(){
 
@@ -76,6 +85,16 @@ public class DerbyTableWrapper {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+
+    /**
+     * sets the wrapper to use the test schema, rather than the production schema (pharmacy)]
+     * this is so that the test suite does not destroy our production tables and data.
+     *
+     * As such, this should only ever get called in the Junit files. Do not call it anywhere else.
+     */
+    public void setTestMode() {
+        // TODO: implement
     }
 
     /**
