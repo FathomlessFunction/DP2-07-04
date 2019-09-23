@@ -222,11 +222,20 @@ public class DerbyTableWrapper_CRUDTest {
 
         // update the object to have the new stuff in it
         s.setSaleStatus(gonnaUpdateStatusTo);
+        s.setNumberSold(1000);
+        s.setSaleID("123");
+        s.setAmountPaid(Float.parseFloat("44.44"));
+        s.setDateOfSale("01-01-2019");
+
         // then edit the record
         Assert.assertTrue(wrapper.editSalesRecord(1, s));
 
         // then ensure the record has been updated!
         Assert.assertTrue(wrapper.getSales().get(0).getSaleStatus().equals(gonnaUpdateStatusTo));
+        Assert.assertEquals(1000, wrapper.getSales().get(0).getNumberSold());
+        Assert.assertEquals("123", wrapper.getSales().get(0).getSaleID());
+        Assert.assertEquals(Float.parseFloat("44.44"), wrapper.getSales().get(0).getAmountPaid(), 0.01);
+        Assert.assertEquals(s.getDateOfSale(), wrapper.getSales().get(0).getDateOfSale());
 
     }
 
@@ -249,11 +258,15 @@ public class DerbyTableWrapper_CRUDTest {
 
         // update the object to have the new stuff in it
         p.setProductCategory(gonnaUpdateCategoryTo);
+        p.setPricePerUnit(Float.parseFloat("99.99"));
+        p.setProductName("UPDATE");
         // then edit the record
         Assert.assertTrue(wrapper.editProductRecord(1, p));
 
         // then ensure the record has been updated!
-        Assert.assertTrue(wrapper.getSales().get(0).getSaleStatus().equals(gonnaUpdateCategoryTo));
+        Assert.assertTrue(wrapper.getProducts().get(0).getProductCategory().equals(gonnaUpdateCategoryTo));
+        Assert.assertEquals(Float.parseFloat("99.99"), wrapper.getProducts().get(0).getPricePerUnit(), 0.01);
+        Assert.assertEquals("UPDATE",wrapper.getProducts().get(0).getProductName());
     }
 
 }

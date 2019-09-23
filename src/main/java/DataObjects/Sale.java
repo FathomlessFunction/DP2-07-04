@@ -147,6 +147,11 @@ public class Sale {
         this.dateOfSale = dateOfSale;
     }
 
+    public void setDateOfSale(String dateOfSaleString){
+        checkDateRegex(dateOfSaleString);
+        this.dateOfSale = convertDateStringToDate(dateOfSaleString);
+    }
+
     @Override
     public String toString(){
         String toReturn = "Sale (";
