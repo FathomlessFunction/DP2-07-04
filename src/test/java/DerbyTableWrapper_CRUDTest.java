@@ -13,9 +13,12 @@ import java.util.List;
  */
 public class DerbyTableWrapper_CRUDTest {
 
+    DerbyTableWrapper wrapper;
+
     @Before
     public void setup(){
-        DerbyTableWrapper wrapper = new DerbyTableWrapper();
+        wrapper = new DerbyTableWrapper();
+        wrapper.setTestMode();
 
         // must exist for sales table creation
         wrapper.deleteSalesTable();
@@ -35,15 +38,12 @@ public class DerbyTableWrapper_CRUDTest {
 
     @Test
     public void shouldAddProductCorrectly(){
-        DerbyTableWrapper wrapper = new DerbyTableWrapper();
-
         // returns true on successful addition
         Assert.assertTrue(wrapper.addProduct(dummyProduct));
     }
 
     @Test
     public void shouldAddSaleCorrectly(){
-        DerbyTableWrapper wrapper = new DerbyTableWrapper();
 
         // product must exist for sale to exist due to foreign key
         Assert.assertTrue(wrapper.addProduct(dummyProduct));
@@ -55,7 +55,6 @@ public class DerbyTableWrapper_CRUDTest {
     /*
     @Test
     public void shouldFailAddingIfTableDoesntExist(){
-        DerbyTableWrapper wrapper = new DerbyTableWrapper();
 
         wrapper.deleteSalesTable();
         wrapper.deleteProductsTable();
@@ -68,7 +67,6 @@ public class DerbyTableWrapper_CRUDTest {
 
     @Test
     public void shouldRetrieveProductCorrectly(){
-        DerbyTableWrapper wrapper = new DerbyTableWrapper();
         wrapper.deleteSalesTable();
         wrapper.deleteProductsTable();
         wrapper.createProductsTable();
@@ -98,7 +96,6 @@ public class DerbyTableWrapper_CRUDTest {
 
     @Test
     public void shouldRetrieveSalesCorrectly(){
-        DerbyTableWrapper wrapper = new DerbyTableWrapper();
 
         wrapper.addProduct(dummyProduct); // must exist to add sale referencing its productID
         wrapper.addSale(dummySale);
@@ -127,8 +124,6 @@ public class DerbyTableWrapper_CRUDTest {
 
     @Test
     public void shouldRetrieveSaleByDateRangeCorrectly(){
-        // not sure if this will work with date string....
-        DerbyTableWrapper wrapper = new DerbyTableWrapper();
 
         wrapper.addProduct(dummyProduct);
         wrapper.addSale(dummySale); // "11-11-2000"
@@ -151,7 +146,6 @@ public class DerbyTableWrapper_CRUDTest {
     @Test
     public void shouldRetrieveSaleByProductCategoryCorrectly(){
         // currently only designed for 1 product filter. ( 1 string, eg school)
-        DerbyTableWrapper wrapper = new DerbyTableWrapper();
         wrapper.addProduct(dummyProduct); // category = "food, edible"
 
         wrapper.addProduct(new Product("pencil", Float.parseFloat("12.32"),
@@ -181,7 +175,6 @@ public class DerbyTableWrapper_CRUDTest {
 
     @Test
     public void shouldRetrieveSaleByProductAndDateRangeCorrectly(){
-        DerbyTableWrapper wrapper = new DerbyTableWrapper();
         wrapper.addProduct(dummyProduct);
         wrapper.addProduct(new Product("balloon", Float.parseFloat("12.31"), "categoryX"));
         wrapper.addSale(new Sale("12345", 2, "19-08-2019", 1, Float.parseFloat("12.99"), "Processed1"));
@@ -206,6 +199,115 @@ public class DerbyTableWrapper_CRUDTest {
         // second entry
         Assert.assertEquals("Processed2",results.get(1).getSaleStatus());
         Assert.assertEquals("categoryX", results.get(1).getProductCategory());
+    }
+
+    ////////////////////////////////////// UPDATE RECORDS ////////////////////////////////////////
+
+    @Test
+    public void shouldUpdateSaleCorrectly(){
+
+        /// fresh start, clean sales table
+        wrapper.deleteSalesTable();
+        wrapper.createSalesTable();
+
+        String gonnaUpdateStatusTo = "UPDATE";
+
+        Sale s = new Sale("SALEID",1,"23-09-2019",2, Float.parseFloat("12.22"), "SOLD");
+
+        wrapper.addProduct(dummyProduct);
+        wrapper.addSale(s);
+
+        // first check that our sales record does NOT have the value we're gonna update to.
+        Assert.assertFalse(wrapper.getSales().get(0).getSaleStatus().equals(gonnaUpdateStatusTo));
+
+        // update the object to have the new stuff in it
+        s.setSaleStatus(gonnaUpdateStatusTo);
+        s.setNumberSold(1000);
+        s.setSaleID("123");
+        s.setAmountPaid(Float.parseFloat("44.44"));
+        s.setDateOfSale("01-01-2019");
+
+        // then edit the record
+        // should change 1 row
+        Assert.assertEquals(1, wrapper.editSalesRecord(1, s));
+
+        // then ensure the record has been updated!
+        Assert.assertTrue(wrapper.getSales().get(0).getSaleStatus().equals(gonnaUpdateStatusTo));
+        Assert.assertEquals(1000, wrapper.getSales().get(0).getNumberSold());
+        Assert.assertEquals("123", wrapper.getSales().get(0).getSaleID());
+        Assert.assertEquals(Float.parseFloat("44.44"), wrapper.getSales().get(0).getAmountPaid(), 0.01);
+        Assert.assertEquals(s.getDateOfSale(), wrapper.getSales().get(0).getDateOfSale());
+
+    }
+
+    @Test
+    public void shouldUpdateProductCorrectly(){
+        /// fresh start, clean table
+        wrapper.deleteSalesTable();
+        wrapper.deleteProductsTable();
+        wrapper.createProductsTable();
+        wrapper.createSalesTable();
+
+        String gonnaUpdateCategoryTo = "UPDATE";
+
+        Product p = new Product("FISH", Float.parseFloat("42.99"), "CATEGORY");
+
+        wrapper.addProduct(dummyProduct);
+
+        // first check that our sales record does NOT have the value we're gonna update to.
+        Assert.assertFalse(wrapper.getProducts().get(0).getProductCategory().equals(gonnaUpdateCategoryTo));
+
+        // update the object to have the new stuff in it
+        p.setProductCategory(gonnaUpdateCategoryTo);
+        p.setPricePerUnit(Float.parseFloat("99.99"));
+        p.setProductName("UPDATE");
+
+        // then edit the record
+        // should change 1 row
+        Assert.assertEquals(1, wrapper.editProductRecord(1, p));
+
+        // then ensure the record has been updated!
+        Assert.assertTrue(wrapper.getProducts().get(0).getProductCategory().equals(gonnaUpdateCategoryTo));
+        Assert.assertEquals(Float.parseFloat("99.99"), wrapper.getProducts().get(0).getPricePerUnit(), 0.01);
+        Assert.assertEquals("UPDATE",wrapper.getProducts().get(0).getProductName());
+    }
+
+    @Test
+    public void editShouldModifyNoRowsIfEntryIDDoesNotExist(){
+        /// fresh start, clean sales table. record should not exist.
+        wrapper.deleteSalesTable();
+        wrapper.createSalesTable();
+
+        Sale s = new Sale("SALEID",1,"23-09-2019",2, Float.parseFloat("12.22"), "SOLD");
+
+        // wrapper.addSale(s); // not adding sale ooo
+
+        Assert.assertEquals("no records should exist in newly created sales table.", 0, wrapper.getSales().size()); // no records should exist in table.
+
+        Assert.assertEquals("should modify zero rows if record does not exist", 0, wrapper.editSalesRecord(1, s));
+
+    }
+
+    @Test
+    public void shouldFailToUpdateIfUpdatingSaleWithProductIDThatDoesNotExist(){
+        wrapper.deleteSalesTable();
+        wrapper.createSalesTable();
+        wrapper.addProduct(dummyProduct);
+
+        Sale s = new Sale("SALEID",1,"23-09-2019",2, Float.parseFloat("12.22"), "SOLD");
+
+        wrapper.addSale(s);
+
+        // update sale with product ID that doesn't exist in product table
+        s.setProductID(1111111);
+
+        Assert.assertEquals("should modify zero rows if editing with invalid product ID", 0, wrapper.editSalesRecord(1, s));
+
+        // should result in message:
+        // an error occured while updating a sale with entryID 1
+        // UPDATE on table 'SALES' caused a violation of foreign key constraint 'SQL190923211610741' for key (1111111).  The statement has been rolled back.
+
+        // as of 23/9/2019 it does. c:
     }
 
 }
