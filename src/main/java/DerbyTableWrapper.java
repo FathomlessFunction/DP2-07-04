@@ -491,6 +491,16 @@ public class DerbyTableWrapper {
     }
 
     /**
+     * retrieves product from products table via its unique, automatically generated Product ID
+     * @param productID the product ID of the product you want to retrieve
+     * @return the product if one was found. Else, null.
+     */
+    public Product getProductByProductId(int productID) {
+        // TODO: implement
+        return null;
+    }
+
+    /**
      * converts passed resultset to a list of sale objects
      */
     private List<Sale> getSaleListFromResultSet(ResultSet results) throws SQLException {
@@ -537,4 +547,5 @@ public class DerbyTableWrapper {
         }
         return true;
     }
+
 }
