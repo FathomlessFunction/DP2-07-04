@@ -13,10 +13,11 @@ public class WeeklySalesRecordPage extends JPanel {
         //this is here for debugging
         add(new JLabel(this.getClass().getSimpleName()));
         //sets the column names
-        String[] columnNames = {"Sale ID",
-                "Date Of Sale",
+        String[] columnNames = {"Entry ID",
+                "Sale ID",
                 "Product",
-                "Quantity",
+                "Amount Sold",
+                "Date Of Sale",
                 "Total Price",
                 "Sale Status"};
         //creates the JTable(Object [][], String[]) and populates it with data

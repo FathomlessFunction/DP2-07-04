@@ -23,6 +23,7 @@ public class Main {
         Sale testSale6 = new Sale("63",1,"02-12-2000", 2,Float.parseFloat("12.3"),"PROCESSED");
         Sale testSale7 = new Sale("63",1,"08-12-2000", 2,Float.parseFloat("12.3"),"PROCESSED");
         Sale testSale8 = new Sale("63",1,"13-12-2000", 2,Float.parseFloat("12.3"),"PROCESSED");
+        Sale testSale9 = new Sale("63",1,"01-01-2000", 2,Float.parseFloat("12.3"),"PROCESSED");
 
         //adds data to wrapper
         wrapper.addProduct(testProd);
@@ -34,6 +35,7 @@ public class Main {
         wrapper.addSale(testSale6);
         wrapper.addSale(testSale7);
         wrapper.addSale(testSale8);
+        wrapper.addSale(testSale9);
 
         SwingUtilities.invokeLater(new Runnable() {
             public void run() {

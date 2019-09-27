@@ -106,8 +106,8 @@ public class InterfaceController extends JFrame {
                 if (selection == HomePage.MenuSelections.ADD_RECORD) {
                     changePage(addRecordPage);
 
-                } else if (selection == HomePage.MenuSelections.EDIT_RECORD) {
-                    changePage(editRecordPage);
+                /*} else if (selection == HomePage.MenuSelections.EDIT_RECORD) {
+                    changePage(editRecordPage);*/
 
                 } else if (selection == HomePage.MenuSelections.DISPLAY_RECORD) {
                     changePage(displayRecordMenu);
@@ -184,17 +184,18 @@ public class InterfaceController extends JFrame {
         //gets list within date range
         List<Sale> saleList = tableWrapper.getSalesByDateRange(startDateString,endDateString);
         //2D array with size of saleList
-        Object [][] salesArray = new Object[saleList.size()][6];
+        Object [][] salesArray = new Object[saleList.size()][7];
 
         //for loop to assign list to object array
         for(int i = 0; i < saleList.size();i++)
         {
-            salesArray[i][0] = saleList.get(i).getSaleID();
-            salesArray[i][1]= saleList.get(i).getProductID();
-            salesArray[i][2]=  saleList.get(i).getNumberSold();
-            salesArray[i][3]=  saleList.get(i).getDateOfSale();
-            salesArray[i][4]=  saleList.get(i).getAmountPaid();
-            salesArray[i][5]=  saleList.get(i).getSaleStatus();
+            salesArray[i][0] = saleList.get(i).getEntryID();
+            salesArray[i][1] = saleList.get(i).getSaleID();
+            salesArray[i][2]= saleList.get(i).getProductID();
+            salesArray[i][3]=  saleList.get(i).getNumberSold();
+            salesArray[i][4]=  saleList.get(i).getDateOfSale();
+            salesArray[i][5]=  saleList.get(i).getAmountPaid();
+            salesArray[i][6]=  saleList.get(i).getSaleStatus();
         }
         return salesArray;
     }
