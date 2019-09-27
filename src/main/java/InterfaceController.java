@@ -6,6 +6,8 @@ import DataObjects.Product;
 import DataObjects.Sale;
 import InterfaceObjects.*;
 
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.lang.reflect.Array;
 import java.sql.Time;
 import java.text.DateFormat;
@@ -42,38 +44,6 @@ public class InterfaceController extends JFrame {
         //Unsure what our program name will be, this is just a stopgap
         super("Pharmacy Sales Reporting Software");
 
-        derbyTableWrapper = tableWrapper;
-        //test input data
-        Product testProd = new Product("fish",
-                Float.parseFloat("4.23"), "food");
-        Sale testSale = new Sale("3",1,"06-11-2000",
-                2,Float.parseFloat("12.3"),"PROCESSED");
-        Sale testSale2 = new Sale("3",1,"11-11-2000",
-                2,Float.parseFloat("12.3"),"PROCESSED");
-        Sale testSale3 = new Sale("63",1,"16-11-2000",
-                2,Float.parseFloat("12.3"),"PROCESSED");
-        Sale testSale4 = new Sale("63",1,"22-11-2000",
-                2,Float.parseFloat("12.3"),"PROCESSED");
-        Sale testSale5 = new Sale("63",1,"28-11-2000",
-                2,Float.parseFloat("12.3"),"PROCESSED");
-        Sale testSale6 = new Sale("63",1,"02-12-2000",
-                2,Float.parseFloat("12.3"),"PROCESSED");
-        Sale testSale7 = new Sale("63",1,"08-12-2000",
-                2,Float.parseFloat("12.3"),"PROCESSED");
-        Sale testSale8 = new Sale("63",1,"13-12-2000",
-                2,Float.parseFloat("12.3"),"PROCESSED");
-
-        //adds data to wrapper
-        tableWrapper.addProduct(testProd);
-        tableWrapper.addSale(testSale);
-        tableWrapper.addSale(testSale2);
-        tableWrapper.addSale(testSale3);
-        tableWrapper.addSale(testSale4);
-        tableWrapper.addSale(testSale5);
-        tableWrapper.addSale(testSale6);
-        tableWrapper.addSale(testSale7);
-        tableWrapper.addSale(testSale8);
-
         //this can be changed to whatever layout we need
         setLayout(new BorderLayout());
 
@@ -82,7 +52,23 @@ public class InterfaceController extends JFrame {
 
         //absolutely required
         setVisible(true);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        //setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+
+        derbyTableWrapper = tableWrapper;
+
+        // this is used to override the window closing function, if you need to have certain functions run at
+        // program closing put it in here
+        addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e){
+                derbyTableWrapper.deleteSalesTable();
+                derbyTableWrapper.deleteProductsTable();
+
+                dispose();
+                System.exit(0);
+            }
+        });
 
         //These are here so that they're immediately usable, also reduces loading times later down the line
         homePage = new HomePage();

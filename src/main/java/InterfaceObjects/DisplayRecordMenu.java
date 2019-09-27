@@ -41,7 +41,7 @@ public class DisplayRecordMenu extends JPanel implements ActionListener {
             monthMenu.addItem(i);
         }
         yearMenu = new JComboBox<Integer>();
-        for (int i=2000;i<=2019;i++){
+        for (int i=2000;i<=2119;i++){
             yearMenu.addItem(i);
         }
         //adds action listeners
@@ -73,7 +73,7 @@ public class DisplayRecordMenu extends JPanel implements ActionListener {
         dates[2] = yearDate;
         //make sure not empty
         if (dates == null){
-            dates = new int[]{11, 11, 2001};
+            dates = new int[]{1, 1, 2001};
         };
         //return array
         return dates;
