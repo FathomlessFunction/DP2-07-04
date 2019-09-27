@@ -23,10 +23,7 @@ import java.util.List;
 
 public class DerbyTableWrapper {
 
-    // pharmacy = schema name
-    // sales = table name
-    private static String SALES_TABLE_NAME="pharmacy.sales";//14
-    private static String PRODUCTS_TABLE_NAME="pharmacy.products";
+    private boolean testMode = false;
 
     // this is the directory in which the table information will be stored
     // so it'll appear in a MyDB folder in the root of this project.
@@ -36,36 +33,6 @@ public class DerbyTableWrapper {
     // here for injection for testing. (eg create connection class that just saves the SQL string and checks)
     private Statement statement;
     private Connection connection;
-
-    private static final String CREATE_SALES_TABLE_SQL=
-            "create table "+SALES_TABLE_NAME+"("+ //28
-            "EntryID INT NOT NULL GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1),"+ //AUTO_INCREMENT //21
-            "SaleID VARCHAR(10) NOT NULL,"+ //28
-            "ProductID INT NOT NULL,"+ //23
-            "DateOfSale DATE,"+ //23
-            "NumberSold INT NOT NULL,"+ //24
-            "AmountPaid FLOAT NOT NULL,"+ //26
-            "SaleStatus VARCHAR(16),"+ //23
-            "PRIMARY KEY (EntryID),"+ //22
-            "FOREIGN KEY (ProductID) REFERENCES "+PRODUCTS_TABLE_NAME+""+ //45
-            ")";
-
-    private static final String CREATE_PRODUCTS_TABLE_SQL=
-            "create table "+PRODUCTS_TABLE_NAME+" ("+
-            "ProductID INT NOT NULL GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1),"+ //AUTO_INCREMENT
-            "ProductName VARCHAR(32),"+
-            "PricePerUnit FLOAT NOT NULL,"+
-            "ProductCategory VARCHAR(16),"+
-            "PRIMARY KEY (ProductID)"+
-            ")";
-
-
-    private static final String DROP_SALES_TABLE_SQL=
-            "DROP TABLE "+SALES_TABLE_NAME;
-
-    private static final String DROP_PRODUCTS_TABLE_SQL=
-            "DROP TABLE "+PRODUCTS_TABLE_NAME;
-
 
     public DerbyTableWrapper(){
 
@@ -78,8 +45,50 @@ public class DerbyTableWrapper {
         }
     }
 
+    ////////////////////////////////// FOR SETTING MODE / TABLE NAMES /////////////////////////////////////////////////
+
     /**
-     * Creates a product table with name PRODUCT_TABLE_NAME
+     * sets the wrapper to use the test schema, rather than the production schema (pharmacy)]
+     * this is so that the test suite does not destroy our production tables and data.
+     *
+     * As such, this should only ever get called in the Junit files. Do not call it anywhere else.
+     */
+    public void setTestMode() {
+        this.testMode = true;
+    }
+
+    /**
+     * returns the current sales table name, based off of the wrapper's mode. (test or production)
+     * @return
+     */
+    public String getSalesTableName(){
+
+        String SalesTableName="pharmacy.sales";
+        String TestSalesTableName="test.sales";
+
+        if (testMode)
+            return TestSalesTableName;
+        return SalesTableName;
+    }
+
+    /**
+     * returns the current product table name, based off of the wrapper's mode.
+     * @return
+     */
+    public String getProductsTableName(){
+
+        String ProductsTableName="pharmacy.products";
+        String TestProductsTableName="test.products";
+
+        if (testMode)
+            return TestProductsTableName;
+        return ProductsTableName;
+    }
+
+    ////////////////////////////////////// CREATE TABLE ////////////////////////////////////////////////////////////
+
+    /**
+     * Creates a product table with name getSalesTableName()
      *
      * NOTE: to create sales table, the product table must be created first!
      *
@@ -87,45 +96,84 @@ public class DerbyTableWrapper {
      */
     public boolean createSalesTable(){
 
-        return executeUpdateWithSQLString(CREATE_SALES_TABLE_SQL,
+        String CreateSalesTableSql=
+                "create table "+getSalesTableName()+"("+ //28
+                        "EntryID INT NOT NULL GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1),"+ //AUTO_INCREMENT //21
+                        "SaleID VARCHAR(10) NOT NULL,"+ //28
+                        "ProductID INT NOT NULL,"+ //23
+                        "DateOfSale DATE,"+ //23
+                        "NumberSold INT NOT NULL,"+ //24
+                        "AmountPaid FLOAT NOT NULL,"+ //26
+                        "SaleStatus VARCHAR(16),"+ //23
+                        "PRIMARY KEY (EntryID),"+ //22
+                        "FOREIGN KEY (ProductID) REFERENCES "+getProductsTableName()+""+ //45
+                        ")";
+
+        return executeUpdateWithSQLString(CreateSalesTableSql,
                 "(probably) Couldn't create sales table again as it already existed.\n");
     }
 
+    /**
+     * creates a product table in your current schema. (test if in test mode, pharmacy if in prod)
+     *
+     * @return true if successful
+     */
     public boolean createProductsTable(){
 
-        return executeUpdateWithSQLString(CREATE_PRODUCTS_TABLE_SQL,
+        String CreateProductTableSql=
+                "create table "+getProductsTableName()+" ("+
+                        "ProductID INT NOT NULL GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1),"+ //AUTO_INCREMENT
+                        "ProductName VARCHAR(32),"+
+                        "PricePerUnit FLOAT NOT NULL,"+
+                        "ProductCategory VARCHAR(16),"+
+                        "PRIMARY KEY (ProductID)"+
+                        ")";
+
+        return executeUpdateWithSQLString(CreateProductTableSql,
                 "(probably) Couldn't create products table again as it already existed.\n");
 
     }
 
+    ////////////////////////////////////// DELETE TABLE ////////////////////////////////////////////////////////////
+
     /**
      * Completely removes/drops the product table.
      * It's here for testing purposes. I don't recommend using this in production.
+     *
      * @return true if successful (false if table does not exist)
      */
     public boolean deleteSalesTable(){
 
-        return executeUpdateWithSQLString(DROP_SALES_TABLE_SQL,
+        String DropSalesTableSql=
+                "DROP TABLE "+getSalesTableName();
+
+        return executeUpdateWithSQLString(DropSalesTableSql,
                 "(probably) Couldn't delete sales table as it didn't exist.\n");
 
     }
 
     public boolean deleteProductsTable(){
 
-        return executeUpdateWithSQLString(DROP_PRODUCTS_TABLE_SQL,
+        String DropProductsTableSql=
+                "DROP TABLE "+getProductsTableName();
+
+        return executeUpdateWithSQLString(DropProductsTableSql,
                 "(probably) Couldn't delete product table as it didn't exist.\n");
 
     }
 
+    ////////////////////////////////////// ADD RECORDS //////////////////////////////////////////////////////////////
+
     /**
      * Adds a product to the product table
      *
+     * @param productToAdd Product object you want to add to the table
      * @return true if successful
      */
     public boolean addProduct(Product productToAdd) {
 
         String sqlInsertProduct =
-                "insert into "+PRODUCTS_TABLE_NAME+" " +
+                "insert into "+getProductsTableName()+" " +
                 "(ProductName, PricePerUnit, ProductCategory) " +
                 "values (?, ?, ?)";
 
@@ -157,15 +205,17 @@ public class DerbyTableWrapper {
 
     /**
      * adds a sale to the sales table
+     * Note: can't choose the sale's EntryID; that is autogenerated by the table.
      *
      * IMPORTANT: will fail if you try to add a sale with a productID of a product that does not exist.
      *
+     * @param saleToAdd Sale object you want to add to the table
      * @return true if successful
      */
     public boolean addSale(Sale saleToAdd){
 
         String sqlInsertSale =
-                "insert into "+SALES_TABLE_NAME+" " +
+                "insert into "+getSalesTableName()+" " +
                         "(SaleID, ProductID, DateOfSale, NumberSold, AmountPaid, SaleStatus)" +
                         "VALUES" +
                         "(?, ?, ?, ?, ?, ?)";
@@ -199,34 +249,42 @@ public class DerbyTableWrapper {
         }
     }
 
+    ////////////////////////////////////// RETRIEVING RECORDS ////////////////////////////////////////////////////////
+
     /**
-     * selects all from product table
-     * returns results as a list of Product objects
+     * selects all from product table.
+     *
+     * @return results as a list of Product objects
      */
     public List<Product> getProducts() {
-        String selectProductSQL = "SELECT * FROM "+PRODUCTS_TABLE_NAME;
+        String selectProductSQL = "SELECT * FROM "+getProductsTableName();
         return getProductWithSQLString(selectProductSQL);
     }
 
     /**
      * selects all from sales table,
-     * returns results as a list of Sale objects
+     *
+     * @return results as a list of Sale objects
      */
     public List<Sale> getSales() {
-        String selectSaleSQL = "SELECT * FROM "+SALES_TABLE_NAME;
+        String selectSaleSQL = "SELECT * FROM "+getSalesTableName();
         return getSalesWithSQLString(selectSaleSQL);
     }
 
     /**
      * selects all sales from the table between the provided date range
      * format of date is dd-MM-yyyy
+     *
+     * @param startDateString the start date string (string dd-MM-yyyy) to filter by. (might not be inclusive)
+     * @param endDateString the end date string(dd-MM-yyyy) to filter by. (might not be inclusive)
+     * @return list of results as Sale objects
      */
     public List<Sale> getSalesByDateRange(String startDateString, String endDateString) {
         // convert date strings
         Date startDate = convertDateStringToDate(startDateString);
         Date endDate = convertDateStringToDate(endDateString);
 
-        String selectSaleSQL = "SELECT * FROM "+SALES_TABLE_NAME+" WHERE DateOfSale " +
+        String selectSaleSQL = "SELECT * FROM "+getSalesTableName()+" WHERE DateOfSale " +
                 "BETWEEN '"+startDate+"' AND '"+endDate+"'";
         return getSalesWithSQLString(selectSaleSQL);
     }
@@ -234,12 +292,15 @@ public class DerbyTableWrapper {
     /**
      * selects all sales from the sales table that are of the passed category string.
      * returned sales items will include product category.
+     *
+     * @param category the category string to filter by
+     * @return list of results as Sale objects
      */
     public List<Sale> getSalesByProductCategory(String category) {
         String selectSaleSQL = "select a.EntryID, a.SaleID, a.DateOfSale, a.NumberSold, " +
                 "a.AmountPaid, a.SaleStatus, a.ProductID, b.ProductCategory " +
-                "from "+SALES_TABLE_NAME+" as a " +
-                "INNER JOIN "+PRODUCTS_TABLE_NAME+" as b ON "
+                "from "+getSalesTableName()+" as a " +
+                "INNER JOIN "+getProductsTableName()+" as b ON "
                 +"a.ProductID=b.ProductID " +
                 "WHERE ProductCategory LIKE '%"+category+"%'";
 
@@ -249,6 +310,10 @@ public class DerbyTableWrapper {
     /**
      * searches for sales with corresponding product category that is within the date range.
      * returned sales items will include product category.
+     *
+     * @param category the category string to filter by
+     * @param startDateString the start date string (dd-MM-yyyy) to filter by. (might not be inclusive)
+     * @param endDateString the end date string (dd-MM-yyyy) to filter by. (might not be inclusive)
      */
     public List<Sale> getSalesByProductCategoryAndDateRange(String category,
                                                             String startDateString, String endDateString){
@@ -258,8 +323,8 @@ public class DerbyTableWrapper {
 
         String selectSaleSQL = "SELECT * FROM (select a.EntryID, a.SaleID, a.DateOfSale, a.NumberSold, " +
                 "a.AmountPaid, a.SaleStatus, a.ProductID, b.ProductCategory " +
-                "from "+SALES_TABLE_NAME+" as a " +
-                "INNER JOIN "+PRODUCTS_TABLE_NAME+" as b ON "
+                "from "+getSalesTableName()+" as a " +
+                "INNER JOIN "+getProductsTableName()+" as b ON "
                 +"a.ProductID=b.ProductID " +
                 "WHERE ProductCategory LIKE '%"+category+"%') c " +
                 "WHERE DateOfSale " +
@@ -267,6 +332,86 @@ public class DerbyTableWrapper {
 
         return getSalesWithSQLString(selectSaleSQL);
     }
+
+    ////////////////////////////////////// EDITING RECORDS ////////////////////////////////////////////////////////////
+
+    /**
+     * Edit an existing sale record with the data available in the passed in sale record
+     *
+     * @param entryID the entry ID of the sales record you wish to update (unique)
+     * @param sale Sale object containing the data you wish to update the record with
+     *
+     * @return number of records modified (ideally will be 1)
+     */
+    public int editSalesRecord(int entryID, Sale sale) {
+        String updateSalesSql = "update "+getSalesTableName()+
+                " set SaleID = ?, ProductID = ?, DateOfSale = ?, NumberSold = ?, AmountPaid = ?, SaleStatus = ?" +
+                " where EntryID = ?";
+
+        try{
+            connection = DriverManager.getConnection(DATABASE_URL);
+            PreparedStatement preparedStatement = connection.prepareStatement(updateSalesSql);
+
+            preparedStatement.setInt(7, entryID);
+
+            preparedStatement.setString(1, sale.getSaleID());
+            preparedStatement.setInt(2, sale.getProductID());
+            preparedStatement.setDate(3, sale.getDateOfSale());
+            preparedStatement.setInt(4, sale.getNumberSold());
+            preparedStatement.setFloat(5, sale.getAmountPaid());
+            preparedStatement.setString(6, sale.getSaleStatus());
+
+            int rowsChanged = preparedStatement.executeUpdate();
+
+            connection.close();
+
+            return rowsChanged;
+
+        } catch (SQLException e){
+            System.out.println("an error occured while updating a sale with entryID "+entryID);
+            System.out.println(e.getMessage());
+            return 0;
+        }
+    }
+
+    /**
+     * Edit an existing product record with the data from the passed in Product object
+     *
+     * @param productID the ID of the product you wish to edit. Should exist, or you'll get an error
+     * @param product contains the up-to-date data you want to update the record with.
+     *
+     * @return number of records modified
+     */
+    public int editProductRecord(int productID, Product product) {
+
+        String updateProductSql = "update "+getProductsTableName()+"" +
+                " set ProductName = ?, PricePerUnit = ?, ProductCategory = ?" +
+                " where ProductID = ?";
+
+        try{
+            connection = DriverManager.getConnection(DATABASE_URL);
+            PreparedStatement preparedStatement = connection.prepareStatement(updateProductSql);
+
+            preparedStatement.setInt(4, productID);
+
+            preparedStatement.setString(1, product.getProductName());
+            preparedStatement.setFloat(2, product.getPricePerUnit());
+            preparedStatement.setString(3, product.getProductCategory());
+
+            int rowsChanged = preparedStatement.executeUpdate();
+
+            connection.close();
+
+            return rowsChanged;
+
+        } catch (SQLException e){
+            System.out.println("an error occured while updating a product with productID "+productID);
+            System.out.println(e.getMessage());
+            return 0;
+        }
+    }
+
+    ////////////////////////////////////// PRIVATE FUNCTIONS //////////////////////////////////////////////////////////
 
     private Date convertDateStringToDate(String dateString){
         SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy");
@@ -294,7 +439,9 @@ public class DerbyTableWrapper {
             statement = connection.createStatement();
             ResultSet results = statement.executeQuery(selectSaleSQL);
 
-            return getSaleListFromResultSet(results);
+            List<Sale> toReturn = getSaleListFromResultSet(results);
+            connection.close();
+            return toReturn;
 
         } catch (SQLException e){
             System.out.println(e.getMessage());
@@ -314,7 +461,10 @@ public class DerbyTableWrapper {
             statement = connection.createStatement();
             ResultSet results = statement.executeQuery(selectProductSQL);
 
-            return getProductListFromResultSet(results);
+            List<Product> toReturn = getProductListFromResultSet(results);
+            connection.close();
+
+            return toReturn;
 
         } catch (SQLException e){
             System.out.println(e.getMessage());
