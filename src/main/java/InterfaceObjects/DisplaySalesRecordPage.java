@@ -7,11 +7,16 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.List;
 
-public class WeeklySalesRecordPage extends JPanel {
+public class DisplaySalesRecordPage extends JPanel {
 
-    public WeeklySalesRecordPage(Object [][] salesArray) {
+    public DisplaySalesRecordPage(Object [][] salesArray, String length) {
         //this is here for debugging
-        add(new JLabel(this.getClass().getSimpleName()));
+        if (length == "week"){
+            add(new JLabel("Weekly sales record display"));
+        } else {
+            add(new JLabel("Monthly sales record display"));
+        }
+        //add(new JLabel(this.getClass().getSimpleName()));
         //sets the column names
         String[] columnNames = {"Entry ID",
                 "Sale ID",

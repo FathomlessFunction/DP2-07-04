@@ -1,23 +1,12 @@
 import javax.swing.*;
-import javax.swing.border.Border;
 import java.awt.*;
 
-import DataObjects.Product;
 import DataObjects.Sale;
 import InterfaceObjects.*;
 
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.lang.reflect.Array;
-import java.sql.Time;
-import java.text.DateFormat;
-import java.text.Format;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Formatter;
 import java.util.List;
-import java.util.logging.SimpleFormatter;
-import java.text.ParseException;
 
 public class InterfaceController extends JFrame {
 
@@ -29,8 +18,8 @@ public class InterfaceController extends JFrame {
 
     //these are still blank, skeleton classes, which now all have a constructor and their name on them.
     private AddRecordPage addRecordPage;
-    private WeeklySalesRecordPage weeklySalesRecordPage;
-    private MonthlySalesRecordPage monthlySalesRecordPage;
+    private DisplaySalesRecordPage displaySalesRecordPage;
+    //private MonthlySalesRecordPage monthlySalesRecordPage;
     private WeeklySalesPredictionPage weeklySalesPredictionPage;
     private MonthlySalesPredictionPage monthlySalesPredictionPage;
     private EditRecordPage editRecordPage;
@@ -125,11 +114,11 @@ public class InterfaceController extends JFrame {
                 if (selection == DisplayRecordMenu.MenuSelections.WEEKLY_RECORDS) {
                     //need to create a new table with new data each call
                     //getList function returns an array of sales
-                    changePage(new WeeklySalesRecordPage(getList(tableWrapper,"week")));
+                    changePage(new DisplaySalesRecordPage(getList(tableWrapper,"week"), "week"));
 
                 } else if (selection == DisplayRecordMenu.MenuSelections.MONTHLY_RECORDS) {
                     //same as weekly
-                    changePage(new MonthlySalesRecordPage(getList(tableWrapper,"month")));
+                    changePage(new DisplaySalesRecordPage(getList(tableWrapper,"month"), "month"));
                 }
             }
         });
@@ -173,8 +162,7 @@ public class InterfaceController extends JFrame {
         //no error checking involved e.g. if input is 31st will set days to 37th
         if (length == "week"){
             endDateStringArray[0] = endDateStringArray[0]+6;
-        } else
-        {
+        } else {
             endDateStringArray[1] = endDateStringArray[1]+1;
         }
         //creates new string in format "dd-mm-yyyy" for start date and end date
@@ -191,11 +179,11 @@ public class InterfaceController extends JFrame {
         {
             salesArray[i][0] = saleList.get(i).getEntryID();
             salesArray[i][1] = saleList.get(i).getSaleID();
-            salesArray[i][2]= saleList.get(i).getProductID();
-            salesArray[i][3]=  saleList.get(i).getNumberSold();
-            salesArray[i][4]=  saleList.get(i).getDateOfSale();
-            salesArray[i][5]=  saleList.get(i).getAmountPaid();
-            salesArray[i][6]=  saleList.get(i).getSaleStatus();
+            salesArray[i][2] = tableWrapper.getProductByProductId(saleList.get(i).getProductID()).getProductName();
+            salesArray[i][3] = saleList.get(i).getNumberSold();
+            salesArray[i][4] = saleList.get(i).getDateOfSale();
+            salesArray[i][5] = saleList.get(i).getAmountPaid();
+            salesArray[i][6] = saleList.get(i).getSaleStatus();
         }
         return salesArray;
     }

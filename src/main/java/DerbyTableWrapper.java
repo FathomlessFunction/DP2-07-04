@@ -262,6 +262,20 @@ public class DerbyTableWrapper {
     }
 
     /**
+     * retrieves product from products table via its unique, automatically generated Product ID
+     * @param productID the product ID of the product you want to retrieve
+     * @return the product if one was found. Else, null.
+     */
+    public Product getProductByProductId(int productID) {
+        String selectProductSQL = "SELECT * FROM "+getProductsTableName()+" WHERE ProductID = "+productID;
+        List<Product> results = getProductWithSQLString(selectProductSQL);
+        if (results.size() < 1)
+            return null;
+        else
+            return results.get(0);
+    }
+
+    /**
      * selects all from sales table,
      *
      * @return results as a list of Sale objects
@@ -537,4 +551,5 @@ public class DerbyTableWrapper {
         }
         return true;
     }
+
 }

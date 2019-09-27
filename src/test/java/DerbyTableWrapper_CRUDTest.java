@@ -95,6 +95,29 @@ public class DerbyTableWrapper_CRUDTest {
     }
 
     @Test
+    public void shouldRetrieveProductViaProductIDCorrectly(){
+        wrapper.deleteSalesTable();
+        wrapper.deleteProductsTable();
+        wrapper.createProductsTable();
+
+        wrapper.addProduct(dummyProduct); // should have product id = 1
+        Product dummyProductTwo= new Product("derp", Float.parseFloat("11.22"), "dummy2cat");
+        wrapper.addProduct(dummyProductTwo); // should have product id = 2
+
+        Product retrieved1 = wrapper.getProductByProductId(1);
+        Assert.assertEquals(1, retrieved1.getProductID());
+        Assert.assertEquals(dummyProduct.getProductCategory(), retrieved1.getProductCategory());
+
+        Product retrieved2 = wrapper.getProductByProductId(2);
+        Assert.assertEquals(2, retrieved2.getProductID());
+        Assert.assertEquals(dummyProductTwo.getProductCategory(), retrieved2.getProductCategory());
+
+        Product retrieved3 = wrapper.getProductByProductId(3); // shouldn't exist, should return null.
+        Assert.assertNull(retrieved3);
+
+    }
+
+    @Test
     public void shouldRetrieveSalesCorrectly(){
 
         wrapper.addProduct(dummyProduct); // must exist to add sale referencing its productID

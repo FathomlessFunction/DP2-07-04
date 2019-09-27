@@ -90,11 +90,11 @@ public class DisplayRecordMenu extends JPanel implements ActionListener {
             listener.menuSelection(MenuSelections.WEEKLY_RECORDS);
         } else if (clicked == monthlyButton) {
             listener.menuSelection(MenuSelections.MONTHLY_RECORDS);
-        } else if (clicked == dateButton){
+        } else if (clicked == dateButton) {
             //set new values from drop down menus when dateButton clicked
             dayDate = (Integer) dayMenu.getSelectedItem();
             monthDate = (Integer) monthMenu.getSelectedItem();
             yearDate = (Integer) yearMenu.getSelectedItem();
-            }
+        }
     }
 }
