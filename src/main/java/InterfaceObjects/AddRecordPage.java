@@ -72,6 +72,13 @@ public class AddRecordPage extends JPanel {
                 if(formListener !=null) {
                     formListener.formReceived(formEvent);
                 }
+
+                saleIDField.setText("");
+                productIDField.setText("");
+                dateOfSaleField.setText("");
+                numberSoldField.setText("");
+                amountPaidField.setText("");
+                saleStatusField.setText("");
             }
         });
 
