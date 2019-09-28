@@ -11,8 +11,8 @@ public class Main {
         wrapper.createSalesTable();
 
         // Cody: This is just here for testing, it can be removed
-        wrapper.deleteSalesTable();
-        wrapper.deleteProductsTable();
+        //wrapper.deleteSalesTable();
+        //wrapper.deleteProductsTable();
 
         SwingUtilities.invokeLater(new Runnable() {
             public void run() {
