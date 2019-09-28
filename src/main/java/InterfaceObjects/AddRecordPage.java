@@ -2,6 +2,8 @@ package InterfaceObjects;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class AddRecordPage extends JPanel {
 
@@ -20,6 +22,8 @@ public class AddRecordPage extends JPanel {
         private JTextField saleStatusField;
 
         private JButton submitButton;
+
+        private FormListener formListener;
 
     public AddRecordPage() {
 
@@ -40,6 +44,36 @@ public class AddRecordPage extends JPanel {
         saleStatusField = new JTextField(fieldWidth);
 
         submitButton = new JButton("Submit");
+
+
+        /**
+         * Similarly to the area for this in the controller, this code is pretty bloated for clarity.
+         * I am happy to refactor this later if people would like me to.
+         */
+        submitButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent event) {
+
+                String saleID = saleIDField.getText();
+                int productID = Integer.valueOf(productIDField.getText());
+                String dateOfSale = dateOfSaleField.getText();
+                int numberSold = Integer.valueOf(numberSoldField.getText());
+                float amountPaid = Float.valueOf(amountPaidField.getText());
+                String saleStatus = saleStatusField.getText();
+
+                FormEvent formEvent = new FormEvent(this);
+
+                formEvent.setSaleID(saleID);
+                formEvent.setProductID(productID);
+                formEvent.setDateOfSale(dateOfSale);
+                formEvent.setNumberSold(numberSold);
+                formEvent.setAmountPaid(amountPaid);
+                formEvent.setSaleStatus(saleStatus);
+
+                if(formListener !=null) {
+                    formListener.formReceived(formEvent);
+                }
+            }
+        });
 
 
         //please excuse how gross this code seems, but it does look very pretty in the gui.
@@ -104,5 +138,10 @@ public class AddRecordPage extends JPanel {
         bagConstraints.weighty = 5;
         bagConstraints.anchor = GridBagConstraints.FIRST_LINE_START;
         add(submitButton, bagConstraints);
+
+    }
+
+    public void setFormListener(FormListener listener) {
+        this.formListener = listener;
     }
 }
