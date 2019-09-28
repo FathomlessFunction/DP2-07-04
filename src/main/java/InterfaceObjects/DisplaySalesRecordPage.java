@@ -2,6 +2,7 @@ package InterfaceObjects;
 
 import DataObjects.Product;
 import DataObjects.Sale;
+import javafx.scene.Group;
 
 import javax.swing.*;
 import java.awt.*;
@@ -11,6 +12,7 @@ public class DisplaySalesRecordPage extends JPanel {
 
     private JComboBox<Integer> recordSelect;
     private JLabel title, DDLable;
+    private JButton edit;
 
     public DisplaySalesRecordPage(Object [][] salesArray, String length) {
         //this is here for debugging
@@ -46,19 +48,32 @@ public class DisplaySalesRecordPage extends JPanel {
         //create scroll with table inside
         JScrollPane scrollPane = new JScrollPane(table);
 
+        edit = new JButton("Edit");
+
         GroupLayout layout = new GroupLayout(this);
-        setLayout(new GroupLayout(this));
+        setLayout(layout);
 
         layout.setAutoCreateGaps(true);
         layout.setAutoCreateContainerGaps(true);
 
         layout.setHorizontalGroup(
-                layout.createSequentialGroup()
-                    .addComponent(title)
+                layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(title))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(DDLable)
+                        .addComponent(recordSelect))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(scrollPane))
         );
         layout.setVerticalGroup(
                 layout.createSequentialGroup()
                     .addComponent(title)
+                    .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                        .addComponent(DDLable)
+                        .addComponent(recordSelect))
+                    .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                        .addComponent(scrollPane))
         );
 
         //add scroll
