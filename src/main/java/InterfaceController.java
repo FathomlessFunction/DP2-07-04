@@ -133,6 +133,27 @@ public class InterfaceController extends JFrame {
                 }
             }
         });
+
+
+        /**
+         * I know this code seems a little more bloated than it needs to be, but it makes it much more clear
+         * about what's going on. Can refactor this if the team would like me to.
+         */
+        addRecordPage.setFormListener(new FormListener() {
+            public void formReceived(FormEvent event) {
+                String saleID = event.getSaleID();
+                int productID = event.getProductID();
+                String dateOfSale = event.getDateOfSale();
+                int numberSold = event.getNumberSold();
+                float amountPaid = event.getAmountPaid();
+                String saleStatus = event.getSaleStatus();
+
+                Sale saleToAdd = new Sale(saleID, productID, dateOfSale, numberSold, amountPaid, saleStatus);
+                derbyTableWrapper.addSale(saleToAdd);
+
+
+            }
+        });
     }
 
     /**
