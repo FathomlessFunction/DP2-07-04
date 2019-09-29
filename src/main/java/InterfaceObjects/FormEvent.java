@@ -8,6 +8,8 @@ import java.util.EventObject;
  */
 public class FormEvent extends EventObject {
 
+    private int entryID;
+
     private String saleID;
     private int productID;
     private String dateOfSale;
@@ -17,6 +19,14 @@ public class FormEvent extends EventObject {
 
     public FormEvent(Object source) {
         super(source);
+    }
+
+    public int getEntryID(){
+        return entryID;
+    }
+
+    public void setEntryID(int entryID){
+        this.entryID = entryID;
     }
 
     public String getSaleID() {

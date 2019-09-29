@@ -8,11 +8,11 @@ public class HomePage extends JPanel implements ActionListener {
 
     public enum MenuSelections
     {
-        ADD_RECORD, EDIT_RECORD, DISPLAY_RECORD, PREDICT_RECORD;
+        ADD_RECORD/*, EDIT_RECORD*/, DISPLAY_RECORD, PREDICT_RECORD;
     }
 
     private JButton addButton;
-    private JButton editButton;
+    //private JButton editButton;
     private JButton displayButton;
     private JButton predictButton;
 
@@ -21,12 +21,12 @@ public class HomePage extends JPanel implements ActionListener {
     public HomePage() {
         //change the button names from here
         addButton = new JButton("Add a Sales Record");
-        editButton = new JButton("Edit a Sales Record");
-        displayButton = new JButton("Display Sales Records");
+        //editButton = new JButton("Edit a Sales Record");
+        displayButton = new JButton("Display/Edit Sales Records");
         predictButton = new JButton("Predict Sales Records");
 
         addButton.addActionListener(this);
-        editButton.addActionListener(this);
+        //editButton.addActionListener(this);
         displayButton.addActionListener(this);
         predictButton.addActionListener(this);
 
@@ -36,7 +36,7 @@ public class HomePage extends JPanel implements ActionListener {
         add(new JLabel(this.getClass().getSimpleName()));
 
         add(addButton);
-        add(editButton);
+        //add(editButton);
         add(displayButton);
         add(predictButton);
     }
@@ -49,8 +49,8 @@ public class HomePage extends JPanel implements ActionListener {
         if (clicked == addButton) {
             listener.menuSelection(MenuSelections.ADD_RECORD);
 
-        } else if (clicked == editButton) {
-            listener.menuSelection(MenuSelections.EDIT_RECORD);
+        /*} else if (clicked == editButton) {
+            listener.menuSelection(MenuSelections.EDIT_RECORD);*/
 
         } else if (clicked == displayButton) {
             listener.menuSelection(MenuSelections.DISPLAY_RECORD);
