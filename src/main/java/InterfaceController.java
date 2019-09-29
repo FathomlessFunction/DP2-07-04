@@ -63,8 +63,7 @@ public class InterfaceController extends JFrame {
         homePage = new HomePage();
         addRecordPage = new AddRecordPage();
         displayRecordMenu = new DisplayRecordMenu();
-        //weeklySalesRecordPage = new WeeklySalesRecordPage(salesArray);
-        //monthlySalesRecordPage = new MonthlySalesRecordPage();
+        displaySalesRecordPage = new DisplaySalesRecordPage();
         predictSalesMenu = new PredictSalesMenu();
         weeklySalesPredictionPage = new WeeklySalesPredictionPage();
         monthlySalesPredictionPage = new MonthlySalesPredictionPage();
@@ -114,12 +113,39 @@ public class InterfaceController extends JFrame {
                 if (selection == DisplayRecordMenu.MenuSelections.WEEKLY_RECORDS) {
                     //need to create a new table with new data each call
                     //getList function returns an array of sales
-                    changePage(new DisplaySalesRecordPage(getList(tableWrapper,"week"), "week"));
-
+                    displaySalesRecordPage = new DisplaySalesRecordPage(getList(tableWrapper,"week"), "week");
                 } else if (selection == DisplayRecordMenu.MenuSelections.MONTHLY_RECORDS) {
                     //same as weekly
-                    changePage(new DisplaySalesRecordPage(getList(tableWrapper,"month"), "month"));
+                    displaySalesRecordPage = new DisplaySalesRecordPage(getList(tableWrapper,"month"), "month");
                 }
+
+                displaySalesRecordPage.setListener(new EditListener() {
+                    public void editClicked(Object [] sale) {
+                        editRecordPage = new EditRecordPage(sale);
+
+                        editRecordPage.setFormListener(new FormListener() {
+                            @Override
+                            public void formReceived(FormEvent event) {
+                                String saleID = event.getSaleID();
+                                int productID = event.getProductID();
+                                String dateOfSale = event.getDateOfSale();
+                                int numberSold = event.getNumberSold();
+                                float amountPaid = event.getAmountPaid();
+                                String saleStatus = event.getSaleStatus();
+
+                                Sale saleToEdit = new Sale(saleID, productID, dateOfSale, numberSold, amountPaid, saleStatus);
+                                derbyTableWrapper.editSalesRecord(event.getEntryID(), saleToEdit);
+
+                                JOptionPane.showMessageDialog(null, "Record has been updated");
+                                changePage(homePage);
+                            }
+                        });
+
+                        changePage(editRecordPage);
+                    }
+                });
+
+                changePage(displaySalesRecordPage);
             }
         });
 
@@ -193,8 +219,10 @@ public class InterfaceController extends JFrame {
         //gets list within date range
         List<Sale> saleList = tableWrapper.getSalesByDateRange(startDateString,endDateString);
         //2D array with size of saleList
-        Object [][] salesArray = new Object[saleList.size()][7];
+        Object [][] salesArray = new Object[saleList.size()][8];
 
+        String result;
+        String tmp[];
         //for loop to assign list to object array
         for(int i = 0; i < saleList.size();i++)
         {
@@ -202,9 +230,14 @@ public class InterfaceController extends JFrame {
             salesArray[i][1] = saleList.get(i).getSaleID();
             salesArray[i][2] = tableWrapper.getProductByProductId(saleList.get(i).getProductID()).getProductName();
             salesArray[i][3] = saleList.get(i).getNumberSold();
-            salesArray[i][4] = saleList.get(i).getDateOfSale();
+
+            tmp = saleList.get(i).getDateOfSale().toString().split("-");
+            result = tmp[2]+"-"+tmp[1]+"-"+tmp[0];
+
+            salesArray[i][4] = result;
             salesArray[i][5] = saleList.get(i).getAmountPaid();
             salesArray[i][6] = saleList.get(i).getSaleStatus();
+            salesArray[i][7] = saleList.get(i).getProductID();
         }
         return salesArray;
     }
