@@ -2,7 +2,6 @@ package InterfaceObjects;
 
 import DataObjects.Product;
 import DataObjects.Sale;
-import javafx.scene.Group;
 
 import javax.swing.*;
 import java.awt.*;
