@@ -2,9 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="4fe8fe8f-9ab6-4a81-9e2f-74c107d3fce5" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/DataObjects/CSVReport.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/java/DataObjects/CSVReportTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/DataObjects/CSVReport.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/DataObjects/CSVReport.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/DataObjects/Sale.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/DataObjects/Sale.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/DataObjects/CSVReportTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/DataObjects/CSVReportTest.java" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/.gradle/" />
@@ -48,8 +49,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/DataObjects/Sale.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="246">
-              <caret line="25" column="4" selection-start-line="25" selection-start-column="4" selection-end-line="26" selection-end-column="69" />
+            <state relative-caret-position="210">
+              <caret line="60" column="5" selection-start-line="60" selection-start-column="5" selection-end-line="60" selection-end-column="5" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -60,8 +61,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/DataObjects/CSVReport.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="255">
-              <caret line="15" column="42" lean-forward="true" selection-start-line="15" selection-start-column="42" selection-end-line="15" selection-end-column="42" />
+            <state relative-caret-position="747">
+              <caret line="93" column="13" selection-start-line="93" selection-start-column="13" selection-end-line="93" selection-end-column="13" />
               <folding>
                 <element signature="e#264#265#0" expanded="true" />
                 <element signature="e#284#285#0" expanded="true" />
@@ -71,8 +72,6 @@
                 <element signature="e#1220#1221#0" expanded="true" />
                 <element signature="e#1367#1368#0" expanded="true" />
                 <element signature="e#1397#1398#0" expanded="true" />
-                <element signature="e#1440#1441#0" expanded="true" />
-                <element signature="e#1478#1479#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -90,8 +89,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/test/java/DataObjects/CSVReportTest.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="722">
-              <caret line="121" column="60" selection-start-line="121" selection-start-column="60" selection-end-line="121" selection-end-column="60" />
+            <state relative-caret-position="238">
+              <caret line="98" column="76" selection-start-line="98" selection-start-column="76" selection-end-line="98" selection-end-column="76" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="e#159#165#0" expanded="true" />
@@ -191,19 +190,18 @@
         <option value="$PROJECT_DIR$/src/test/java/DataObjects/SaleTest.java" />
         <option value="$PROJECT_DIR$/src/test/java/DerbyTableWrapperTest.java" />
         <option value="$PROJECT_DIR$/src/main/java/DataObjects/Product.java" />
-        <option value="$PROJECT_DIR$/src/main/java/DataObjects/Sale.java" />
         <option value="$PROJECT_DIR$/src/test/java/DerbyTableWrapper_CRUDTest.java" />
         <option value="$PROJECT_DIR$/src/main/java/DerbyTableWrapper.java" />
+        <option value="$PROJECT_DIR$/src/main/java/DataObjects/Sale.java" />
         <option value="$PROJECT_DIR$/src/main/java/DataObjects/CSVReport.java" />
         <option value="$PROJECT_DIR$/src/test/java/DataObjects/CSVReportTest.java" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="952" />
-    <option name="y" value="-8" />
-    <option name="width" value="976" />
-    <option name="height" value="1056" />
+    <option name="x" value="953" />
+    <option name="width" value="974" />
+    <option name="height" value="1047" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectView">
@@ -284,7 +282,7 @@
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1570442039910" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1570444442254" />
     <property name="project.structure.last.edited" value="Project" />
     <property name="project.structure.proportion" value="0.0" />
     <property name="project.structure.side.proportion" value="0.0" />
@@ -302,13 +300,6 @@
     </option>
   </component>
   <component name="RunManager" selected="JUnit.All in DP2-07-04.test (2)">
-    <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="Main" />
-      <module name="DP2-07-04.main" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
     <configuration name="All in DP2-07-04.test (1)" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="DP2-07-04.test" />
       <option name="PACKAGE_NAME" value="" />
@@ -325,14 +316,6 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="All in DP2-07-04.test (3)" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="DP2-07-04.test" />
-      <option name="PACKAGE_NAME" value="" />
-      <option name="TEST_OBJECT" value="package" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
     <configuration name="All in DP2-07-04.test" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="DP2-07-04.test" />
       <option name="PACKAGE_NAME" value="" />
@@ -341,19 +324,49 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="CSVReportTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="DP2-07-04.test" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="DataObjects.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="DataObjects" />
+      <option name="MAIN_CLASS_NAME" value="DataObjects.CSVReportTest" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="CSVReportTest.convertingListToCSVResultsInCorrectlyFormedCSVString" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="DP2-07-04.test" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="DataObjects.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="DataObjects" />
+      <option name="MAIN_CLASS_NAME" value="DataObjects.CSVReportTest" />
+      <option name="METHOD_NAME" value="convertingListToCSVResultsInCorrectlyFormedCSVString" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <list>
-      <item itemvalue="Application.Main" />
       <item itemvalue="JUnit.All in DP2-07-04.test" />
-      <item itemvalue="JUnit.All in DP2-07-04.test (3)" />
+      <item itemvalue="JUnit.CSVReportTest" />
+      <item itemvalue="JUnit.CSVReportTest.convertingListToCSVResultsInCorrectlyFormedCSVString" />
       <item itemvalue="JUnit.All in DP2-07-04.test (1)" />
       <item itemvalue="JUnit.All in DP2-07-04.test (2)" />
     </list>
     <recent_temporary>
       <list>
         <item itemvalue="JUnit.All in DP2-07-04.test (2)" />
-        <item itemvalue="Application.Main" />
         <item itemvalue="JUnit.All in DP2-07-04.test (1)" />
-        <item itemvalue="JUnit.All in DP2-07-04.test (3)" />
+        <item itemvalue="JUnit.CSVReportTest" />
+        <item itemvalue="JUnit.CSVReportTest.convertingListToCSVResultsInCorrectlyFormedCSVString" />
         <item itemvalue="JUnit.All in DP2-07-04.test" />
       </list>
     </recent_temporary>
@@ -389,50 +402,50 @@
       <workItem from="1569569975326" duration="1629000" />
       <workItem from="1569827805710" duration="5280000" />
       <workItem from="1570423962364" duration="670000" />
-      <workItem from="1570439236042" duration="2795000" />
+      <workItem from="1570439236042" duration="5202000" />
     </task>
     <servers />
   </component>
   <component name="TestHistory">
-    <history-entry file="All_in_DP2-07-04_test_(5) - 2019.09.25 at 22h 50m 14s.xml">
-      <configuration name="All in DP2-07-04.test (5)" configurationId="JUnit" />
+    <history-entry file="CSVReportTest_convertingListToCSVResultsInCorrectlyFormedCSVString - 2019.10.07 at 21h 21m 29s.xml">
+      <configuration name="CSVReportTest.convertingListToCSVResultsInCorrectlyFormedCSVString" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="All_in_DP2-07-04_test - 2019.09.25 at 22h 51m 29s.xml">
-      <configuration name="All in DP2-07-04.test" configurationId="JUnit" />
+    <history-entry file="CSVReportTest_convertingListToCSVResultsInCorrectlyFormedCSVString - 2019.10.07 at 21h 22m 24s.xml">
+      <configuration name="CSVReportTest.convertingListToCSVResultsInCorrectlyFormedCSVString" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="All_in_DP2-07-04_test_(3) - 2019.09.25 at 22h 53m 03s.xml">
-      <configuration name="All in DP2-07-04.test (3)" configurationId="JUnit" />
+    <history-entry file="CSVReportTest_convertingListToCSVResultsInCorrectlyFormedCSVString - 2019.10.07 at 21h 24m 01s.xml">
+      <configuration name="CSVReportTest.convertingListToCSVResultsInCorrectlyFormedCSVString" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="All_in_DP2-07-04_test_(1) - 2019.09.25 at 22h 53m 22s.xml">
+    <history-entry file="CSVReportTest_convertingListToCSVResultsInCorrectlyFormedCSVString - 2019.10.07 at 21h 24m 41s.xml">
+      <configuration name="CSVReportTest.convertingListToCSVResultsInCorrectlyFormedCSVString" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="CSVReportTest - 2019.10.07 at 21h 25m 07s.xml">
+      <configuration name="CSVReportTest" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="CSVReportTest_convertingListToCSVResultsInCorrectlyFormedCSVString - 2019.10.07 at 21h 26m 54s.xml">
+      <configuration name="CSVReportTest.convertingListToCSVResultsInCorrectlyFormedCSVString" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="CSVReportTest - 2019.10.07 at 21h 28m 03s.xml">
+      <configuration name="CSVReportTest" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="CSVReportTest - 2019.10.07 at 21h 30m 38s.xml">
+      <configuration name="CSVReportTest" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="All_in_DP2-07-04_test_(1) - 2019.10.07 at 21h 30m 46s.xml">
       <configuration name="All in DP2-07-04.test (1)" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="All_in_DP2-07-04_test_(4) - 2019.09.25 at 22h 54m 53s.xml">
-      <configuration name="All in DP2-07-04.test (4)" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="All_in_DP2-07-04_test_(2) - 2019.09.25 at 22h 56m 03s.xml">
+    <history-entry file="All_in_DP2-07-04_test_(2) - 2019.10.07 at 21h 33m 37s.xml">
       <configuration name="All in DP2-07-04.test (2)" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="All_in_DP2-07-04_test_(5) - 2019.09.25 at 23h 05m 52s.xml">
-      <configuration name="All in DP2-07-04.test (5)" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="All_in_DP2-07-04_test - 2019.09.27 at 17h 51m 18s.xml">
-      <configuration name="All in DP2-07-04.test" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="All_in_DP2-07-04_test_(3) - 2019.09.27 at 17h 55m 03s.xml">
-      <configuration name="All in DP2-07-04.test (3)" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="All_in_DP2-07-04_test_(1) - 2019.10.07 at 15h 53m 22s.xml">
-      <configuration name="All in DP2-07-04.test (1)" configurationId="JUnit" />
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="43452000" />
+    <option name="totallyTimeSpent" value="45859000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.15298508" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.08208955" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Designer" order="2" />
       <window_info id="Image Layers" order="3" />
@@ -441,7 +454,7 @@
       <window_info id="Favorites" order="6" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info anchor="bottom" id="Run" order="2" weight="0.40520042" />
+      <window_info anchor="bottom" id="Run" order="2" visible="true" weight="0.43336946" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -459,7 +472,7 @@
       <window_info anchor="right" id="Maven" order="3" />
       <window_info anchor="right" id="Palette" order="4" />
       <window_info anchor="right" id="Capture Analysis" order="5" />
-      <window_info anchor="right" id="Gradle" order="6" visible="true" weight="0.14498934" />
+      <window_info anchor="right" id="Gradle" order="6" visible="true" weight="0.020788912" />
       <window_info anchor="right" id="Database" order="7" />
       <window_info anchor="right" id="Palette&#9;" order="8" />
       <window_info anchor="right" id="Theme Preview" order="9" />
@@ -675,8 +688,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/DataObjects/Sale.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="246">
-          <caret line="25" column="4" selection-start-line="25" selection-start-column="4" selection-end-line="26" selection-end-column="69" />
+        <state relative-caret-position="210">
+          <caret line="60" column="5" selection-start-line="60" selection-start-column="5" selection-end-line="60" selection-end-column="5" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
@@ -685,8 +698,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/DataObjects/CSVReport.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="255">
-          <caret line="15" column="42" lean-forward="true" selection-start-line="15" selection-start-column="42" selection-end-line="15" selection-end-column="42" />
+        <state relative-caret-position="747">
+          <caret line="93" column="13" selection-start-line="93" selection-start-column="13" selection-end-line="93" selection-end-column="13" />
           <folding>
             <element signature="e#264#265#0" expanded="true" />
             <element signature="e#284#285#0" expanded="true" />
@@ -696,16 +709,14 @@
             <element signature="e#1220#1221#0" expanded="true" />
             <element signature="e#1367#1368#0" expanded="true" />
             <element signature="e#1397#1398#0" expanded="true" />
-            <element signature="e#1440#1441#0" expanded="true" />
-            <element signature="e#1478#1479#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/test/java/DataObjects/CSVReportTest.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="722">
-          <caret line="121" column="60" selection-start-line="121" selection-start-column="60" selection-end-line="121" selection-end-column="60" />
+        <state relative-caret-position="238">
+          <caret line="98" column="76" selection-start-line="98" selection-start-column="76" selection-end-line="98" selection-end-column="76" />
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="e#159#165#0" expanded="true" />

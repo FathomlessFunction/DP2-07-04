@@ -61,8 +61,8 @@ public class CSVReportTest {
         String csvString = testReport.toString();
 
         // should contain stuff from both records
+        Assert.assertTrue(csvString.contains(listOfSales.get(0).getSaleStatus()));
         Assert.assertTrue(csvString.contains(listOfSales.get(1).getSaleStatus()));
-        Assert.assertTrue(csvString.contains(listOfSales.get(2).getSaleStatus()));
 
         // should contain everything from 1 record
         // NOTE: leaving date format as default until requested otherwise.
@@ -96,11 +96,15 @@ public class CSVReportTest {
         List<Sale> listOfSales = getSampleList();
         testReport = new CSVReport(listOfSales);
 
+        //System.out.println(testReport.toString()); // here to check output
+
         // string should be quoted, is checked in previous test though
-        Assert.assertTrue(testReport.toString().contains(testReport.getNewLine()+""));
+        Assert.assertTrue(testReport.toString().contains(
+                '"'+listOfSales.get(1).getSaleStatus()+'"')
+        );
 
         // should start new line after entry field
-        Assert.assertTrue(testReport.toString().contains('"'+testReport.getNewLine()+""));
+        Assert.assertTrue(testReport.toString().contains(testReport.getNewLine()+""));
 
         // numbers should not be quoted.
         Assert.assertFalse(testReport.toString().contains(listOfSales.get(1).getEntryID()+'"'+""));
