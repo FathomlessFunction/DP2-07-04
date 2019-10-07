@@ -1,0 +1,6 @@
+Q'DROP TABLE' cannot be performed on 'PHARMACY.SALES' because it does not exist.
+;(probably) Couldn't delete sales table as it didn't exist.
+
+T'DROP TABLE' cannot be performed on 'PHARMACY.PRODUCTS' because it does not exist.
+=(probably) Couldn't delete product table as it didn't exist.
+
