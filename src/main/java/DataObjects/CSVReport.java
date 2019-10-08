@@ -44,6 +44,16 @@ public class CSVReport {
     }
 
     /**
+     * outputs the csv string representation of passed Sale list
+     * to a file, at the path specified
+     * @param filePath output file location
+     * @return true if successful
+     */
+    public boolean writeToFile(String filePath){
+        return false;
+    }
+
+    /**
      * checking whether or not generated CSV has column titles
      * @return true if generated csv will have column names
      */

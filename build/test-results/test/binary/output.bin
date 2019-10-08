@@ -1,6 +1,53 @@
-Q'DROP TABLE' cannot be performed on 'PHARMACY.SALES' because it does not exist.
-;(probably) Couldn't delete sales table as it didn't exist.
-
-T'DROP TABLE' cannot be performed on 'PHARMACY.PRODUCTS' because it does not exist.
-=(probably) Couldn't delete product table as it didn't exist.
-
+8Table/View 'PRODUCTS' already exists in Schema 'TEST'.
+G(probably) Couldn't create products table again as it already existed.
+
+•Operation 'DROP CONSTRAINT' cannot be performed on object 'SQL191009104102600' because CONSTRAINT 'SQL191009104156401' is dependent on that object.
+=(probably) Couldn't delete product table as it didn't exist.
+
+8Table/View 'PRODUCTS' already exists in Schema 'TEST'.
+G(probably) Couldn't create products table again as it already existed.
+
+M'DROP TABLE' cannot be performed on 'TEST.SALES' because it does not exist.
+;(probably) Couldn't delete sales table as it didn't exist.
+
+M'DROP TABLE' cannot be performed on 'TEST.SALES' because it does not exist.
+;(probably) Couldn't delete sales table as it didn't exist.
+
+M'DROP TABLE' cannot be performed on 'TEST.SALES' because it does not exist.
+;(probably) Couldn't delete sales table as it didn't exist.
+
+M'DROP TABLE' cannot be performed on 'TEST.SALES' because it does not exist.
+;(probably) Couldn't delete sales table as it didn't exist.
+
+M'DROP TABLE' cannot be performed on 'TEST.SALES' because it does not exist.
+;(probably) Couldn't delete sales table as it didn't exist.
+
+M'DROP TABLE' cannot be performed on 'TEST.SALES' because it does not exist.
+;(probably) Couldn't delete sales table as it didn't exist.
+
+M'DROP TABLE' cannot be performed on 'TEST.SALES' because it does not exist.
+;(probably) Couldn't delete sales table as it didn't exist.
+
+5Table/View 'SALES' already exists in Schema 'TEST'.
+D(probably) Couldn't create sales table again as it already existed.
+
+•Operation 'DROP CONSTRAINT' cannot be performed on object 'SQL191009104156580' because CONSTRAINT 'SQL191009104156591' is dependent on that object.
+=(probably) Couldn't delete product table as it didn't exist.
+
+8Table/View 'PRODUCTS' already exists in Schema 'TEST'.
+G(probably) Couldn't create products table again as it already existed.
+
+M'DROP TABLE' cannot be performed on 'TEST.SALES' because it does not exist.
+;(probably) Couldn't delete sales table as it didn't exist.
+
+M'DROP TABLE' cannot be performed on 'TEST.SALES' because it does not exist.
+;(probably) Couldn't delete sales table as it didn't exist.
+
+M'DROP TABLE' cannot be performed on 'TEST.SALES' because it does not exist.
+;(probably) Couldn't delete sales table as it didn't exist.
+
+P'DROP TABLE' cannot be performed on 'TEST.PRODUCTS' because it does not exist.
+=(probably) Couldn't delete product table as it didn't exist.
+
+7an error occured while updating a sale with entryID 1
+“UPDATE on table 'SALES' caused a violation of foreign key constraint 'SQL191009104156731' for key (1111111).  The statement has been rolled back.

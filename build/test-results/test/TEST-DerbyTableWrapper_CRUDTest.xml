@@ -1,19 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="DerbyTableWrapper_CRUDTest" tests="7" skipped="0" failures="0" errors="0" timestamp="2019-09-25T09:41:40" hostname="DESKTOP-RHDT4F6" time="4.313">
+<testsuite name="DerbyTableWrapper_CRUDTest" tests="12" skipped="0" failures="0" errors="0" timestamp="2019-10-08T23:41:56" hostname="MSI" time="1.132">
   <properties/>
-  <testcase name="shouldAddProductCorrectly" classname="DerbyTableWrapper_CRUDTest" time="1.817"/>
-  <testcase name="shouldRetrieveProductCorrectly" classname="DerbyTableWrapper_CRUDTest" time="0.714"/>
-  <testcase name="shouldRetrieveSalesCorrectly" classname="DerbyTableWrapper_CRUDTest" time="0.189"/>
-  <testcase name="shouldAddSaleCorrectly" classname="DerbyTableWrapper_CRUDTest" time="0.24"/>
-  <testcase name="shouldRetrieveSaleByProductCategoryCorrectly" classname="DerbyTableWrapper_CRUDTest" time="0.361"/>
-  <testcase name="shouldRetrieveSaleByProductAndDateRangeCorrectly" classname="DerbyTableWrapper_CRUDTest" time="0.68"/>
-  <testcase name="shouldRetrieveSaleByDateRangeCorrectly" classname="DerbyTableWrapper_CRUDTest" time="0.296"/>
-  <system-out><![CDATA['DROP TABLE' cannot be performed on 'PHARMACY.SALES' because it does not exist.
+  <testcase name="shouldFailToUpdateIfUpdatingSaleWithProductIDThatDoesNotExist" classname="DerbyTableWrapper_CRUDTest" time="0.17"/>
+  <testcase name="shouldAddSaleCorrectly" classname="DerbyTableWrapper_CRUDTest" time="0.079"/>
+  <testcase name="shouldAddProductCorrectly" classname="DerbyTableWrapper_CRUDTest" time="0.062"/>
+  <testcase name="shouldRetrieveProductCorrectly" classname="DerbyTableWrapper_CRUDTest" time="0.136"/>
+  <testcase name="shouldRetrieveSalesCorrectly" classname="DerbyTableWrapper_CRUDTest" time="0.063"/>
+  <testcase name="shouldUpdateSaleCorrectly" classname="DerbyTableWrapper_CRUDTest" time="0.107"/>
+  <testcase name="shouldUpdateProductCorrectly" classname="DerbyTableWrapper_CRUDTest" time="0.107"/>
+  <testcase name="shouldRetrieveSaleByDateRangeCorrectly" classname="DerbyTableWrapper_CRUDTest" time="0.066"/>
+  <testcase name="shouldRetrieveSaleByProductAndDateRangeCorrectly" classname="DerbyTableWrapper_CRUDTest" time="0.071"/>
+  <testcase name="editShouldModifyNoRowsIfEntryIDDoesNotExist" classname="DerbyTableWrapper_CRUDTest" time="0.079"/>
+  <testcase name="shouldRetrieveSaleByProductCategoryCorrectly" classname="DerbyTableWrapper_CRUDTest" time="0.099"/>
+  <testcase name="shouldRetrieveProductViaProductIDCorrectly" classname="DerbyTableWrapper_CRUDTest" time="0.088"/>
+  <system-out><![CDATA['DROP TABLE' cannot be performed on 'TEST.SALES' because it does not exist.
 (probably) Couldn't delete sales table as it didn't exist.
 
-'DROP TABLE' cannot be performed on 'PHARMACY.PRODUCTS' because it does not exist.
+'DROP TABLE' cannot be performed on 'TEST.PRODUCTS' because it does not exist.
 (probably) Couldn't delete product table as it didn't exist.
 
+an error occured while updating a sale with entryID 1
+UPDATE on table 'SALES' caused a violation of foreign key constraint 'SQL191009104156731' for key (1111111).  The statement has been rolled back.
 ]]></system-out>
   <system-err><![CDATA[]]></system-err>
 </testsuite>

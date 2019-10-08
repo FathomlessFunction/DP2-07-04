@@ -3,6 +3,7 @@ package DataObjects;
 import org.junit.Assert;
 import org.junit.Test;
 
+import java.io.File;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -27,6 +28,39 @@ public class CSVReportTest {
 
         return toReturn;
     }
+
+    ////////////////////////// TESTS FOR FILE OUTPUT /////////////////////////////////////////
+    @Test
+    public void shouldNotThrowErrorWhenWritingToFileWithValidParameters(){
+        testReport = new CSVReport(getSampleList());
+
+        boolean result = testReport.writeToFile("./testReport.csv");
+
+        // returns true when no errors and successful
+        Assert.assertTrue(result);
+    }
+
+    @Test
+    public void shouldCreateFileWhenWritingToFile(){
+        String fileLocation = "testReport.csv";
+
+        // delete file if it exists already
+        File outputFile = new File(fileLocation);
+        if (outputFile.exists())
+            outputFile.delete();
+
+        // create file
+        testReport = new CSVReport(getSampleList());
+        testReport.writeToFile(fileLocation);
+
+        // file should now exist
+        Assert.assertTrue(outputFile.exists());
+
+        // file should not be empty
+        Assert.assertTrue(outputFile.length() > 0);
+    }
+
+    ////////////////////////// TESTS FOR CSV GENERATION /////////////////////////////////////
 
     @Test
     public void convertingListToCSVStringWithValidParametersShouldNotThrowError(){
