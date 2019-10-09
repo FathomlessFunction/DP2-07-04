@@ -1,9 +1,8 @@
-import javax.swing.*;
-import java.awt.*;
-
 import DataObjects.Sale;
 import InterfaceObjects.*;
 
+import javax.swing.*;
+import java.awt.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.List;
@@ -177,7 +176,7 @@ public class InterfaceController extends JFrame {
                 Sale saleToAdd = new Sale(saleID, productID, dateOfSale, numberSold, amountPaid, saleStatus);
                 derbyTableWrapper.addSale(saleToAdd);
 
-
+                JOptionPane.showMessageDialog(null, "Record has been added successfully.");
             }
         });
     }
