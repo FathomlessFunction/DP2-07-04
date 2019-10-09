@@ -13,7 +13,7 @@ public class InterfaceController extends JFrame {
     private HomePage homePage;
     private DisplayRecordMenu displayRecordMenu;
     private PredictSalesMenu predictSalesMenu;
-    private ReturnHotbar returnHotbar;
+    private ReturnHomeHotbar returnHomeHotbar;
 
     //these are still blank, skeleton classes, which now all have a constructor and their name on them.
     private AddRecordPage addRecordPage;
@@ -67,11 +67,11 @@ public class InterfaceController extends JFrame {
         weeklySalesPredictionPage = new WeeklySalesPredictionPage();
         monthlySalesPredictionPage = new MonthlySalesPredictionPage();
         editRecordPage = new EditRecordPage();
-        returnHotbar = new ReturnHotbar();
+        returnHomeHotbar = new ReturnHomeHotbar();
 
         //this is basically the init of what will be displayed at the start
         currentPage = homePage;
-        add(returnHotbar, BorderLayout.NORTH);
+        add(returnHomeHotbar, BorderLayout.NORTH);
         add(currentPage, BorderLayout.CENTER);
 
         /**
@@ -79,16 +79,23 @@ public class InterfaceController extends JFrame {
          * put into their own method in order to reduce clutter, but for now I have left them here.
          */
 
+        // in home page, home button should not be visible
+        if (currentPage == homePage)
+            returnHomeHotbar.setVisible(false);
+
         //small listener for the "Back" button in the top left
-        returnHotbar.setReturnListener(new ReturnListener() {
-            public void returnClicked() {
-                changePage(homePage);
-                }
+        returnHomeHotbar.setReturnListener(() -> {
+            changePage(homePage);
+            // if returning to home page, home button should not be visible.
+            returnHomeHotbar.setVisible(false);
+
         });
 
         //listeners for the HomePage, this connects all the buttons via enums in HomePage
         homePage.setMenuListener(new MenuListener() {
             public void menuSelection(Enum selection) {
+                // in non-home pages, home button will be visible
+                returnHomeHotbar.setVisible(true);
 
                 if (selection == HomePage.MenuSelections.ADD_RECORD) {
                     changePage(addRecordPage);
