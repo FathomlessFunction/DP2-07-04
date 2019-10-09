@@ -7,23 +7,23 @@ import java.awt.event.ActionListener;
 
 public class AddRecordPage extends JPanel {
 
-        private JLabel saleIDLabel;
-        private JLabel productIDLabel;
-        private JLabel dateOfSaleLabel;
-        private JLabel numberSoldLabel;
-        private JLabel amountPaidLabel;
-        private JLabel saleStatusLabel;
+    private JLabel saleIDLabel;
+    private JLabel productIDLabel;
+    private JLabel dateOfSaleLabel;
+    private JLabel numberSoldLabel;
+    private JLabel amountPaidLabel;
+    private JLabel saleStatusLabel;
 
-        private JTextField saleIDField;
-        private JTextField productIDField;
-        private JTextField dateOfSaleField;
-        private JTextField numberSoldField;
-        private JTextField amountPaidField;
-        private JTextField saleStatusField;
+    private JTextField saleIDField;
+    private JTextField productIDField;
+    private JTextField dateOfSaleField;
+    private JTextField numberSoldField;
+    private JTextField amountPaidField;
+    private JTextField saleStatusField;
 
-        private JButton submitButton;
+    private JButton submitButton;
 
-        private FormListener formListener;
+    private FormListener formListener;
 
     public AddRecordPage() {
 
@@ -53,32 +53,35 @@ public class AddRecordPage extends JPanel {
         submitButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent event) {
 
-                String saleID = saleIDField.getText();
-                int productID = Integer.valueOf(productIDField.getText());
-                String dateOfSale = dateOfSaleField.getText();
-                int numberSold = Integer.valueOf(numberSoldField.getText());
-                float amountPaid = Float.valueOf(amountPaidField.getText());
-                String saleStatus = saleStatusField.getText();
+                if (!checkInt(productIDField.getText())) {
+                    JOptionPane.showMessageDialog(null, "The product ID must be a number.");
+                } else if (!(dateOfSaleField.getText()).matches("\\d{2}-\\d{2}-\\d{4}")) {
+                    JOptionPane.showMessageDialog(null, "Date is of the incorrect format.\n Expected format: DD-MM-YYYY \n");
+                } else if (!checkInt(numberSoldField.getText())) {
+                    JOptionPane.showMessageDialog(null, "The amount sold must be a number.");
+                } else if (!checkFloat(amountPaidField.getText()) ) {
+                    JOptionPane.showMessageDialog(null, "The amount paid must be a number.");
+                } else {
+                    FormEvent formEvent = new FormEvent(this);
 
-                FormEvent formEvent = new FormEvent(this);
+                    formEvent.setSaleID(saleIDField.getText());
+                    formEvent.setProductID(Integer.valueOf(productIDField.getText()));
+                    formEvent.setDateOfSale(dateOfSaleField.getText());
+                    formEvent.setNumberSold(Integer.valueOf(numberSoldField.getText()));
+                    formEvent.setAmountPaid(Float.valueOf(amountPaidField.getText()));
+                    formEvent.setSaleStatus(saleStatusField.getText());
 
-                formEvent.setSaleID(saleID);
-                formEvent.setProductID(productID);
-                formEvent.setDateOfSale(dateOfSale);
-                formEvent.setNumberSold(numberSold);
-                formEvent.setAmountPaid(amountPaid);
-                formEvent.setSaleStatus(saleStatus);
+                    if (formListener != null) {
+                        formListener.formReceived(formEvent);
+                    }
 
-                if(formListener !=null) {
-                    formListener.formReceived(formEvent);
+                    saleIDField.setText("");
+                    productIDField.setText("");
+                    dateOfSaleField.setText("");
+                    numberSoldField.setText("");
+                    amountPaidField.setText("");
+                    saleStatusField.setText("");
                 }
-
-                saleIDField.setText("");
-                productIDField.setText("");
-                dateOfSaleField.setText("");
-                numberSoldField.setText("");
-                amountPaidField.setText("");
-                saleStatusField.setText("");
             }
         });
 
@@ -148,7 +151,29 @@ public class AddRecordPage extends JPanel {
 
     }
 
+    private boolean checkInt(String toCheck) {
+        try {
+            Integer.parseInt(toCheck);
+            return true;
+        }
+        catch (Exception e) {
+            return false;
+        }
+    }
+
+    private boolean checkFloat(String toCheck) {
+        try {
+            Float.parseFloat(toCheck);
+            return true;
+        }
+        catch (Exception e) {
+            return false;
+        }
+    }
+
     public void setFormListener(FormListener listener) {
         this.formListener = listener;
     }
+
 }
+
