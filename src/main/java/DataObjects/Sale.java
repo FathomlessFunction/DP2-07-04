@@ -60,6 +60,22 @@ public class Sale {
         this.saleStatus = saleStatus;
     }
 
+    // get all values as a string array
+    public Object[] getValues(){
+
+        Object[] toReturn = {
+                this.entryID,
+                this.saleID + "",
+                this.productID,
+                this.numberSold,
+                this.amountPaid,
+                this.saleStatus + "",
+                this.dateOfSale + "", // if we need formatting, put it here
+                this.productCategory + ""
+        };
+        return toReturn;
+    }
+
     /**
      * if date string does not match the required regex of DD-MM-YYYY
      * throw an IllegalArgumentException

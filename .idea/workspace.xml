@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="4fe8fe8f-9ab6-4a81-9e2f-74c107d3fce5" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/DataObjects/CSVReport.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/DataObjects/CSVReport.java" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/.gradle/" />
@@ -43,20 +43,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/main/java/Main.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="17">
-              <caret line="1" column="24" lean-forward="true" selection-start-line="1" selection-start-column="24" selection-end-line="1" selection-end-column="24" />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/DataObjects/Sale.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="682">
-              <caret line="155" column="29" selection-start-line="155" selection-start-column="29" selection-end-line="155" selection-end-column="29" />
+            <state relative-caret-position="210">
+              <caret line="60" column="5" selection-start-line="60" selection-start-column="5" selection-end-line="60" selection-end-column="5" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -64,20 +55,43 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/InterfaceObjects/EditRecordPage.java">
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/main/java/DataObjects/CSVReport.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="68">
-              <caret line="7" column="13" selection-start-line="7" selection-start-column="13" selection-end-line="7" selection-end-column="13" />
+            <state relative-caret-position="102">
+              <caret line="29" lean-forward="true" selection-start-line="29" selection-end-line="29" />
+              <folding>
+                <element signature="e#264#265#0" expanded="true" />
+                <element signature="e#284#285#0" expanded="true" />
+                <element signature="e#606#607#0" expanded="true" />
+                <element signature="e#633#634#0" expanded="true" />
+                <element signature="e#1182#1183#0" expanded="true" />
+                <element signature="e#1220#1221#0" expanded="true" />
+                <element signature="e#1367#1368#0" expanded="true" />
+                <element signature="e#1397#1398#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/InterfaceObjects/FormEvent.java">
+        <entry file="file://$PROJECT_DIR$/src/main/java/DataObjects/Product.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="85">
-              <caret line="8" column="13" selection-start-line="8" selection-start-column="13" selection-end-line="8" selection-end-column="13" />
+            <state relative-caret-position="17">
+              <caret line="5" column="22" selection-start-line="5" selection-start-column="22" selection-end-line="5" selection-end-column="22" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/test/java/DataObjects/CSVReportTest.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="374">
+              <caret line="100" column="70" selection-start-line="100" selection-start-column="70" selection-end-line="100" selection-end-column="70" />
+              <folding>
+                <element signature="imports" expanded="true" />
+                <element signature="e#159#165#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -85,7 +99,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/InterfaceObjects/HomePage.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-202">
+            <state relative-caret-position="68">
               <caret line="6" column="13" selection-start-line="6" selection-start-column="13" selection-end-line="6" selection-end-column="13" />
               <folding>
                 <element signature="imports" expanded="true" />
@@ -134,7 +148,7 @@
         <entry file="file://$PROJECT_DIR$/src/main/java/InterfaceController.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="391">
-              <caret line="31" column="12" lean-forward="true" selection-start-line="31" selection-start-column="12" selection-end-line="31" selection-end-column="12" />
+              <caret line="31" column="12" selection-start-line="31" selection-start-column="12" selection-end-line="31" selection-end-column="12" />
               <folding>
                 <element signature="method#InterfaceController#0;class#InterfaceController#0" />
               </folding>
@@ -173,15 +187,17 @@
         <option value="$PROJECT_DIR$/src/test/java/DataObjects/SaleTest.java" />
         <option value="$PROJECT_DIR$/src/test/java/DerbyTableWrapperTest.java" />
         <option value="$PROJECT_DIR$/src/main/java/DataObjects/Product.java" />
-        <option value="$PROJECT_DIR$/src/main/java/DataObjects/Sale.java" />
         <option value="$PROJECT_DIR$/src/test/java/DerbyTableWrapper_CRUDTest.java" />
         <option value="$PROJECT_DIR$/src/main/java/DerbyTableWrapper.java" />
+        <option value="$PROJECT_DIR$/src/main/java/DataObjects/Sale.java" />
+        <option value="$PROJECT_DIR$/src/test/java/DataObjects/CSVReportTest.java" />
+        <option value="$PROJECT_DIR$/src/main/java/DataObjects/CSVReport.java" />
       </list>
     </option>
   </component>
-  <component name="ProjectFrameBounds">
-    <option name="x" value="-7" />
-    <option name="width" value="886" />
+  <component name="ProjectFrameBounds" extendedState="6">
+    <option name="x" value="953" />
+    <option name="width" value="974" />
     <option name="height" value="1047" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
@@ -263,7 +279,7 @@
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1569571184481" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1570444569268" />
     <property name="project.structure.last.edited" value="Project" />
     <property name="project.structure.proportion" value="0.0" />
     <property name="project.structure.side.proportion" value="0.0" />
@@ -281,6 +297,14 @@
     </option>
   </component>
   <component name="RunManager" selected="JUnit.All in DP2-07-04.test (3)">
+    <configuration name="All in DP2-07-04.test (1)" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="DP2-07-04.test" />
+      <option name="PACKAGE_NAME" value="" />
+      <option name="TEST_OBJECT" value="package" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="All in DP2-07-04.test (2)" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="DP2-07-04.test" />
       <option name="PACKAGE_NAME" value="" />
@@ -297,44 +321,50 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="All in DP2-07-04.test (4)" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="CSVReportTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="DP2-07-04.test" />
-      <option name="PACKAGE_NAME" value="" />
-      <option name="TEST_OBJECT" value="package" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="DataObjects.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="DataObjects" />
+      <option name="MAIN_CLASS_NAME" value="DataObjects.CSVReportTest" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="All in DP2-07-04.test (5)" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="CSVReportTest.convertingListToCSVResultsInCorrectlyFormedCSVString" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="DP2-07-04.test" />
-      <option name="PACKAGE_NAME" value="" />
-      <option name="TEST_OBJECT" value="package" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="All in DP2-07-04.test" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="DP2-07-04.test" />
-      <option name="PACKAGE_NAME" value="" />
-      <option name="TEST_OBJECT" value="package" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="DataObjects.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="DataObjects" />
+      <option name="MAIN_CLASS_NAME" value="DataObjects.CSVReportTest" />
+      <option name="METHOD_NAME" value="convertingListToCSVResultsInCorrectlyFormedCSVString" />
+      <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
     <list>
-      <item itemvalue="JUnit.All in DP2-07-04.test (4)" />
+      <item itemvalue="JUnit.CSVReportTest" />
+      <item itemvalue="JUnit.CSVReportTest.convertingListToCSVResultsInCorrectlyFormedCSVString" />
+      <item itemvalue="JUnit.All in DP2-07-04.test (1)" />
       <item itemvalue="JUnit.All in DP2-07-04.test (2)" />
-      <item itemvalue="JUnit.All in DP2-07-04.test (5)" />
-      <item itemvalue="JUnit.All in DP2-07-04.test" />
       <item itemvalue="JUnit.All in DP2-07-04.test (3)" />
     </list>
     <recent_temporary>
       <list>
         <item itemvalue="JUnit.All in DP2-07-04.test (3)" />
-        <item itemvalue="JUnit.All in DP2-07-04.test" />
-        <item itemvalue="JUnit.All in DP2-07-04.test (5)" />
         <item itemvalue="JUnit.All in DP2-07-04.test (2)" />
-        <item itemvalue="JUnit.All in DP2-07-04.test (4)" />
+        <item itemvalue="JUnit.All in DP2-07-04.test (1)" />
+        <item itemvalue="JUnit.CSVReportTest" />
+        <item itemvalue="JUnit.CSVReportTest.convertingListToCSVResultsInCorrectlyFormedCSVString" />
       </list>
     </recent_temporary>
   </component>
@@ -368,48 +398,51 @@
       <workItem from="1569415548316" duration="1796000" />
       <workItem from="1569569975326" duration="1629000" />
       <workItem from="1569827805710" duration="5280000" />
+      <workItem from="1570423962364" duration="670000" />
+      <workItem from="1570439236042" duration="5329000" />
     </task>
     <servers />
   </component>
   <component name="TestHistory">
-    <history-entry file="All_in_DP2-07-04_test_(2) - 2019.09.25 at 22h 48m 57s.xml">
-      <configuration name="All in DP2-07-04.test (2)" configurationId="JUnit" />
+    <history-entry file="CSVReportTest_convertingListToCSVResultsInCorrectlyFormedCSVString - 2019.10.07 at 21h 22m 24s.xml">
+      <configuration name="CSVReportTest.convertingListToCSVResultsInCorrectlyFormedCSVString" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="All_in_DP2-07-04_test_(5) - 2019.09.25 at 22h 50m 14s.xml">
-      <configuration name="All in DP2-07-04.test (5)" configurationId="JUnit" />
+    <history-entry file="CSVReportTest_convertingListToCSVResultsInCorrectlyFormedCSVString - 2019.10.07 at 21h 24m 01s.xml">
+      <configuration name="CSVReportTest.convertingListToCSVResultsInCorrectlyFormedCSVString" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="All_in_DP2-07-04_test - 2019.09.25 at 22h 51m 29s.xml">
-      <configuration name="All in DP2-07-04.test" configurationId="JUnit" />
+    <history-entry file="CSVReportTest_convertingListToCSVResultsInCorrectlyFormedCSVString - 2019.10.07 at 21h 24m 41s.xml">
+      <configuration name="CSVReportTest.convertingListToCSVResultsInCorrectlyFormedCSVString" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="All_in_DP2-07-04_test_(3) - 2019.09.25 at 22h 53m 03s.xml">
-      <configuration name="All in DP2-07-04.test (3)" configurationId="JUnit" />
+    <history-entry file="CSVReportTest - 2019.10.07 at 21h 25m 07s.xml">
+      <configuration name="CSVReportTest" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="All_in_DP2-07-04_test_(1) - 2019.09.25 at 22h 53m 22s.xml">
+    <history-entry file="CSVReportTest_convertingListToCSVResultsInCorrectlyFormedCSVString - 2019.10.07 at 21h 26m 54s.xml">
+      <configuration name="CSVReportTest.convertingListToCSVResultsInCorrectlyFormedCSVString" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="CSVReportTest - 2019.10.07 at 21h 28m 03s.xml">
+      <configuration name="CSVReportTest" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="CSVReportTest - 2019.10.07 at 21h 30m 38s.xml">
+      <configuration name="CSVReportTest" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="All_in_DP2-07-04_test_(1) - 2019.10.07 at 21h 30m 46s.xml">
       <configuration name="All in DP2-07-04.test (1)" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="All_in_DP2-07-04_test_(4) - 2019.09.25 at 22h 54m 53s.xml">
-      <configuration name="All in DP2-07-04.test (4)" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="All_in_DP2-07-04_test_(2) - 2019.09.25 at 22h 56m 03s.xml">
+    <history-entry file="All_in_DP2-07-04_test_(2) - 2019.10.07 at 21h 33m 37s.xml">
       <configuration name="All in DP2-07-04.test (2)" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="All_in_DP2-07-04_test_(5) - 2019.09.25 at 23h 05m 52s.xml">
-      <configuration name="All in DP2-07-04.test (5)" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="All_in_DP2-07-04_test - 2019.09.27 at 17h 51m 18s.xml">
-      <configuration name="All in DP2-07-04.test" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="All_in_DP2-07-04_test_(3) - 2019.09.27 at 17h 55m 03s.xml">
+    <history-entry file="All_in_DP2-07-04_test_(3) - 2019.10.07 at 21h 35m 06s.xml">
       <configuration name="All in DP2-07-04.test (3)" configurationId="JUnit" />
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="39987000" />
+    <option name="totallyTimeSpent" value="45986000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-7" y="0" width="886" height="1047" extended-state="0" />
+    <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
+    <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.33535108" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.16791044" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Designer" order="2" />
       <window_info id="Image Layers" order="3" />
@@ -418,7 +451,7 @@
       <window_info id="Favorites" order="6" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info anchor="bottom" id="Run" order="2" weight="0.4059081" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.43336946" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -436,7 +469,7 @@
       <window_info anchor="right" id="Maven" order="3" />
       <window_info anchor="right" id="Palette" order="4" />
       <window_info anchor="right" id="Capture Analysis" order="5" />
-      <window_info anchor="right" id="Gradle" order="6" visible="true" weight="0.0" />
+      <window_info anchor="right" id="Gradle" order="6" visible="true" weight="0.020788912" />
       <window_info anchor="right" id="Database" order="7" />
       <window_info anchor="right" id="Palette&#9;" order="8" />
       <window_info anchor="right" id="Theme Preview" order="9" />
@@ -500,13 +533,6 @@
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/DataObjects/Product.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-119">
-          <caret line="5" column="22" selection-start-line="5" selection-start-column="22" selection-end-line="5" selection-end-column="22" />
         </state>
       </provider>
     </entry>
@@ -578,10 +604,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/DataObjects/Sale.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/Main.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="682">
-          <caret line="155" column="29" selection-start-line="155" selection-start-column="29" selection-end-line="155" selection-end-column="29" />
+        <state relative-caret-position="204">
+          <caret line="12" column="38" lean-forward="true" selection-start-line="12" selection-start-column="38" selection-end-line="12" selection-end-column="38" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
@@ -597,14 +623,14 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/InterfaceObjects/FormEvent.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="85">
+        <state relative-caret-position="136">
           <caret line="8" column="13" selection-start-line="8" selection-start-column="13" selection-end-line="8" selection-end-column="13" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/InterfaceObjects/HomePage.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-202">
+        <state relative-caret-position="68">
           <caret line="6" column="13" selection-start-line="6" selection-start-column="13" selection-end-line="6" selection-end-column="13" />
           <folding>
             <element signature="imports" expanded="true" />
@@ -643,17 +669,55 @@
     <entry file="file://$PROJECT_DIR$/src/main/java/InterfaceController.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="391">
-          <caret line="31" column="12" lean-forward="true" selection-start-line="31" selection-start-column="12" selection-end-line="31" selection-end-column="12" />
+          <caret line="31" column="12" selection-start-line="31" selection-start-column="12" selection-end-line="31" selection-end-column="12" />
           <folding>
             <element signature="method#InterfaceController#0;class#InterfaceController#0" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/Main.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/DataObjects/Product.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="17">
-          <caret line="1" column="24" lean-forward="true" selection-start-line="1" selection-start-column="24" selection-end-line="1" selection-end-column="24" />
+          <caret line="5" column="22" selection-start-line="5" selection-start-column="22" selection-end-line="5" selection-end-column="22" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/DataObjects/Sale.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="210">
+          <caret line="60" column="5" selection-start-line="60" selection-start-column="5" selection-end-line="60" selection-end-column="5" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/test/java/DataObjects/CSVReportTest.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="374">
+          <caret line="100" column="70" selection-start-line="100" selection-start-column="70" selection-end-line="100" selection-end-column="70" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#159#165#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/DataObjects/CSVReport.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="102">
+          <caret line="29" lean-forward="true" selection-start-line="29" selection-end-line="29" />
+          <folding>
+            <element signature="e#264#265#0" expanded="true" />
+            <element signature="e#284#285#0" expanded="true" />
+            <element signature="e#606#607#0" expanded="true" />
+            <element signature="e#633#634#0" expanded="true" />
+            <element signature="e#1182#1183#0" expanded="true" />
+            <element signature="e#1220#1221#0" expanded="true" />
+            <element signature="e#1367#1368#0" expanded="true" />
+            <element signature="e#1397#1398#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
