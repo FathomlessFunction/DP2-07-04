@@ -74,7 +74,7 @@ public class PharmacyDataGenerator {
         String saleID = "SALE"+randBetween(1,9999);
         int productID = getRandomProductID();
 
-        String randomDateString = String.format("%02d-%02d-%04d", randBetween(1,28), randBetween(1,12), randBetween(2000,2019));
+        String randomDateString = String.format("%02d-%02d-%04d", randBetween(1,28), randBetween(1,12), randBetween(2018,2019));
         //randBetween(1, 28) + "-"+randBetween(1,12) + "-" + randBetween(1997, 2019);
         int numberSold = randBetween(1, 12);
         Float amountPaid = numberSold * productList.get(productID-1).getPricePerUnit();
