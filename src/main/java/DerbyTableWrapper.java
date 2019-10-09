@@ -123,7 +123,7 @@ public class DerbyTableWrapper {
         String CreateProductTableSql=
                 "create table "+getProductsTableName()+" ("+
                         "ProductID INT NOT NULL GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1),"+ //AUTO_INCREMENT
-                        "ProductName VARCHAR(32),"+
+                        "ProductName VARCHAR(36),"+
                         "PricePerUnit FLOAT NOT NULL,"+
                         "ProductCategory VARCHAR(16),"+
                         "PRIMARY KEY (ProductID)"+
