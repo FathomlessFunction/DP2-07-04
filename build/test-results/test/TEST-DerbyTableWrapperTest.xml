@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="DerbyTableWrapperTest" tests="5" skipped="0" failures="0" errors="0" timestamp="2019-10-08T23:57:17" hostname="MSI" time="1.584">
+  <properties/>
+  <testcase name="ifCantCreateTableShouldReturnFalse" classname="DerbyTableWrapperTest" time="1.394"/>
+  <testcase name="shouldCreateSalesTableWithoutException" classname="DerbyTableWrapperTest" time="0.068"/>
+  <testcase name="shouldDeleteSalesTableWithoutException" classname="DerbyTableWrapperTest" time="0.065"/>
+  <testcase name="ifCantDeleteTableShouldReturnFalse" classname="DerbyTableWrapperTest" time="0.031"/>
+  <testcase name="shouldUseDifferentTableForTestMode" classname="DerbyTableWrapperTest" time="0.025"/>
+  <system-out><![CDATA[Table/View 'PRODUCTS' already exists in Schema 'TEST'.
+(probably) Couldn't create products table again as it already existed.
+
+Table/View 'SALES' already exists in Schema 'TEST'.
+(probably) Couldn't create sales table again as it already existed.
+
+Operation 'DROP CONSTRAINT' cannot be performed on object 'SQL191009105644810' because CONSTRAINT 'SQL191009105719151' is dependent on that object.
+(probably) Couldn't delete product table as it didn't exist.
+
+Table/View 'PRODUCTS' already exists in Schema 'TEST'.
+(probably) Couldn't create products table again as it already existed.
+
+'DROP TABLE' cannot be performed on 'TEST.SALES' because it does not exist.
+(probably) Couldn't delete sales table as it didn't exist.
+
+Operation 'DROP CONSTRAINT' cannot be performed on object 'SQL191009105644810' because CONSTRAINT 'SQL191009105719261' is dependent on that object.
+(probably) Couldn't delete product table as it didn't exist.
+
+Table/View 'PRODUCTS' already exists in Schema 'TEST'.
+(probably) Couldn't create products table again as it already existed.
+
+'DROP TABLE' cannot be performed on 'TEST.SALES' because it does not exist.
+(probably) Couldn't delete sales table as it didn't exist.
+
+'DROP TABLE' cannot be performed on 'TEST.SALES' because it does not exist.
+(probably) Couldn't delete sales table as it didn't exist.
+
+'DROP TABLE' cannot be performed on 'TEST.SALES' because it does not exist.
+(probably) Couldn't delete sales table as it didn't exist.
+
+'DROP TABLE' cannot be performed on 'TEST.SALES' because it does not exist.
+(probably) Couldn't delete sales table as it didn't exist.
+
+'DROP TABLE' cannot be performed on 'TEST.SALES' because it does not exist.
+(probably) Couldn't delete sales table as it didn't exist.
+
+'DROP TABLE' cannot be performed on 'TEST.SALES' because it does not exist.
+(probably) Couldn't delete sales table as it didn't exist.
+
+'DROP TABLE' cannot be performed on 'TEST.SALES' because it does not exist.
+(probably) Couldn't delete sales table as it didn't exist.
+
+'DROP TABLE' cannot be performed on 'TEST.SALES' because it does not exist.
+(probably) Couldn't delete sales table as it didn't exist.
+
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
