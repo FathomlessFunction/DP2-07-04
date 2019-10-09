@@ -1,5 +1,8 @@
 package DataObjects;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
 import java.util.List;
 
 /**
@@ -46,11 +49,46 @@ public class CSVReport {
     /**
      * outputs the csv string representation of passed Sale list
      * to a file, at the path specified
-     * @param filePath output file location
+     *
+     * @param filePath output file location. Should not include ".csv".
      * @return true if successful
      */
     public boolean writeToFile(String filePath){
-        return false;
+
+        filePath = filePath + ".csv";
+
+        // if file doesn't exist, create it
+        File f = new File(filePath);
+
+        // write to file
+        try (PrintWriter output = new PrintWriter(filePath)){
+            output.print(csvString);
+            output.close();
+        } catch (FileNotFoundException e){
+            e.printStackTrace();
+            return false;
+        }
+        return true;
+    }
+
+    /**
+     * if file already exists, append an incrementing number to its name (eg "filename1"
+     * to avoid deletion of old records
+     *
+     * @param filePath output file location. Should not include ".csv"
+     * @return true if successful
+     */
+    public boolean writeToFileIncrementFileName(String filePath){
+        File file = new File(filePath + ".csv");
+        int i = 0;
+        while (file.exists()){
+            i++;
+            file = new File(filePath + i + ".csv");
+        }
+        if (i == 0) // no increment necessary
+            return writeToFile(filePath);
+        else
+            return writeToFile(filePath + i);
     }
 
     /**

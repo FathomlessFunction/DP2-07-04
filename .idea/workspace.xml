@@ -12,16 +12,19 @@
       <change beforePath="$PROJECT_DIR$/.gradle/4.10/taskHistory/taskHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/4.10/taskHistory/taskHistory.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/4.10/taskHistory/taskHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/4.10/taskHistory/taskHistory.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/outputFiles.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/outputFiles.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/META-INF/DP2-07-04.main.kotlin_module" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/reports/tests/test/classes/DataObjects.CSVReportTest.html" beforeDir="false" afterPath="$PROJECT_DIR$/build/reports/tests/test/classes/DataObjects.CSVReportTest.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/reports/tests/test/classes/DataObjects.ProductTest.html" beforeDir="false" afterPath="$PROJECT_DIR$/build/reports/tests/test/classes/DataObjects.ProductTest.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/reports/tests/test/classes/DataObjects.SaleTest.html" beforeDir="false" afterPath="$PROJECT_DIR$/build/reports/tests/test/classes/DataObjects.SaleTest.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/reports/tests/test/classes/DerbyTableWrapperTest.html" beforeDir="false" afterPath="$PROJECT_DIR$/build/reports/tests/test/classes/DerbyTableWrapperTest.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/reports/tests/test/classes/DerbyTableWrapper_CRUDTest.html" beforeDir="false" afterPath="$PROJECT_DIR$/build/reports/tests/test/classes/DerbyTableWrapper_CRUDTest.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/reports/tests/test/css/base-style.css" beforeDir="false" afterPath="$PROJECT_DIR$/build/reports/tests/test/css/base-style.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/reports/tests/test/css/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/build/reports/tests/test/css/style.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/reports/tests/test/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/build/reports/tests/test/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/reports/tests/test/js/report.js" beforeDir="false" afterPath="$PROJECT_DIR$/build/reports/tests/test/js/report.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/reports/tests/test/packages/DataObjects.html" beforeDir="false" afterPath="$PROJECT_DIR$/build/reports/tests/test/packages/DataObjects.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/reports/tests/test/packages/default-package.html" beforeDir="false" afterPath="$PROJECT_DIR$/build/reports/tests/test/packages/default-package.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/test-results/test/TEST-DataObjects.CSVReportTest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/build/test-results/test/TEST-DataObjects.CSVReportTest.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/test-results/test/TEST-DataObjects.ProductTest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/build/test-results/test/TEST-DataObjects.ProductTest.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/test-results/test/TEST-DataObjects.SaleTest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/build/test-results/test/TEST-DataObjects.SaleTest.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/test-results/test/TEST-DerbyTableWrapperTest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/build/test-results/test/TEST-DerbyTableWrapperTest.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/test-results/test/TEST-DerbyTableWrapper_CRUDTest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/build/test-results/test/TEST-DerbyTableWrapper_CRUDTest.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/test-results/test/binary/output.bin" beforeDir="false" afterPath="$PROJECT_DIR$/build/test-results/test/binary/output.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/test-results/test/binary/output.bin.idx" beforeDir="false" afterPath="$PROJECT_DIR$/build/test-results/test/binary/output.bin.idx" afterDir="false" />
@@ -101,7 +104,67 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Gradle.Tests in 'DP2-07-04.test'">
+  <component name="RunManager" selected="JUnit.CSVReportTest">
+    <configuration name="CSVReportTest.convertingListToCSVStringWithValidParametersShouldNotThrowError" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="--tests &quot;DataObjects.CSVReportTest.convertingListToCSVStringWithValidParametersShouldNotThrowError&quot;" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value=":cleanTest" />
+            <option value=":test" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <GradleScriptDebugEnabled>false</GradleScriptDebugEnabled>
+      <method v="2" />
+    </configuration>
+    <configuration name="CSVReportTest.shouldCreateFileWhenWritingToFile" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="--tests &quot;DataObjects.CSVReportTest.shouldCreateFileWhenWritingToFile&quot;" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value=":cleanTest" />
+            <option value=":test" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <GradleScriptDebugEnabled>false</GradleScriptDebugEnabled>
+      <method v="2" />
+    </configuration>
+    <configuration name="CSVReportTest.shouldNotThrowErrorWhenWritingToFileWithValidParameters" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="--tests &quot;DataObjects.CSVReportTest.shouldNotThrowErrorWhenWritingToFileWithValidParameters&quot;" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value=":cleanTest" />
+            <option value=":test" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <GradleScriptDebugEnabled>false</GradleScriptDebugEnabled>
+      <method v="2" />
+    </configuration>
     <configuration name="Tests in 'DP2-07-04.test'" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
@@ -122,30 +185,6 @@
       <GradleScriptDebugEnabled>false</GradleScriptDebugEnabled>
       <method v="2" />
     </configuration>
-    <configuration name="All in DP2-07-04.test (1)" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="DP2-07-04.test" />
-      <option name="PACKAGE_NAME" value="" />
-      <option name="TEST_OBJECT" value="package" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="All in DP2-07-04.test (2)" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="DP2-07-04.test" />
-      <option name="PACKAGE_NAME" value="" />
-      <option name="TEST_OBJECT" value="package" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="All in DP2-07-04.test (3)" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="DP2-07-04.test" />
-      <option name="PACKAGE_NAME" value="" />
-      <option name="TEST_OBJECT" value="package" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
     <configuration name="CSVReportTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="DP2-07-04.test" />
       <extension name="coverage">
@@ -163,18 +202,18 @@
     </configuration>
     <list>
       <item itemvalue="JUnit.CSVReportTest" />
-      <item itemvalue="JUnit.All in DP2-07-04.test (1)" />
-      <item itemvalue="JUnit.All in DP2-07-04.test (2)" />
-      <item itemvalue="JUnit.All in DP2-07-04.test (3)" />
       <item itemvalue="Gradle.Tests in 'DP2-07-04.test'" />
+      <item itemvalue="Gradle.CSVReportTest.shouldNotThrowErrorWhenWritingToFileWithValidParameters" />
+      <item itemvalue="Gradle.CSVReportTest.shouldCreateFileWhenWritingToFile" />
+      <item itemvalue="Gradle.CSVReportTest.convertingListToCSVStringWithValidParametersShouldNotThrowError" />
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Gradle.Tests in 'DP2-07-04.test'" />
-        <item itemvalue="JUnit.All in DP2-07-04.test (3)" />
-        <item itemvalue="JUnit.All in DP2-07-04.test (2)" />
-        <item itemvalue="JUnit.All in DP2-07-04.test (1)" />
         <item itemvalue="JUnit.CSVReportTest" />
+        <item itemvalue="Gradle.Tests in 'DP2-07-04.test'" />
+        <item itemvalue="Gradle.CSVReportTest.shouldNotThrowErrorWhenWritingToFileWithValidParameters" />
+        <item itemvalue="Gradle.CSVReportTest.convertingListToCSVStringWithValidParametersShouldNotThrowError" />
+        <item itemvalue="Gradle.CSVReportTest.shouldCreateFileWhenWritingToFile" />
       </list>
     </recent_temporary>
   </component>

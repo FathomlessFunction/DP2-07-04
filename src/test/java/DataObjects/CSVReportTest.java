@@ -1,6 +1,7 @@
 package DataObjects;
 
 import org.junit.Assert;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 import java.io.File;
@@ -9,6 +10,15 @@ import java.util.List;
 
 public class CSVReportTest {
     CSVReport testReport;
+    static String TEST_FILE_DIRECTORY = "./output/test";
+    static String TEST_FILE_OUTPUT_LOCATION = TEST_FILE_DIRECTORY+"/testReport";
+    static String TEST_FILE_INCREMENTED_NAME_LOCATION = TEST_FILE_DIRECTORY+"/testReport1";
+
+    @BeforeClass
+    public static void makeOutputDirectory(){
+        File file = new File(TEST_FILE_DIRECTORY);
+        file.mkdirs();
+    }
 
     private List<Sale> getSampleList(){
         List<Sale> toReturn = new LinkedList<Sale>();
@@ -34,7 +44,7 @@ public class CSVReportTest {
     public void shouldNotThrowErrorWhenWritingToFileWithValidParameters(){
         testReport = new CSVReport(getSampleList());
 
-        boolean result = testReport.writeToFile("./testReport.csv");
+        boolean result = testReport.writeToFile(TEST_FILE_OUTPUT_LOCATION);
 
         // returns true when no errors and successful
         Assert.assertTrue(result);
@@ -42,22 +52,53 @@ public class CSVReportTest {
 
     @Test
     public void shouldCreateFileWhenWritingToFile(){
-        String fileLocation = "testReport.csv";
 
         // delete file if it exists already
-        File outputFile = new File(fileLocation);
+        File outputFile = new File(TEST_FILE_OUTPUT_LOCATION + ".csv");
         if (outputFile.exists())
             outputFile.delete();
 
         // create file
         testReport = new CSVReport(getSampleList());
-        testReport.writeToFile(fileLocation);
+        Boolean result = testReport.writeToFile(TEST_FILE_OUTPUT_LOCATION);
+
+        // no errors occurred
+        Assert.assertTrue(result);
 
         // file should now exist
         Assert.assertTrue(outputFile.exists());
 
         // file should not be empty
         Assert.assertTrue(outputFile.length() > 0);
+    }
+
+    @Test
+    public void shouldIncrementNameIfFileAlreadyExists(){
+        makeOutputDirectory();
+
+        // delete file if it exists already
+        File outputFile1 = new File(TEST_FILE_OUTPUT_LOCATION + ".csv");
+        if (outputFile1.exists())
+            outputFile1.delete();
+        File outputFile2 = new File(TEST_FILE_INCREMENTED_NAME_LOCATION+".csv");
+        if (outputFile2.exists())
+            outputFile2.delete();
+
+        testReport = new CSVReport(getSampleList());
+
+        // first file should be "testReport.csv"
+        testReport.writeToFileIncrementFileName(TEST_FILE_OUTPUT_LOCATION);
+        Assert.assertTrue(outputFile1.exists()); // first file should exist
+
+        // second file should be "testReport1.csv"
+        // first, check if doesn't exist
+        Assert.assertFalse(outputFile2.exists());
+
+        // this should create an incremented file
+        testReport.writeToFileIncrementFileName(TEST_FILE_OUTPUT_LOCATION);
+
+        // check incremented file now exists
+        Assert.assertTrue(outputFile2.exists());
     }
 
     ////////////////////////// TESTS FOR CSV GENERATION /////////////////////////////////////
