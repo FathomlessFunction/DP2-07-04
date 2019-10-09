@@ -43,8 +43,5 @@ public class Main {
             }
         });
 
-        // Cody: This is just here for testing, it can be removed
-        //wrapper.deleteSalesTable();
-        //wrapper.deleteProductsTable();
     }
 }
