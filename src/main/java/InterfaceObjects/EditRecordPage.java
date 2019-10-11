@@ -48,6 +48,8 @@ public class EditRecordPage extends JPanel {
         amountPaidLabel = new JLabel("Amount Paid: ");
         saleStatusLabel = new JLabel("Sale Status: ");
 
+        System.out.println(sale[1].toString());
+
         entryIDField = new JLabel(sale[0].toString());
         saleIDField = new JLabel(sale[1].toString());
         productIDField = new JLabel(sale[2].toString());

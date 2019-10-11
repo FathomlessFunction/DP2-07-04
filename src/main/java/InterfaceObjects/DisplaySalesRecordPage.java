@@ -1,13 +1,9 @@
 package InterfaceObjects;
 
-import DataObjects.Product;
-import DataObjects.Sale;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.List;
 
 public class DisplaySalesRecordPage extends JPanel implements ActionListener {
 
@@ -113,7 +109,7 @@ public class DisplaySalesRecordPage extends JPanel implements ActionListener {
         if (clicked == edit) {
             tmp = new Object[8];
             for (int i = 0; i < array.length; i++) {
-                if ((Integer)array[i][0] == (Integer)recordSelect.getSelectedItem()){
+                if (array[i][0].equals(recordSelect.getSelectedItem())){
                     tmp[0] = array[i][0];
                     tmp[1] = array[i][1];
                     tmp[2] = array[i][2];
