@@ -104,7 +104,7 @@ public class InterfaceController extends JFrame {
                     changePage(editRecordPage);*/
 
                 } else if (selection == HomePage.MenuSelections.DISPLAY_RECORD) {
-                    changePage(displayRecordMenu);
+                    changePage(displayRecordMenu /*= new DisplayRecordMenu()*/);
 
                 } else  if (selection == HomePage.MenuSelections.PREDICT_RECORD) {
                     changePage(predictSalesMenu);
@@ -211,6 +211,8 @@ public class InterfaceController extends JFrame {
         int[] dateStringArray = displayRecordMenu.getDate();
         int[] endDateStringArray = displayRecordMenu.getDate();
 
+        String[] dates = displayRecordMenu.getDates();
+
         //set end date range to either +6 days or +1 month
         //no error checking involved e.g. if input is 31st will set days to 37th
         if (length == "week"){
@@ -221,9 +223,17 @@ public class InterfaceController extends JFrame {
         //creates new string in format "dd-mm-yyyy" for start date and end date
         String startDateString = dateStringArray[0] +"-"+dateStringArray[1]+"-"+dateStringArray[2];
         String endDateString = endDateStringArray[0]+"-"+endDateStringArray[1]+"-"+endDateStringArray[2];
+        String startDate;
+        String endDate;
+        String[] split;
+        split = dates[0].split("-");
+        startDate = split[2]+"-"+split[1]+"-"+split[0];
+        split = dates[1].split("-");
+        endDate = split[2]+"-"+split[1]+"-"+split[0];
 
         //gets list within date range
-        List<Sale> saleList = tableWrapper.getSalesByDateRange(startDateString,endDateString);
+        //List<Sale> saleList = tableWrapper.getSalesByDateRange(startDateString,endDateString);
+        List<Sale> saleList = tableWrapper.getSalesByDateRange(startDate,endDate);
         //2D array with size of saleList
         Object [][] salesArray = new Object[saleList.size()][8];
 

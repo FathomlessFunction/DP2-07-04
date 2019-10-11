@@ -15,15 +15,15 @@ public class Main {
 
         //test input data
         Product testProd = new Product("fish", Float.parseFloat("4.23"), "food");
-        Sale testSale1 = new Sale("3",1,"06-11-2000", 2,Float.parseFloat("12.3"),"PROCESSED");
-        Sale testSale2 = new Sale("3",1,"11-11-2000", 2,Float.parseFloat("12.3"),"PROCESSED");
-        Sale testSale3 = new Sale("63",1,"16-11-2000", 2,Float.parseFloat("12.3"),"PROCESSED");
-        Sale testSale4 = new Sale("63",1,"22-11-2000", 2,Float.parseFloat("12.3"),"PROCESSED");
-        Sale testSale5 = new Sale("63",1,"28-11-2000", 2,Float.parseFloat("12.3"),"PROCESSED");
-        Sale testSale6 = new Sale("63",1,"02-12-2000", 2,Float.parseFloat("12.3"),"PROCESSED");
-        Sale testSale7 = new Sale("63",1,"08-12-2000", 2,Float.parseFloat("12.3"),"PROCESSED");
-        Sale testSale8 = new Sale("63",1,"13-12-2000", 2,Float.parseFloat("12.3"),"PROCESSED");
-        Sale testSale9 = new Sale("63",1,"01-01-2000", 2,Float.parseFloat("12.3"),"PROCESSED");
+        Sale testSale1 = new Sale("3",1,"06-09-2019", 2,Float.parseFloat("12.3"),"PROCESSED");
+        Sale testSale2 = new Sale("3",1,"11-09-2019", 2,Float.parseFloat("12.3"),"PROCESSED");
+        Sale testSale3 = new Sale("63",1,"16-09-2019", 2,Float.parseFloat("12.3"),"PROCESSED");
+        Sale testSale4 = new Sale("63",1,"22-09-2019", 2,Float.parseFloat("12.3"),"PROCESSED");
+        Sale testSale5 = new Sale("63",1,"28-09-2019", 2,Float.parseFloat("12.3"),"PROCESSED");
+        Sale testSale6 = new Sale("63",1,"02-10-2019", 2,Float.parseFloat("12.3"),"PROCESSED");
+        Sale testSale7 = new Sale("63",1,"08-10-2019", 2,Float.parseFloat("12.3"),"PROCESSED");
+        Sale testSale8 = new Sale("63",1,"10-10-2019", 2,Float.parseFloat("12.3"),"PROCESSED");
+        Sale testSale9 = new Sale("63",1,"11-10-2019", 2,Float.parseFloat("12.3"),"PROCESSED");
 
         //adds data to wrapper
         wrapper.addProduct(testProd);
