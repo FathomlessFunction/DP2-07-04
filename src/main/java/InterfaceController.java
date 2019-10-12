@@ -1,3 +1,4 @@
+import DataObjects.CSVReport;
 import DataObjects.Sale;
 import InterfaceObjects.*;
 
@@ -5,7 +6,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.util.*;
+import java.util.ArrayList;
 import java.util.List;
 
 public class InterfaceController extends JFrame {
@@ -24,6 +25,9 @@ public class InterfaceController extends JFrame {
     private EditRecordPage editRecordPage;
 
     private DerbyTableWrapper derbyTableWrapper;
+
+    //getList now saves the current saleList as a private variable, for the CSV reports.
+    private List<Sale> saleList;
 
     //this is here so that the Interface knows what page it should be displaying
     private JPanel currentPage;
@@ -133,7 +137,7 @@ public class InterfaceController extends JFrame {
                     displaySalesRecordPage = new DisplaySalesRecordPage(getList(tableWrapper,"month"), "month");
                 }
 
-                displaySalesRecordPage.setListener(new EditListener() {
+                displaySalesRecordPage.setEditListener(new EditListener() {
                     public void editClicked(Object [] sale) {
                         editRecordPage = new EditRecordPage(sale);
 
@@ -156,6 +160,27 @@ public class InterfaceController extends JFrame {
                         });
 
                         changePage(editRecordPage, false);
+                    }
+                });
+
+                displaySalesRecordPage.setCSVListener(new CSVListener() {
+                    public void exportCSVClicked() {
+                        CSVReport csvReport = new CSVReport(saleList);
+                        JFileChooser chooser = new JFileChooser();
+
+                        //This code has been taken from the oracle tutorial on how to use a file chooser
+                        int returnValue = chooser.showSaveDialog(InterfaceController.this);
+
+                        if (returnValue == JFileChooser.APPROVE_OPTION) {
+
+                            String filePath = chooser.getSelectedFile().getPath();
+
+                            if (csvReport.writeToFile(filePath)) {
+                                JOptionPane.showMessageDialog(null, "Write Successful!\n File Location: " + filePath + ".csv");
+                            } else {
+                                JOptionPane.showMessageDialog(null, "Write Failed.");
+                            }
+                        }
                     }
                 });
 
@@ -242,7 +267,7 @@ public class InterfaceController extends JFrame {
         String endDateString = endDateStringArray[0]+"-"+endDateStringArray[1]+"-"+endDateStringArray[2];
 
         //gets list within date range
-        List<Sale> saleList = tableWrapper.getSalesByDateRange(startDateString,endDateString);
+        saleList = tableWrapper.getSalesByDateRange(startDateString,endDateString);
         //2D array with size of saleList
         Object [][] salesArray = new Object[saleList.size()][8];
 

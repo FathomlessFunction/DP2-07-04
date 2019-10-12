@@ -9,11 +9,13 @@ public class DisplaySalesRecordPage extends JPanel implements ActionListener {
 
     private JComboBox<Integer> recordSelect;
     private JLabel title, DDLable;
-    private JButton edit;
+    private JButton editButton;
+    private JButton csvButton;
     private Object [][] array;
     private Object [] tmp;
 
-    private EditListener listener;
+    private EditListener editListener;
+    private CSVListener csvListener;
 
     public DisplaySalesRecordPage() {
 
@@ -66,8 +68,11 @@ public class DisplaySalesRecordPage extends JPanel implements ActionListener {
         //create scroll with table inside
         JScrollPane scrollPane = new JScrollPane(table);
 
-        edit = new JButton("Edit");
-        edit.addActionListener(this);
+        editButton = new JButton("Edit");
+        editButton.addActionListener(this);
+
+        csvButton = new JButton("Export to CSV");
+        csvButton.addActionListener(this);
 
         GroupLayout layout = new GroupLayout(this);
         setLayout(layout);
@@ -82,7 +87,8 @@ public class DisplaySalesRecordPage extends JPanel implements ActionListener {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(DDLable)
                         .addComponent(recordSelect)
-                        .addComponent(edit))
+                        .addComponent(editButton)
+                        .addComponent(csvButton))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(scrollPane))
         );
@@ -92,7 +98,8 @@ public class DisplaySalesRecordPage extends JPanel implements ActionListener {
                     .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                         .addComponent(DDLable)
                         .addComponent(recordSelect)
-                        .addComponent(edit))
+                        .addComponent(editButton)
+                        .addComponent(csvButton))
                     .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                         .addComponent(scrollPane))
         );
@@ -101,12 +108,14 @@ public class DisplaySalesRecordPage extends JPanel implements ActionListener {
         //add(scrollPane);
     }
 
-    public void setListener(EditListener listener) { this.listener = listener; }
+    public void setEditListener(EditListener listener) { this.editListener = listener; }
+    public void setCSVListener(CSVListener listener) { this.csvListener = listener; }
+
 
     public void actionPerformed(ActionEvent event) {
         JButton clicked = (JButton)event.getSource();
 
-        if (clicked == edit) {
+        if (clicked == editButton) {
             tmp = new Object[8];
             for (int i = 0; i < array.length; i++) {
                 if (array[i][0].equals(recordSelect.getSelectedItem())){
@@ -121,7 +130,9 @@ public class DisplaySalesRecordPage extends JPanel implements ActionListener {
                     break;
                 }
             }
-            listener.editClicked(tmp);
+            editListener.editClicked(tmp);
+        } else if (clicked == csvButton) {
+            csvListener.exportCSVClicked();
         }
     }
 
