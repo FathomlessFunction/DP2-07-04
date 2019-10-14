@@ -1,5 +1,6 @@
 plugins {
     id 'java'
+    id 'org.openjfx.javafxplugin' version '0.0.8'
 }
 
 group 'developmentproject2-2019.au.edu.swinburne'
@@ -10,6 +11,11 @@ sourceCompatibility = 1.8
 repositories {
     mavenLocal()
     mavenCentral()
+}
+
+javafx {
+    version = "13"
+    modules = [ 'javafx.controls', 'javafx.swing' ]
 }
 
 dependencies {
