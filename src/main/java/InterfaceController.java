@@ -1,3 +1,4 @@
+import DataObjects.CSVReport;
 import DataObjects.Sale;
 import InterfaceObjects.*;
 
@@ -5,7 +6,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.util.*;
+import java.util.ArrayList;
 import java.util.List;
 
 public class InterfaceController extends JFrame {
@@ -24,6 +25,9 @@ public class InterfaceController extends JFrame {
     private EditRecordPage editRecordPage;
 
     private DerbyTableWrapper derbyTableWrapper;
+
+    //getList now saves the current saleList as a private variable, for the CSV reports.
+    private List<Sale> saleList;
 
     //this is here so that the Interface knows what page it should be displaying
     private JPanel currentPage;
@@ -121,14 +125,14 @@ public class InterfaceController extends JFrame {
                             if (selection == DisplayRecordMenu.MenuSelections.WEEKLY_RECORDS) {
                                 //need to create a new table with new data each call
                                 //getList function returns an array of sales
-                                displaySalesRecordPage = new DisplaySalesRecordPage(getList(tableWrapper,"week"), "week");
+                                displaySalesRecordPage = new DisplaySalesRecordPage(getList(tableWrapper, "week"), "week");
                             } else if (selection == DisplayRecordMenu.MenuSelections.MONTHLY_RECORDS) {
                                 //same as weekly
-                                displaySalesRecordPage = new DisplaySalesRecordPage(getList(tableWrapper,"month"), "month");
+                                displaySalesRecordPage = new DisplaySalesRecordPage(getList(tableWrapper, "month"), "month");
                             }
 
-                            displaySalesRecordPage.setListener(new EditListener() {
-                                public void editClicked(Object [] sale) {
+                            displaySalesRecordPage.setEditListener(new EditListener() {
+                                public void editClicked(Object[] sale) {
                                     editRecordPage = new EditRecordPage(sale);
 
                                     editRecordPage.setFormListener(new FormListener() {
@@ -153,29 +157,45 @@ public class InterfaceController extends JFrame {
                                 }
                             });
 
+                            displaySalesRecordPage.setCSVListener(new CSVListener() {
+                                public void exportCSVClicked() {
+                                    CSVReport csvReport = new CSVReport(saleList);
+                                    JFileChooser chooser = new JFileChooser();
+
+                                    //This code has been taken from the oracle tutorial on how to use a file chooser
+                                    int returnValue = chooser.showSaveDialog(InterfaceController.this);
+
+                                    if (returnValue == JFileChooser.APPROVE_OPTION) {
+
+                                        String filePath = chooser.getSelectedFile().getPath();
+                                        if (csvReport.writeToFile(filePath)) {
+                                            JOptionPane.showMessageDialog(null, "Write Successful!\n File Location: " + filePath + ".csv");
+                                        } else {
+                                            JOptionPane.showMessageDialog(null, "Write Failed.");
+                                        }
+                                    }
+                                }
+                            });
+
                             changePage(displaySalesRecordPage, false);
                         }
                     });
 
-                } else  if (selection == HomePage.MenuSelections.PREDICT_RECORD) {
-                    changePage(predictSalesMenu, false);
+                    //same as above, but for DisplayRecordMenu
+
+                    //same as above, but for PredictSalesMenu
+                    predictSalesMenu.setMenuListener(new MenuListener() {
+                        public void menuSelection(Enum selection) {
+                            if (selection == PredictSalesMenu.MenuSelections.WEEKLY_PREDICTION) {
+                                changePage(weeklySalesPredictionPage, false);
+                            } else if (selection == PredictSalesMenu.MenuSelections.MONTHLY_PREDICTION) {
+                                changePage(monthlySalesPredictionPage, false);
+                            }
+                        }
+                    });
                 }
             }
         });
-
-        //same as above, but for DisplayRecordMenu
-
-        //same as above, but for PredictSalesMenu
-        predictSalesMenu.setMenuListener(new MenuListener() {
-            public void menuSelection(Enum selection) {
-                if (selection == PredictSalesMenu.MenuSelections.WEEKLY_PREDICTION) {
-                    changePage(weeklySalesPredictionPage, false);
-                } else if (selection == PredictSalesMenu.MenuSelections.MONTHLY_PREDICTION) {
-                    changePage(monthlySalesPredictionPage, false);
-                }
-            }
-        });
-
 
         /**
          * I know this code seems a little more bloated than it needs to be, but it makes it much more clear
@@ -239,11 +259,11 @@ public class InterfaceController extends JFrame {
         //if (length == "week"){
         //    endDateStringArray[0] = endDateStringArray[0]+6;
         //} else {
-         //   endDateStringArray[1] = endDateStringArray[1]+1;
-       // }
+        //   endDateStringArray[1] = endDateStringArray[1]+1;
+        // }
         //creates new string in format "dd-mm-yyyy" for start date and end date
         //String startDateString = dateStringArray[0] +"-"+dateStringArray[1]+"-"+dateStringArray[2];
-       // String endDateString = endDateStringArray[0]+"-"+endDateStringArray[1]+"-"+endDateStringArray[2];
+        // String endDateString = endDateStringArray[0]+"-"+endDateStringArray[1]+"-"+endDateStringArray[2];
         String startDate;
         String endDate;
         String[] split;
@@ -253,8 +273,7 @@ public class InterfaceController extends JFrame {
         endDate = split[2]+"-"+split[1]+"-"+split[0];
 
         //gets list within date range
-        //List<Sale> saleList = tableWrapper.getSalesByDateRange(startDateString,endDateString);
-        List<Sale> saleList = tableWrapper.getSalesByDateRange(startDate,endDate);
+        saleList = tableWrapper.getSalesByDateRange(startDate,endDate);
         //2D array with size of saleList
         Object [][] salesArray = new Object[saleList.size()][8];
 
