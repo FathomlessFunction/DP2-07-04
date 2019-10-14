@@ -24,7 +24,6 @@ public class DisplayRecordMenu extends JPanel implements ActionListener {
     //button variables
     private JButton weeklyButton;
     private JButton monthlyButton;
-    private JButton reportButton;
     private JButton dateButton;
     private JComboBox<Integer> dayMenu;
     private JComboBox<Integer> monthMenu;
@@ -45,12 +44,12 @@ public class DisplayRecordMenu extends JPanel implements ActionListener {
         //change the button names from here
         weeklyButton = new JButton("Weekly Sales Record");
         monthlyButton = new JButton("Monthly Sales Record");
-        reportButton = new JButton("Show Report");
+
 
         //adds action listeners
         weeklyButton.addActionListener(this);
         monthlyButton.addActionListener(this);
-        reportButton.addActionListener(this);
+
 
         //don't like the look of box layout, will address later
         //setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
@@ -61,7 +60,6 @@ public class DisplayRecordMenu extends JPanel implements ActionListener {
         //adds buttons and drop down menus
         add(weeklyButton);
         add(monthlyButton);
-        add(reportButton);
 
         JFXPanel fxPanel = new JFXPanel();
         add(fxPanel);
@@ -150,11 +148,7 @@ public class DisplayRecordMenu extends JPanel implements ActionListener {
             listener.menuSelection(MenuSelections.WEEKLY_RECORDS);
         } else if (clicked == monthlyButton) {
             listener.menuSelection(MenuSelections.MONTHLY_RECORDS);
-        } else if (clicked == reportButton){
-            listener.menuSelection(MenuSelections.REPORT_PAGE);
         }
-
-
         // else if (clicked == dateButton) {
         //set new values from drop down menus when dateButton clicked
         //    dayDate = (Integer) dayMenu.getSelectedItem();

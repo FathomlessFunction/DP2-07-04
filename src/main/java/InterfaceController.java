@@ -22,7 +22,6 @@ public class InterfaceController extends JFrame {
     private WeeklySalesPredictionPage weeklySalesPredictionPage;
     private MonthlySalesPredictionPage monthlySalesPredictionPage;
     private EditRecordPage editRecordPage;
-    private DisplayReportPage displayReportPage;
 
     private DerbyTableWrapper derbyTableWrapper;
 
@@ -69,7 +68,6 @@ public class InterfaceController extends JFrame {
         monthlySalesPredictionPage = new MonthlySalesPredictionPage();
         editRecordPage = new EditRecordPage();
         returnHomeHotbar = new ReturnHomeHotbar();
-        displayReportPage = new DisplayReportPage();
 
         //this is basically the init of what will be displayed at the start
         currentPage = homePage;
@@ -119,9 +117,6 @@ public class InterfaceController extends JFrame {
                             } else if (selection == DisplayRecordMenu.MenuSelections.MONTHLY_RECORDS) {
                                 //same as weekly
                                 displaySalesRecordPage = new DisplaySalesRecordPage(getList(tableWrapper,"month"), "month");
-                            } else if (selection == DisplayRecordMenu.MenuSelections.REPORT_PAGE) {
-                                //same as weekly
-                                displayReportPage = new DisplayReportPage(getListReport(tableWrapper,"month"));
                             }
 
                             displaySalesRecordPage.setListener(new EditListener() {
