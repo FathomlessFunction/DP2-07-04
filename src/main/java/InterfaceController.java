@@ -5,6 +5,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.util.*;
 import java.util.List;
 
 public class InterfaceController extends JFrame {
@@ -18,7 +19,6 @@ public class InterfaceController extends JFrame {
     //these are still blank, skeleton classes, which now all have a constructor and their name on them.
     private AddRecordPage addRecordPage;
     private DisplaySalesRecordPage displaySalesRecordPage;
-    //private MonthlySalesRecordPage monthlySalesRecordPage;
     private WeeklySalesPredictionPage weeklySalesPredictionPage;
     private MonthlySalesPredictionPage monthlySalesPredictionPage;
     private EditRecordPage editRecordPage;
@@ -27,6 +27,7 @@ public class InterfaceController extends JFrame {
 
     //this is here so that the Interface knows what page it should be displaying
     private JPanel currentPage;
+    private List<JPanel> previousPage; // change to an array/list
 
     public InterfaceController(DerbyTableWrapper tableWrapper) {
         //Unsure what our program name will be, this is just a stopgap
@@ -69,8 +70,10 @@ public class InterfaceController extends JFrame {
         editRecordPage = new EditRecordPage();
         returnHomeHotbar = new ReturnHomeHotbar();
 
+        previousPage = new ArrayList<JPanel>();
+
         //this is basically the init of what will be displayed at the start
-        currentPage = homePage;
+        currentPage = homePage; // use array/list?
         add(returnHomeHotbar, BorderLayout.NORTH);
         add(currentPage, BorderLayout.CENTER);
 
@@ -84,10 +87,19 @@ public class InterfaceController extends JFrame {
             returnHomeHotbar.setVisible(false);
 
         //small listener for the "Back" button in the top left
-        returnHomeHotbar.setReturnListener(() -> {
-            changePage(homePage);
-            // if returning to home page, home button should not be visible.
-            returnHomeHotbar.setVisible(false);
+        returnHomeHotbar.setReturnListener(new MenuListener() {
+            @Override
+            public void menuSelection(Enum selection) {
+                if (selection == ReturnHomeHotbar.ReturnSelections.HOME) {
+                    changePage(homePage, false);
+
+                } else if (selection == ReturnHomeHotbar.ReturnSelections.BACK) {
+                    JPanel tmp = previousPage.get(previousPage.size()-1);
+                    previousPage.remove(previousPage.size()-1);
+                    changePage(tmp, true);
+
+                }
+            }
 
         });
 
@@ -95,17 +107,13 @@ public class InterfaceController extends JFrame {
         homePage.setMenuListener(new MenuListener() {
             public void menuSelection(Enum selection) {
                 // in non-home pages, home button will be visible
-                returnHomeHotbar.setVisible(true);
 
                 if (selection == HomePage.MenuSelections.ADD_RECORD) {
-                    changePage(addRecordPage);
-
-                /*} else if (selection == HomePage.MenuSelections.EDIT_RECORD) {
-                    changePage(editRecordPage);*/
+                    changePage(addRecordPage, false);
 
                 } else if (selection == HomePage.MenuSelections.DISPLAY_RECORD) {
                     displayRecordMenu = new DisplayRecordMenu();
-                    changePage(displayRecordMenu);
+                    changePage(displayRecordMenu, false);
 
                     displayRecordMenu.setMenuListener(new MenuListener() {
                         public void menuSelection(Enum selection) {
@@ -137,34 +145,33 @@ public class InterfaceController extends JFrame {
                                             derbyTableWrapper.editSalesRecord(event.getEntryID(), saleToEdit);
 
                                             JOptionPane.showMessageDialog(null, "Record has been updated");
-                                            changePage(homePage);
+                                            changePage(homePage, false);
                                         }
                                     });
 
-                                    changePage(editRecordPage);
+                                    changePage(editRecordPage, false);
                                 }
                             });
 
-                            changePage(displaySalesRecordPage);
+                            changePage(displaySalesRecordPage, false);
                         }
                     });
 
                 } else  if (selection == HomePage.MenuSelections.PREDICT_RECORD) {
-                    changePage(predictSalesMenu);
+                    changePage(predictSalesMenu, false);
                 }
             }
         });
 
         //same as above, but for DisplayRecordMenu
 
-
         //same as above, but for PredictSalesMenu
         predictSalesMenu.setMenuListener(new MenuListener() {
             public void menuSelection(Enum selection) {
                 if (selection == PredictSalesMenu.MenuSelections.WEEKLY_PREDICTION) {
-                    changePage(weeklySalesPredictionPage);
+                    changePage(weeklySalesPredictionPage, false);
                 } else if (selection == PredictSalesMenu.MenuSelections.MONTHLY_PREDICTION) {
-                    changePage(monthlySalesPredictionPage);
+                    changePage(monthlySalesPredictionPage, false);
                 }
             }
         });
@@ -197,8 +204,19 @@ public class InterfaceController extends JFrame {
      *
      * @param newPage the panel to change to
      */
-    private void changePage(JPanel newPage) {
+    private void changePage(JPanel newPage, boolean back) {
         invalidate();
+
+        if (!back) {
+            previousPage.add(currentPage);
+        }
+
+        if (newPage == homePage) {
+            previousPage.clear();
+            returnHomeHotbar.setVisible(false);
+        } else {
+            returnHomeHotbar.setVisible(true);
+        }
 
         //cycles to the new page and puts it into the center.
         remove(currentPage);
