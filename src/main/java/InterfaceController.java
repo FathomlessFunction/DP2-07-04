@@ -22,6 +22,7 @@ public class InterfaceController extends JFrame {
     private WeeklySalesPredictionPage weeklySalesPredictionPage;
     private MonthlySalesPredictionPage monthlySalesPredictionPage;
     private EditRecordPage editRecordPage;
+    private DisplayReportPage displayReportPage;
 
     private DerbyTableWrapper derbyTableWrapper;
 
@@ -68,6 +69,7 @@ public class InterfaceController extends JFrame {
         monthlySalesPredictionPage = new MonthlySalesPredictionPage();
         editRecordPage = new EditRecordPage();
         returnHomeHotbar = new ReturnHomeHotbar();
+        displayReportPage = new DisplayReportPage();
 
         //this is basically the init of what will be displayed at the start
         currentPage = homePage;
@@ -104,7 +106,53 @@ public class InterfaceController extends JFrame {
                     changePage(editRecordPage);*/
 
                 } else if (selection == HomePage.MenuSelections.DISPLAY_RECORD) {
-                    changePage(displayRecordMenu /*= new DisplayRecordMenu()*/);
+                    displayRecordMenu = new DisplayRecordMenu();
+                    changePage(displayRecordMenu);
+
+                    displayRecordMenu.setMenuListener(new MenuListener() {
+                        public void menuSelection(Enum selection) {
+
+                            if (selection == DisplayRecordMenu.MenuSelections.WEEKLY_RECORDS) {
+                                //need to create a new table with new data each call
+                                //getList function returns an array of sales
+                                displaySalesRecordPage = new DisplaySalesRecordPage(getList(tableWrapper,"week"), "week");
+                            } else if (selection == DisplayRecordMenu.MenuSelections.MONTHLY_RECORDS) {
+                                //same as weekly
+                                displaySalesRecordPage = new DisplaySalesRecordPage(getList(tableWrapper,"month"), "month");
+                            } else if (selection == DisplayRecordMenu.MenuSelections.REPORT_PAGE) {
+                                //same as weekly
+                                displayReportPage = new DisplayReportPage(getListReport(tableWrapper,"month"));
+                            }
+
+                            displaySalesRecordPage.setListener(new EditListener() {
+                                public void editClicked(Object [] sale) {
+                                    editRecordPage = new EditRecordPage(sale);
+
+                                    editRecordPage.setFormListener(new FormListener() {
+                                        @Override
+                                        public void formReceived(FormEvent event) {
+                                            String saleID = event.getSaleID();
+                                            int productID = event.getProductID();
+                                            String dateOfSale = event.getDateOfSale();
+                                            int numberSold = event.getNumberSold();
+                                            float amountPaid = event.getAmountPaid();
+                                            String saleStatus = event.getSaleStatus();
+
+                                            Sale saleToEdit = new Sale(saleID, productID, dateOfSale, numberSold, amountPaid, saleStatus);
+                                            derbyTableWrapper.editSalesRecord(event.getEntryID(), saleToEdit);
+
+                                            JOptionPane.showMessageDialog(null, "Record has been updated");
+                                            changePage(homePage);
+                                        }
+                                    });
+
+                                    changePage(editRecordPage);
+                                }
+                            });
+
+                            changePage(displaySalesRecordPage);
+                        }
+                    });
 
                 } else  if (selection == HomePage.MenuSelections.PREDICT_RECORD) {
                     changePage(predictSalesMenu);
@@ -113,47 +161,7 @@ public class InterfaceController extends JFrame {
         });
 
         //same as above, but for DisplayRecordMenu
-        displayRecordMenu.setMenuListener(new MenuListener() {
-            public void menuSelection(Enum selection) {
 
-                if (selection == DisplayRecordMenu.MenuSelections.WEEKLY_RECORDS) {
-                    //need to create a new table with new data each call
-                    //getList function returns an array of sales
-                    displaySalesRecordPage = new DisplaySalesRecordPage(getList(tableWrapper,"week"), "week");
-                } else if (selection == DisplayRecordMenu.MenuSelections.MONTHLY_RECORDS) {
-                    //same as weekly
-                    displaySalesRecordPage = new DisplaySalesRecordPage(getList(tableWrapper,"month"), "month");
-                }
-
-                displaySalesRecordPage.setListener(new EditListener() {
-                    public void editClicked(Object [] sale) {
-                        editRecordPage = new EditRecordPage(sale);
-
-                        editRecordPage.setFormListener(new FormListener() {
-                            @Override
-                            public void formReceived(FormEvent event) {
-                                String saleID = event.getSaleID();
-                                int productID = event.getProductID();
-                                String dateOfSale = event.getDateOfSale();
-                                int numberSold = event.getNumberSold();
-                                float amountPaid = event.getAmountPaid();
-                                String saleStatus = event.getSaleStatus();
-
-                                Sale saleToEdit = new Sale(saleID, productID, dateOfSale, numberSold, amountPaid, saleStatus);
-                                derbyTableWrapper.editSalesRecord(event.getEntryID(), saleToEdit);
-
-                                JOptionPane.showMessageDialog(null, "Record has been updated");
-                                changePage(homePage);
-                            }
-                        });
-
-                        changePage(editRecordPage);
-                    }
-                });
-
-                changePage(displaySalesRecordPage);
-            }
-        });
 
         //same as above, but for PredictSalesMenu
         predictSalesMenu.setMenuListener(new MenuListener() {
@@ -208,21 +216,21 @@ public class InterfaceController extends JFrame {
 
     private Object[][] getList(DerbyTableWrapper tableWrapper, String length)  {
         //get input from drop lists in display record menu
-        int[] dateStringArray = displayRecordMenu.getDate();
-        int[] endDateStringArray = displayRecordMenu.getDate();
+        //int[] dateStringArray = displayRecordMenu.getDate();
+        //int[] endDateStringArray = displayRecordMenu.getDate();
 
         String[] dates = displayRecordMenu.getDates();
 
         //set end date range to either +6 days or +1 month
         //no error checking involved e.g. if input is 31st will set days to 37th
-        if (length == "week"){
-            endDateStringArray[0] = endDateStringArray[0]+6;
-        } else {
-            endDateStringArray[1] = endDateStringArray[1]+1;
-        }
+        //if (length == "week"){
+        //    endDateStringArray[0] = endDateStringArray[0]+6;
+        //} else {
+         //   endDateStringArray[1] = endDateStringArray[1]+1;
+       // }
         //creates new string in format "dd-mm-yyyy" for start date and end date
-        String startDateString = dateStringArray[0] +"-"+dateStringArray[1]+"-"+dateStringArray[2];
-        String endDateString = endDateStringArray[0]+"-"+endDateStringArray[1]+"-"+endDateStringArray[2];
+        //String startDateString = dateStringArray[0] +"-"+dateStringArray[1]+"-"+dateStringArray[2];
+       // String endDateString = endDateStringArray[0]+"-"+endDateStringArray[1]+"-"+endDateStringArray[2];
         String startDate;
         String endDate;
         String[] split;
@@ -254,6 +262,33 @@ public class InterfaceController extends JFrame {
             salesArray[i][5] = saleList.get(i).getAmountPaid();
             salesArray[i][6] = saleList.get(i).getSaleStatus();
             salesArray[i][7] = saleList.get(i).getProductID();
+        }
+        return salesArray;
+    }
+
+    private Object[][] getListReport(DerbyTableWrapper tableWrapper, String length)  {
+        String[] dates = displayRecordMenu.getDates();
+
+        String startDate;
+        String endDate;
+        String[] split;
+        split = dates[0].split("-");
+        startDate = split[2]+"-"+split[1]+"-"+split[0];
+        split = dates[1].split("-");
+        endDate = split[2]+"-"+split[1]+"-"+split[0];
+
+        List<Sale> saleList = tableWrapper.getSalesByDateRange(startDate,endDate);
+        //2D array with size of saleList
+        Object [][] salesArray = new Object[saleList.size()][3];
+
+        String result;
+        String tmp[];
+        //for loop to assign list to object array
+        for(int i = 0; i < saleList.size();i++)
+        {
+            salesArray[i][0] = tableWrapper.getProductByProductId(saleList.get(i).getProductID()).getProductName();
+            salesArray[i][1] = saleList.get(i).getNumberSold();
+            salesArray[i][2] = saleList.get(i).getAmountPaid();
         }
         return salesArray;
     }
