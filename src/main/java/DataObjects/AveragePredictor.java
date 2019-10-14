@@ -19,9 +19,13 @@ public class AveragePredictor{
 
 
     /**
+     * Use this if you want to predict with a specific time span
+     * eg   if you want a prediction for 28-day long months
+     *      or for a variable date range and length.
      *
      * @param sales list of sales data to use for prediction
-     * @param timeSpanDays time span you want to predict with. eg 7 days for a weekly prediction
+     * @param timeSpanDays time span you want to predict with. eg 7 days for a weekly prediction.
+     * 
      * @return Prediction
      */
     public static Prediction predict(List<Sale> sales, int timeSpanDays) {
