@@ -2,12 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="6f911080-935f-4a30-ba37-c73824acd1b9" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/DataObjects/AveragePredictor.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/DataObjects/IPredictTrends.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/DataObjects/Prediction.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/java/DataObjects/AveragePredictorTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/DataObjects/AveragePredictor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/DataObjects/AveragePredictor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/DataObjects/AveragePredictorTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/DataObjects/AveragePredictorTest.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -49,7 +46,7 @@
         <entry file="file://$PROJECT_DIR$/src/main/java/InterfaceController.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="854">
-              <caret line="140" column="37" lean-forward="true" selection-start-line="140" selection-start-column="37" selection-end-line="140" selection-end-column="37" />
+              <caret line="140" column="37" selection-start-line="140" selection-start-column="37" selection-end-line="140" selection-end-column="37" />
             </state>
           </provider>
         </entry>
@@ -58,7 +55,7 @@
         <entry file="file://$PROJECT_DIR$/src/main/java/DataObjects/Prediction.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="255">
-              <caret line="15" column="47" lean-forward="true" selection-start-line="15" selection-start-column="47" selection-end-line="15" selection-end-column="47" />
+              <caret line="15" column="47" selection-start-line="15" selection-start-column="47" selection-end-line="15" selection-end-column="47" />
               <folding>
                 <element signature="e#486#487#0" expanded="true" />
                 <element signature="e#514#515#0" expanded="true" />
@@ -81,15 +78,12 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/DataObjects/AveragePredictor.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="255">
-              <caret line="15" column="7" lean-forward="true" selection-start-line="15" selection-start-column="7" selection-end-line="15" selection-end-column="7" />
+            <state relative-caret-position="278">
+              <caret line="20" column="7" selection-start-line="20" selection-start-column="7" selection-end-line="20" selection-end-column="7" />
               <folding>
-                <element signature="e#550#551#0" expanded="true" />
-                <element signature="e#577#578#0" expanded="true" />
-                <element signature="e#648#649#0" expanded="true" />
-                <element signature="e#675#676#0" expanded="true" />
-                <element signature="e#747#748#0" expanded="true" />
-                <element signature="e#774#775#0" expanded="true" />
+                <element signature="imports" expanded="true" />
+                <element signature="e#3083#3084#0" expanded="true" />
+                <element signature="e#3189#3190#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -98,10 +92,22 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/test/java/DataObjects/AveragePredictorTest.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="535">
-              <caret line="73" column="58" lean-forward="true" selection-start-line="73" selection-start-column="58" selection-end-line="73" selection-end-column="58" />
+            <state relative-caret-position="325">
+              <caret line="21" column="25" lean-forward="true" selection-start-line="21" selection-start-column="25" selection-end-line="21" selection-end-column="25" />
               <folding>
                 <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="jar://C:/Program Files/Java/jdk-11.0.1/lib/src.zip!/java.sql/java/sql/Date.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="501">
+              <caret line="315" selection-start-line="315" selection-end-line="315" />
+              <folding>
+                <element signature="e#10185#10186#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -120,19 +126,10 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/InterfaceObjects/DisplaySalesRecordPage.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2023">
-              <caret line="122" column="13" selection-start-line="122" selection-start-column="13" selection-end-line="122" selection-end-column="13" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/PharmacyDataGenerator.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="280">
-              <caret line="86" column="37" selection-start-line="86" selection-start-column="37" selection-end-line="86" selection-end-column="37" />
+            <state relative-caret-position="246">
+              <caret line="84" column="8" selection-start-line="84" selection-start-column="8" selection-end-line="86" selection-end-column="37" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -199,8 +196,8 @@
     </option>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="833" />
-    <option name="width" value="1094" />
+    <option name="x" value="-7" />
+    <option name="width" value="974" />
     <option name="height" value="1047" />
   </component>
   <component name="ProjectId" id="1S04BDs6D1LOaKXj1IbORfNSSO7" />
@@ -283,7 +280,7 @@
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1571038398697" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1571048649227" />
     <property name="project.structure.last.edited" value="Project" />
     <property name="project.structure.proportion" value="0.0" />
     <property name="project.structure.side.proportion" value="0.0" />
@@ -300,7 +297,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="JUnit.All in DP2-07-04.test">
+  <component name="RunManager" selected="JUnit.AveragePredictorTest">
     <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="Main" />
       <module name="DP2-07-04.main" />
@@ -308,50 +305,32 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="CSVReportTest.shouldNotThrowErrorWhenWritingToFileWithValidParameters" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
-      <ExternalSystemSettings>
-        <option name="executionName" />
-        <option name="externalProjectPath" value="$PROJECT_DIR$" />
-        <option name="externalSystemIdString" value="GRADLE" />
-        <option name="scriptParameters" value="--tests &quot;DataObjects.CSVReportTest.shouldNotThrowErrorWhenWritingToFileWithValidParameters&quot;" />
-        <option name="taskDescriptions">
-          <list />
-        </option>
-        <option name="taskNames">
-          <list>
-            <option value=":cleanTest" />
-            <option value=":test" />
-          </list>
-        </option>
-        <option name="vmOptions" />
-      </ExternalSystemSettings>
-      <GradleScriptDebugEnabled>false</GradleScriptDebugEnabled>
-      <method v="2" />
-    </configuration>
-    <configuration name="Tests in 'DP2-07-04.test'" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
-      <ExternalSystemSettings>
-        <option name="executionName" />
-        <option name="externalProjectPath" value="$PROJECT_DIR$" />
-        <option name="externalSystemIdString" value="GRADLE" />
-        <option name="scriptParameters" value="--tests *" />
-        <option name="taskDescriptions">
-          <list />
-        </option>
-        <option name="taskNames">
-          <list>
-            <option value=":cleanTest" />
-            <option value=":test" />
-          </list>
-        </option>
-        <option name="vmOptions" />
-      </ExternalSystemSettings>
-      <GradleScriptDebugEnabled>false</GradleScriptDebugEnabled>
-      <method v="2" />
+    <configuration name="All in DP2-07-04.test (1)" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="DP2-07-04.test" />
+      <option name="PACKAGE_NAME" value="" />
+      <option name="TEST_OBJECT" value="package" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
     </configuration>
     <configuration name="All in DP2-07-04.test" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="DP2-07-04.test" />
       <option name="PACKAGE_NAME" value="" />
       <option name="TEST_OBJECT" value="package" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="AveragePredictorTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="DP2-07-04.test" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="DataObjects.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="DataObjects" />
+      <option name="MAIN_CLASS_NAME" value="DataObjects.AveragePredictorTest" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -372,18 +351,18 @@
     </configuration>
     <list>
       <item itemvalue="Application.Main" />
-      <item itemvalue="Gradle.Tests in 'DP2-07-04.test'" />
-      <item itemvalue="Gradle.CSVReportTest.shouldNotThrowErrorWhenWritingToFileWithValidParameters" />
       <item itemvalue="JUnit.CSVReportTest" />
       <item itemvalue="JUnit.All in DP2-07-04.test" />
+      <item itemvalue="JUnit.All in DP2-07-04.test (1)" />
+      <item itemvalue="JUnit.AveragePredictorTest" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="JUnit.AveragePredictorTest" />
+        <item itemvalue="JUnit.All in DP2-07-04.test (1)" />
         <item itemvalue="JUnit.All in DP2-07-04.test" />
         <item itemvalue="Application.Main" />
         <item itemvalue="JUnit.CSVReportTest" />
-        <item itemvalue="Gradle.Tests in 'DP2-07-04.test'" />
-        <item itemvalue="Gradle.CSVReportTest.shouldNotThrowErrorWhenWritingToFileWithValidParameters" />
       </list>
     </recent_temporary>
   </component>
@@ -429,18 +408,50 @@
       <workItem from="1569827805710" duration="5280000" />
       <workItem from="1570423962364" duration="670000" />
       <workItem from="1570439236042" duration="5329000" />
-      <workItem from="1571036414435" duration="1978000" />
+      <workItem from="1571036414435" duration="5981000" />
     </task>
     <servers />
   </component>
+  <component name="TestHistory">
+    <history-entry file="AveragePredictorTest - 2019.10.14 at 21h 13m 05s.xml">
+      <configuration name="AveragePredictorTest" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="AveragePredictorTest - 2019.10.14 at 21h 14m 06s.xml">
+      <configuration name="AveragePredictorTest" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="AveragePredictorTest - 2019.10.14 at 21h 15m 01s.xml">
+      <configuration name="AveragePredictorTest" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="AveragePredictorTest - 2019.10.14 at 21h 16m 34s.xml">
+      <configuration name="AveragePredictorTest" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="AveragePredictorTest - 2019.10.14 at 21h 17m 14s.xml">
+      <configuration name="AveragePredictorTest" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="AveragePredictorTest - 2019.10.14 at 21h 17m 31s.xml">
+      <configuration name="AveragePredictorTest" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="AveragePredictorTest - 2019.10.14 at 21h 21m 37s.xml">
+      <configuration name="AveragePredictorTest" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="AveragePredictorTest - 2019.10.14 at 21h 22m 22s.xml">
+      <configuration name="AveragePredictorTest" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="AveragePredictorTest - 2019.10.14 at 21h 22m 48s.xml">
+      <configuration name="AveragePredictorTest" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="AveragePredictorTest - 2019.10.14 at 21h 24m 03s.xml">
+      <configuration name="AveragePredictorTest" configurationId="JUnit" />
+    </history-entry>
+  </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="58623000" />
+    <option name="totallyTimeSpent" value="62626000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.195629" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.195629" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Designer" order="2" />
       <window_info id="Image Layers" order="3" />
@@ -449,7 +460,7 @@
       <window_info id="Favorites" order="6" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32936078" />
-      <window_info anchor="bottom" id="Run" order="2" weight="0.18201517" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.26435536" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -581,7 +592,7 @@
     <entry file="file://$PROJECT_DIR$/src/main/java/InterfaceController.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="854">
-          <caret line="140" column="37" lean-forward="true" selection-start-line="140" selection-start-column="37" selection-end-line="140" selection-end-column="37" />
+          <caret line="140" column="37" selection-start-line="140" selection-start-column="37" selection-end-line="140" selection-end-column="37" />
         </state>
       </provider>
     </entry>
@@ -595,16 +606,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/PharmacyDataGenerator.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="280">
-          <caret line="86" column="37" selection-start-line="86" selection-start-column="37" selection-end-line="86" selection-end-column="37" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/DataObjects/IPredictTrends.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="119">
@@ -612,25 +613,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/DataObjects/AveragePredictor.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="255">
-          <caret line="15" column="7" lean-forward="true" selection-start-line="15" selection-start-column="7" selection-end-line="15" selection-end-column="7" />
-          <folding>
-            <element signature="e#550#551#0" expanded="true" />
-            <element signature="e#577#578#0" expanded="true" />
-            <element signature="e#648#649#0" expanded="true" />
-            <element signature="e#675#676#0" expanded="true" />
-            <element signature="e#747#748#0" expanded="true" />
-            <element signature="e#774#775#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/DataObjects/Prediction.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="255">
-          <caret line="15" column="47" lean-forward="true" selection-start-line="15" selection-start-column="47" selection-end-line="15" selection-end-column="47" />
+          <caret line="15" column="47" selection-start-line="15" selection-start-column="47" selection-end-line="15" selection-end-column="47" />
           <folding>
             <element signature="e#486#487#0" expanded="true" />
             <element signature="e#514#515#0" expanded="true" />
@@ -640,10 +626,42 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/PharmacyDataGenerator.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="246">
+          <caret line="84" column="8" selection-start-line="84" selection-start-column="8" selection-end-line="86" selection-end-column="37" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://C:/Program Files/Java/jdk-11.0.1/lib/src.zip!/java.sql/java/sql/Date.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="501">
+          <caret line="315" selection-start-line="315" selection-end-line="315" />
+          <folding>
+            <element signature="e#10185#10186#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/DataObjects/AveragePredictor.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="278">
+          <caret line="20" column="7" selection-start-line="20" selection-start-column="7" selection-end-line="20" selection-end-column="7" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#3083#3084#0" expanded="true" />
+            <element signature="e#3189#3190#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/test/java/DataObjects/AveragePredictorTest.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="535">
-          <caret line="73" column="58" lean-forward="true" selection-start-line="73" selection-start-column="58" selection-end-line="73" selection-end-column="58" />
+        <state relative-caret-position="325">
+          <caret line="21" column="25" lean-forward="true" selection-start-line="21" selection-start-column="25" selection-end-line="21" selection-end-column="25" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>

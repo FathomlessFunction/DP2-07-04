@@ -35,10 +35,27 @@ public class AveragePredictorTest {
         Assert.assertEquals(expectedNumSold, result.getPredictedNumberOfSales());
         Assert.assertEquals(expectedProfit, result.getPredictedProfit(), 0.1);
 
+
+    }
+
+    @Test
+    public void shouldPredictAveragesOverMultipleDaysCorrectly(){
+
+        int numSold1 = 2;
+        String price1 = "10";
+        int numSold2 = 4;
+        String price2 = "30";
+        int expectedNumSold = numSold1 + numSold2;
+        float expectedProfit = Float.parseFloat(price1) + Float.parseFloat(price2);
+
+        sales = new LinkedList<>();
+        sales.add(makeSaleWith("11-12-2019", numSold1, price1));
+        sales.add(makeSaleWith("12-12-2019", numSold2, price2));
+
         // prediction for 2 days
-        result = AveragePredictor.predict(sales, 2);
-        Assert.assertEquals(expectedNumSold / 2, result.getPredictedNumberOfSales());
-        Assert.assertEquals(expectedProfit/2, result.getPredictedProfit(), 0.2);
+        Prediction result = AveragePredictor.predict(sales, 1);
+        Assert.assertEquals(3, result.getPredictedNumberOfSales());
+        Assert.assertEquals(Float.parseFloat("20"), result.getPredictedProfit(), 0.2);
     }
 
     @Test
@@ -57,7 +74,7 @@ public class AveragePredictorTest {
         sales.add(makeSaleWith("13-12-2019", numSold1, price1));
         sales.add(makeSaleWith("12-12-2019", numSold2, price2));
 
-        Prediction result = AveragePredictor.predict(sales, 2);
+        Prediction result = AveragePredictor.predict(sales, 1);
 
         Assert.assertEquals(expectedNumSold, result.getPredictedNumberOfSales());
         Assert.assertEquals(expectedProfit, result.getPredictedProfit(), 0.1);
@@ -80,7 +97,7 @@ public class AveragePredictorTest {
         sale2.setSaleStatus("RETURNED");
         sales.add(sale2);
 
-        Prediction result = AveragePredictor.predict(sales, 2);
+        Prediction result = AveragePredictor.predict(sales, 1);
 
         Assert.assertEquals(expectedNumSold, result.getPredictedNumberOfSales());
         Assert.assertEquals(expectedProfit, result.getPredictedProfit(), 0.1);
