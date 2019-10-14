@@ -54,15 +54,11 @@ public class AveragePredictor{
 
         }
 
-        System.out.println("TOTAL SOLD: "+salesTotal);
-
         // calculate how many 'date ranges' occurred in provided sale data range
         // math.ceil to round up.
         int daysBetween = (int) Math.ceil(ChronoUnit.DAYS.between(
                 LocalDate.parse(earliestDate.toString()), LocalDate.parse(latestDate.toString()))) + 1;
-
-        System.out.println("DAYS BETWEEN: "+daysBetween);
-        System.out.println("TIMESPAN: "+timeSpanDays);
+        
 
         // average daily profit = total / daysBetween
         // profit for a timespan = days per timespan * daily profit
@@ -76,8 +72,6 @@ public class AveragePredictor{
         // round profit to be 2 decimal places
         BigDecimal bd = new BigDecimal(profitPrediction);
         bd = bd.setScale(2, RoundingMode.HALF_UP);
-
-        System.out.println("RESULTING PREDICTED NUMBER SOLD: "+numberSoldPrediction);
 
         return new Prediction(numberSoldPrediction, bd.floatValue());
     }
