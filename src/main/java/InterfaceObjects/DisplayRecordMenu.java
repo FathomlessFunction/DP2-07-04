@@ -14,29 +14,23 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.time.LocalDate;
+import java.util.Date;
 
 public class DisplayRecordMenu extends JPanel implements ActionListener {
 
     public enum MenuSelections
     {
-        WEEKLY_RECORDS, MONTHLY_RECORDS, REPORT_PAGE;
+        WEEKLY_RECORDS, MONTHLY_RECORDS, DATE_RANGE;
     }
     //button variables
     private JButton weeklyButton;
     private JButton monthlyButton;
-    private JButton dateButton;
-    private JComboBox<Integer> dayMenu;
-    private JComboBox<Integer> monthMenu;
-    private  JComboBox<Integer> yearMenu;
+    private JButton dateRangeButton;
     private DatePicker fmPicker;
-    //private DatePicker inPicker;
     private DatePicker toPicker;
     private LocalDate fmDate;
     private LocalDate toDate;
     private static final String pattern = "dd-mm-yyyy";
-    private int dayDate;
-    private int monthDate;
-    private int yearDate;
 
     private MenuListener listener;
 
@@ -44,15 +38,12 @@ public class DisplayRecordMenu extends JPanel implements ActionListener {
         //change the button names from here
         weeklyButton = new JButton("Weekly Sales Record");
         monthlyButton = new JButton("Monthly Sales Record");
-
+        dateRangeButton = new JButton("Selected Date Range");
 
         //adds action listeners
         weeklyButton.addActionListener(this);
         monthlyButton.addActionListener(this);
-
-
-        //don't like the look of box layout, will address later
-        //setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+        dateRangeButton.addActionListener(this);
 
         //this is here for debugging
         add(new JLabel(this.getClass().getSimpleName()));
@@ -60,6 +51,7 @@ public class DisplayRecordMenu extends JPanel implements ActionListener {
         //adds buttons and drop down menus
         add(weeklyButton);
         add(monthlyButton);
+        add(dateRangeButton);
 
         JFXPanel fxPanel = new JFXPanel();
         add(fxPanel);
@@ -106,27 +98,11 @@ public class DisplayRecordMenu extends JPanel implements ActionListener {
         return new Scene(vbox);
     }
 
-   /* public int[] getDate(){
-        //allows InterfaceController to access input of drop down menus
-        //create array to pass the 3 values
-        int[] dates = new int[3];
-        dates[0] = dayDate;
-        dates[1] = monthDate;
-        dates[2] = yearDate;
-        //make sure not empty
-        if (dates == null){
-            dates = new int[]{1, 1, 2001};
-        };
+    public LocalDate[] getDates(){
+        LocalDate[] dates = new LocalDate[2];
 
-        //return array
-        return dates;
-    }*/
-
-    public String[] getDates(){
-        String[] dates = new String[2];
-        //convert fmDate java.time.LocalDate to Java.lang.string
-        dates[0] = fmDate.toString();
-        dates[1] = toDate.toString();
+        dates[0] = fmDate;
+        dates[1] = toDate;
 
         return dates;
     }
@@ -137,9 +113,7 @@ public class DisplayRecordMenu extends JPanel implements ActionListener {
     public void actionPerformed(ActionEvent event) {
         //can tell which button is clicked
         JButton clicked = (JButton)event.getSource();
-        //dayDate = (Integer) dayMenu.getSelectedItem();
-        //monthDate = (Integer) monthMenu.getSelectedItem();
-        //yearDate = (Integer) yearMenu.getSelectedItem();
+
         fmDate = fmPicker.getValue();
         toDate = toPicker.getValue();
         System.out.println(fmDate);
@@ -148,12 +122,8 @@ public class DisplayRecordMenu extends JPanel implements ActionListener {
             listener.menuSelection(MenuSelections.WEEKLY_RECORDS);
         } else if (clicked == monthlyButton) {
             listener.menuSelection(MenuSelections.MONTHLY_RECORDS);
+        } else if (clicked == dateRangeButton) {
+            listener.menuSelection(MenuSelections.DATE_RANGE);
         }
-        // else if (clicked == dateButton) {
-        //set new values from drop down menus when dateButton clicked
-        //    dayDate = (Integer) dayMenu.getSelectedItem();
-        //    monthDate = (Integer) monthMenu.getSelectedItem();
-        //    yearDate = (Integer) yearMenu.getSelectedItem();
-        //}
     }
 }

@@ -6,6 +6,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -129,6 +130,9 @@ public class InterfaceController extends JFrame {
                             } else if (selection == DisplayRecordMenu.MenuSelections.MONTHLY_RECORDS) {
                                 //same as weekly
                                 displaySalesRecordPage = new DisplaySalesRecordPage(getList(tableWrapper, "month"), "month");
+                            } else if (selection == DisplayRecordMenu.MenuSelections.DATE_RANGE) {
+                                //same as weekly
+                                displaySalesRecordPage = new DisplaySalesRecordPage(getList(tableWrapper, "range"), "range");
                             }
 
                             displaySalesRecordPage.setEditListener(new EditListener() {
@@ -248,29 +252,27 @@ public class InterfaceController extends JFrame {
     }
 
     private Object[][] getList(DerbyTableWrapper tableWrapper, String length)  {
-        //get input from drop lists in display record menu
-        //int[] dateStringArray = displayRecordMenu.getDate();
-        //int[] endDateStringArray = displayRecordMenu.getDate();
 
-        String[] dates = displayRecordMenu.getDates();
+        LocalDate[] dates = displayRecordMenu.getDates();
 
         //set end date range to either +6 days or +1 month
-        //no error checking involved e.g. if input is 31st will set days to 37th
-        //if (length == "week"){
-        //    endDateStringArray[0] = endDateStringArray[0]+6;
-        //} else {
-        //   endDateStringArray[1] = endDateStringArray[1]+1;
-        // }
-        //creates new string in format "dd-mm-yyyy" for start date and end date
-        //String startDateString = dateStringArray[0] +"-"+dateStringArray[1]+"-"+dateStringArray[2];
-        // String endDateString = endDateStringArray[0]+"-"+endDateStringArray[1]+"-"+endDateStringArray[2];
+        if (length == "week"){
+            dates[1] = dates[1].plusWeeks(1);
+        } else if (length =="month"){
+            dates[1] = dates[1].plusMonths(1);
+        }
+
         String startDate;
         String endDate;
-        String[] split;
-        split = dates[0].split("-");
-        startDate = split[2]+"-"+split[1]+"-"+split[0];
-        split = dates[1].split("-");
-        endDate = split[2]+"-"+split[1]+"-"+split[0];
+
+        String[] splitStart;
+        String[] splitEnd;
+        splitStart = dates[0].toString().split("-");
+        splitEnd = dates[1].toString().split("-");
+
+        startDate = splitStart[2]+"-"+splitStart[1]+"-"+splitStart[0];
+        endDate = splitEnd[2]+"-"+splitEnd[1]+"-"+splitEnd[0];
+        System.out.println(endDate);
 
         //gets list within date range
         saleList = tableWrapper.getSalesByDateRange(startDate,endDate);
@@ -294,33 +296,6 @@ public class InterfaceController extends JFrame {
             salesArray[i][5] = saleList.get(i).getAmountPaid();
             salesArray[i][6] = saleList.get(i).getSaleStatus();
             salesArray[i][7] = saleList.get(i).getProductID();
-        }
-        return salesArray;
-    }
-
-    private Object[][] getListReport(DerbyTableWrapper tableWrapper, String length)  {
-        String[] dates = displayRecordMenu.getDates();
-
-        String startDate;
-        String endDate;
-        String[] split;
-        split = dates[0].split("-");
-        startDate = split[2]+"-"+split[1]+"-"+split[0];
-        split = dates[1].split("-");
-        endDate = split[2]+"-"+split[1]+"-"+split[0];
-
-        List<Sale> saleList = tableWrapper.getSalesByDateRange(startDate,endDate);
-        //2D array with size of saleList
-        Object [][] salesArray = new Object[saleList.size()][3];
-
-        String result;
-        String tmp[];
-        //for loop to assign list to object array
-        for(int i = 0; i < saleList.size();i++)
-        {
-            salesArray[i][0] = tableWrapper.getProductByProductId(saleList.get(i).getProductID()).getProductName();
-            salesArray[i][1] = saleList.get(i).getNumberSold();
-            salesArray[i][2] = saleList.get(i).getAmountPaid();
         }
         return salesArray;
     }

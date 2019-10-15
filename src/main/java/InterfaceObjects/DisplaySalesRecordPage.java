@@ -39,8 +39,10 @@ public class DisplaySalesRecordPage extends JPanel implements ActionListener {
         DDLable = new JLabel("EntryID Selection: ");
         if (length == "week"){
             title = new JLabel("Weekly sales record display");
-        } else {
+        } else if (length == "month") {
             title = new JLabel("Monthly sales record display");
+        } else {
+            title = new JLabel("Date Range sales record display");
         }
 
         recordSelect = new JComboBox<Integer>();
