@@ -1,4 +1,6 @@
 import DataObjects.CSVReport;
+import DataObjects.DerbyTableWrapper;
+import DataObjects.Product;
 import DataObjects.Sale;
 import InterfaceObjects.*;
 
@@ -120,19 +122,19 @@ public class InterfaceController extends JFrame {
                     displayRecordMenu = new DisplayRecordMenu();
                     changePage(displayRecordMenu, false);
 
-                    displayRecordMenu.setMenuListener(new MenuListener() {
-                        public void menuSelection(Enum selection) {
+                    displayRecordMenu.setMenuListener(new DisplayListener() {
+                        public void menuSelection(Enum selection, String productCategoryFilter) {
 
                             if (selection == DisplayRecordMenu.MenuSelections.WEEKLY_RECORDS) {
                                 //need to create a new table with new data each call
                                 //getList function returns an array of sales
-                                displaySalesRecordPage = new DisplaySalesRecordPage(getList(tableWrapper, "week"), "week");
+                                displaySalesRecordPage = new DisplaySalesRecordPage(getList(tableWrapper, "week", productCategoryFilter), "week", productCategoryFilter);
                             } else if (selection == DisplayRecordMenu.MenuSelections.MONTHLY_RECORDS) {
                                 //same as weekly
-                                displaySalesRecordPage = new DisplaySalesRecordPage(getList(tableWrapper, "month"), "month");
+                                displaySalesRecordPage = new DisplaySalesRecordPage(getList(tableWrapper, "month", productCategoryFilter), "month", productCategoryFilter);
                             } else if (selection == DisplayRecordMenu.MenuSelections.DATE_RANGE) {
                                 //same as weekly
-                                displaySalesRecordPage = new DisplaySalesRecordPage(getList(tableWrapper, "range"), "range");
+                                displaySalesRecordPage = new DisplaySalesRecordPage(getList(tableWrapper, "range", productCategoryFilter), "range", productCategoryFilter);
                             }
 
                             displaySalesRecordPage.setEditListener(new EditListener() {
@@ -251,7 +253,13 @@ public class InterfaceController extends JFrame {
         repaint();
     }
 
-    private Object[][] getList(DerbyTableWrapper tableWrapper, String length)  {
+    /*
+    private Object[][] getList(DerbyTableWrapper tableWrapper, String length){
+        return getList(tableWrapper, length, null);
+    }*/
+
+    // filterProduct == null if we want no filter.
+    private Object[][] getList(DerbyTableWrapper tableWrapper, String length, String productCategoryFilter)  {
 
         LocalDate[] dates = displayRecordMenu.getDates();
 
@@ -272,10 +280,19 @@ public class InterfaceController extends JFrame {
 
         startDate = splitStart[2]+"-"+splitStart[1]+"-"+splitStart[0];
         endDate = splitEnd[2]+"-"+splitEnd[1]+"-"+splitEnd[0];
-        System.out.println(endDate);
+        //System.out.println(endDate);
 
         //gets list within date range
-        saleList = tableWrapper.getSalesByDateRange(startDate,endDate);
+        if (productCategoryFilter == null || productCategoryFilter.equals(Product.getNoProductCat())){
+            System.out.println("No product filter.");
+            saleList = tableWrapper.getSalesByDateRange(startDate,endDate);
+            System.out.println("resulting sales number: "+saleList.size());
+        } else {
+            System.out.println("Product filter!"+productCategoryFilter);
+            saleList = tableWrapper.getSalesByProductCategoryAndDateRange(productCategoryFilter, startDate, endDate);
+            System.out.println("resulting sales number: "+saleList.size());
+        }
+
         //2D array with size of saleList
         Object [][] salesArray = new Object[saleList.size()][8];
 
