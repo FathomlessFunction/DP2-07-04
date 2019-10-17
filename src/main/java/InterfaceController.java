@@ -23,8 +23,7 @@ public class InterfaceController extends JFrame {
     //these are still blank, skeleton classes, which now all have a constructor and their name on them.
     private AddRecordPage addRecordPage;
     private DisplaySalesRecordPage displaySalesRecordPage;
-    private WeeklySalesPredictionPage weeklySalesPredictionPage;
-    private MonthlySalesPredictionPage monthlySalesPredictionPage;
+    private SalesPredictionPage salesPredictionPage;
     private EditRecordPage editRecordPage;
 
     private DerbyTableWrapper derbyTableWrapper;
@@ -70,10 +69,7 @@ public class InterfaceController extends JFrame {
         homePage = new HomePage();
         addRecordPage = new AddRecordPage();
         displayRecordMenu = new DisplayRecordMenu();
-        displaySalesRecordPage = new DisplaySalesRecordPage();
         predictSalesMenu = new PredictSalesMenu();
-        weeklySalesPredictionPage = new WeeklySalesPredictionPage();
-        monthlySalesPredictionPage = new MonthlySalesPredictionPage();
         editRecordPage = new EditRecordPage();
         returnHomeHotbar = new ReturnHomeHotbar();
 
@@ -187,16 +183,28 @@ public class InterfaceController extends JFrame {
                         }
                     });
 
-                    //same as above, but for DisplayRecordMenu
-
                     //same as above, but for PredictSalesMenu
-                    predictSalesMenu.setMenuListener(new MenuListener() {
-                        public void menuSelection(Enum selection) {
+
+
+                } else if (selection == HomePage.MenuSelections.PREDICT_RECORD) {
+                    predictSalesMenu = new PredictSalesMenu();
+                    changePage(predictSalesMenu, false);
+
+                    //as above, I have combined the sales menus one class to avoid duplicated code.
+                    predictSalesMenu.setDisplayListener(new DisplayListener() {
+                        public void menuSelection(Enum selection, String productCategoryFilter) {
+                            //I've adapted the same system we used for the displaySalesMenu for this, as it'll do the same thing.
                             if (selection == PredictSalesMenu.MenuSelections.WEEKLY_PREDICTION) {
-                                changePage(weeklySalesPredictionPage, false);
+                                salesPredictionPage = new SalesPredictionPage(getList(tableWrapper, "week", productCategoryFilter), "week", productCategoryFilter);
                             } else if (selection == PredictSalesMenu.MenuSelections.MONTHLY_PREDICTION) {
-                                changePage(monthlySalesPredictionPage, false);
+                                //same as weekly
+                                salesPredictionPage = new SalesPredictionPage(getList(tableWrapper, "month", productCategoryFilter), "month", productCategoryFilter);
+                            } else if (selection == PredictSalesMenu.MenuSelections.DATE_RANGE) {
+                                //same as weekly
+                                salesPredictionPage = new SalesPredictionPage(getList(tableWrapper, "range", productCategoryFilter), "range", productCategoryFilter);
                             }
+
+
                         }
                     });
                 }
