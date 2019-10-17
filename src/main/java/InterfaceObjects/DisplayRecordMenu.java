@@ -1,5 +1,7 @@
 package InterfaceObjects;
 
+import DataObjects.DerbyTableWrapper;
+import DataObjects.Product;
 import javafx.application.Platform;
 import javafx.embed.swing.JFXPanel;
 import javafx.geometry.Insets;
@@ -15,6 +17,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.time.LocalDate;
 import java.util.Date;
+import java.util.LinkedList;
+import java.util.List;
 
 public class DisplayRecordMenu extends JPanel implements ActionListener {
 
@@ -30,9 +34,10 @@ public class DisplayRecordMenu extends JPanel implements ActionListener {
     private DatePicker toPicker;
     private LocalDate fmDate;
     private LocalDate toDate;
+    private JComboBox<String> productIDDropDown;
     private static final String pattern = "dd-mm-yyyy";
 
-    private MenuListener listener;
+    private DisplayListener listener;
 
     public DisplayRecordMenu() {
         //change the button names from here
@@ -52,6 +57,17 @@ public class DisplayRecordMenu extends JPanel implements ActionListener {
         add(weeklyButton);
         add(monthlyButton);
         add(dateRangeButton);
+
+        // drop down menu setup
+        // grab products from table.
+        DerbyTableWrapper wrapper = new DerbyTableWrapper();
+        List<String> productCats = new LinkedList<String>();
+        // add default option to list
+        productCats.add(Product.getNoProductCat());
+        productCats.addAll(wrapper.getProductCategories());
+        productIDDropDown = new JComboBox(productCats.toArray());
+        productIDDropDown.setVisible(true);
+        add(productIDDropDown);
 
         JFXPanel fxPanel = new JFXPanel();
         add(fxPanel);
@@ -108,22 +124,25 @@ public class DisplayRecordMenu extends JPanel implements ActionListener {
     }
 
     //setter for the listener, this is how the controller accesses the buttons.
-    public void setMenuListener(MenuListener listener) { this.listener = listener; }
+    public void setMenuListener(DisplayListener listener) { this.listener = listener; }
 
     public void actionPerformed(ActionEvent event) {
         //can tell which button is clicked
         JButton clicked = (JButton)event.getSource();
+
+        String selectedProductFilter = (String)productIDDropDown.getSelectedItem();
 
         fmDate = fmPicker.getValue();
         toDate = toPicker.getValue();
         System.out.println(fmDate);
         System.out.println(toDate);
         if (clicked == weeklyButton) {
-            listener.menuSelection(MenuSelections.WEEKLY_RECORDS);
+            listener.menuSelection(MenuSelections.WEEKLY_RECORDS, selectedProductFilter);
         } else if (clicked == monthlyButton) {
-            listener.menuSelection(MenuSelections.MONTHLY_RECORDS);
+            listener.menuSelection(MenuSelections.MONTHLY_RECORDS, selectedProductFilter);
         } else if (clicked == dateRangeButton) {
-            listener.menuSelection(MenuSelections.DATE_RANGE);
+            listener.menuSelection(MenuSelections.DATE_RANGE, selectedProductFilter);
         }
     }
+
 }

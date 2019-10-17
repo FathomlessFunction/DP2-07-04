@@ -1,5 +1,7 @@
 package InterfaceObjects;
 
+import DataObjects.Product;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -9,7 +11,7 @@ import java.lang.reflect.Array;
 public class DisplaySalesRecordPage extends JPanel implements ActionListener {
 
     private JComboBox<Integer> recordSelect;
-    private JLabel title, DDLable,totalSalesText,totalReturnsText,totalPriceText;
+    private JLabel title, DDLable, productFilterDisplayText,totalSalesText,totalReturnsText,totalPriceText;
     private JButton editButton;
     private JButton csvButton;
     private Object [][] array;
@@ -21,11 +23,7 @@ public class DisplaySalesRecordPage extends JPanel implements ActionListener {
     private EditListener editListener;
     private CSVListener csvListener;
 
-    public DisplaySalesRecordPage() {
-
-    }
-
-    public DisplaySalesRecordPage(Object [][] salesArray, String length) {
+    public DisplaySalesRecordPage(Object [][] salesArray, String length, String filterString) {
         //this is here for debugging
         array = salesArray;
         //initialise values
@@ -65,7 +63,11 @@ public class DisplaySalesRecordPage extends JPanel implements ActionListener {
         totalReturnsText = new JLabel("Total Returns: " + totalReturns);
         totalPriceText = new JLabel("Total Price: $" + totalPrice.floatValue());
 
-        //create drop down menu to select which entry to edit
+        if (filterString.equals(Product.getNoProductCat()))
+            productFilterDisplayText = new JLabel("No product filter applied");
+        else
+            productFilterDisplayText = new JLabel("Filtering sales with product category = " + filterString);
+
         recordSelect = new JComboBox<Integer>();
         for (int i = 0; i < salesArray.length; i++){
             recordSelect.addItem(Integer.parseInt(salesArray[i][0].toString()));
@@ -108,6 +110,8 @@ public class DisplaySalesRecordPage extends JPanel implements ActionListener {
                         .addComponent(totalReturnsText)
                         .addComponent(totalPriceText))
                     .addGroup(layout.createSequentialGroup()
+                        .addComponent(productFilterDisplayText))
+                    .addGroup(layout.createSequentialGroup()
                         .addComponent(DDLable)
                         .addComponent(recordSelect)
                         .addComponent(editButton)
@@ -122,6 +126,7 @@ public class DisplaySalesRecordPage extends JPanel implements ActionListener {
                         .addComponent(totalSalesText)
                         .addComponent(totalReturnsText)
                         .addComponent(totalPriceText))
+                        .addComponent(productFilterDisplayText)
                     .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                         .addComponent(DDLable)
                         .addComponent(recordSelect)
@@ -134,7 +139,6 @@ public class DisplaySalesRecordPage extends JPanel implements ActionListener {
 
     public void setEditListener(EditListener listener) { this.editListener = listener; }
     public void setCSVListener(CSVListener listener) { this.csvListener = listener; }
-
 
     public void actionPerformed(ActionEvent event) {
         JButton clicked = (JButton)event.getSource();

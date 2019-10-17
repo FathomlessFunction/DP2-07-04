@@ -1,4 +1,6 @@
 import DataObjects.CSVReport;
+import DataObjects.DerbyTableWrapper;
+import DataObjects.Product;
 import DataObjects.Sale;
 import InterfaceObjects.*;
 
@@ -21,8 +23,7 @@ public class InterfaceController extends JFrame {
     //these are still blank, skeleton classes, which now all have a constructor and their name on them.
     private AddRecordPage addRecordPage;
     private DisplaySalesRecordPage displaySalesRecordPage;
-    private WeeklySalesPredictionPage weeklySalesPredictionPage;
-    private MonthlySalesPredictionPage monthlySalesPredictionPage;
+    private SalesPredictionPage salesPredictionPage;
     private EditRecordPage editRecordPage;
 
     private DerbyTableWrapper derbyTableWrapper;
@@ -68,10 +69,7 @@ public class InterfaceController extends JFrame {
         homePage = new HomePage();
         addRecordPage = new AddRecordPage();
         displayRecordMenu = new DisplayRecordMenu();
-        displaySalesRecordPage = new DisplaySalesRecordPage();
         predictSalesMenu = new PredictSalesMenu();
-        weeklySalesPredictionPage = new WeeklySalesPredictionPage();
-        monthlySalesPredictionPage = new MonthlySalesPredictionPage();
         editRecordPage = new EditRecordPage();
         returnHomeHotbar = new ReturnHomeHotbar();
 
@@ -120,19 +118,19 @@ public class InterfaceController extends JFrame {
                     displayRecordMenu = new DisplayRecordMenu();
                     changePage(displayRecordMenu, false);
 
-                    displayRecordMenu.setMenuListener(new MenuListener() {
-                        public void menuSelection(Enum selection) {
+                    displayRecordMenu.setMenuListener(new DisplayListener() {
+                        public void menuSelection(Enum selection, String productCategoryFilter) {
 
                             if (selection == DisplayRecordMenu.MenuSelections.WEEKLY_RECORDS) {
                                 //need to create a new table with new data each call
                                 //getList function returns an array of sales
-                                displaySalesRecordPage = new DisplaySalesRecordPage(getList(tableWrapper, "week"), "week");
+                                displaySalesRecordPage = new DisplaySalesRecordPage(getList(tableWrapper, "week", productCategoryFilter), "week", productCategoryFilter);
                             } else if (selection == DisplayRecordMenu.MenuSelections.MONTHLY_RECORDS) {
                                 //same as weekly
-                                displaySalesRecordPage = new DisplaySalesRecordPage(getList(tableWrapper, "month"), "month");
+                                displaySalesRecordPage = new DisplaySalesRecordPage(getList(tableWrapper, "month", productCategoryFilter), "month", productCategoryFilter);
                             } else if (selection == DisplayRecordMenu.MenuSelections.DATE_RANGE) {
                                 //same as weekly
-                                displaySalesRecordPage = new DisplaySalesRecordPage(getList(tableWrapper, "range"), "range");
+                                displaySalesRecordPage = new DisplaySalesRecordPage(getList(tableWrapper, "range", productCategoryFilter), "range", productCategoryFilter);
                             }
 
                             displaySalesRecordPage.setEditListener(new EditListener() {
@@ -185,16 +183,28 @@ public class InterfaceController extends JFrame {
                         }
                     });
 
-                    //same as above, but for DisplayRecordMenu
-
                     //same as above, but for PredictSalesMenu
-                    predictSalesMenu.setMenuListener(new MenuListener() {
-                        public void menuSelection(Enum selection) {
+
+
+                } else if (selection == HomePage.MenuSelections.PREDICT_RECORD) {
+                    predictSalesMenu = new PredictSalesMenu();
+                    changePage(predictSalesMenu, false);
+
+                    //as above, I have combined the sales menus one class to avoid duplicated code.
+                    predictSalesMenu.setDisplayListener(new DisplayListener() {
+                        public void menuSelection(Enum selection, String productCategoryFilter) {
+                            //I've adapted the same system we used for the displaySalesMenu for this, as it'll do the same thing.
                             if (selection == PredictSalesMenu.MenuSelections.WEEKLY_PREDICTION) {
-                                changePage(weeklySalesPredictionPage, false);
+                                salesPredictionPage = new SalesPredictionPage(getList(tableWrapper, "week", productCategoryFilter), "week", productCategoryFilter);
                             } else if (selection == PredictSalesMenu.MenuSelections.MONTHLY_PREDICTION) {
-                                changePage(monthlySalesPredictionPage, false);
+                                //same as weekly
+                                salesPredictionPage = new SalesPredictionPage(getList(tableWrapper, "month", productCategoryFilter), "month", productCategoryFilter);
+                            } else if (selection == PredictSalesMenu.MenuSelections.DATE_RANGE) {
+                                //same as weekly
+                                salesPredictionPage = new SalesPredictionPage(getList(tableWrapper, "range", productCategoryFilter), "range", productCategoryFilter);
                             }
+
+
                         }
                     });
                 }
@@ -251,7 +261,13 @@ public class InterfaceController extends JFrame {
         repaint();
     }
 
-    private Object[][] getList(DerbyTableWrapper tableWrapper, String length)  {
+    /*
+    private Object[][] getList(DerbyTableWrapper tableWrapper, String length){
+        return getList(tableWrapper, length, null);
+    }*/
+
+    // filterProduct == null if we want no filter.
+    private Object[][] getList(DerbyTableWrapper tableWrapper, String length, String productCategoryFilter)  {
 
         //get dates from display record menu
         LocalDate[] dates = displayRecordMenu.getDates();
@@ -273,10 +289,19 @@ public class InterfaceController extends JFrame {
 
         startDate = splitStart[2]+"-"+splitStart[1]+"-"+splitStart[0];
         endDate = splitEnd[2]+"-"+splitEnd[1]+"-"+splitEnd[0];
-        System.out.println(endDate);
+        //System.out.println(endDate);
 
         //gets list within date range
-        saleList = tableWrapper.getSalesByDateRange(startDate,endDate);
+        if (productCategoryFilter == null || productCategoryFilter.equals(Product.getNoProductCat())){
+            System.out.println("No product filter.");
+            saleList = tableWrapper.getSalesByDateRange(startDate,endDate);
+            System.out.println("resulting sales number: "+saleList.size());
+        } else {
+            System.out.println("Product filter!"+productCategoryFilter);
+            saleList = tableWrapper.getSalesByProductCategoryAndDateRange(productCategoryFilter, startDate, endDate);
+            System.out.println("resulting sales number: "+saleList.size());
+        }
+
         //2D array with size of saleList
         Object [][] salesArray = new Object[saleList.size()][8];
 

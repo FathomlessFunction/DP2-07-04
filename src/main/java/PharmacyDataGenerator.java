@@ -1,3 +1,4 @@
+import DataObjects.DerbyTableWrapper;
 import DataObjects.Product;
 import DataObjects.Sale;
 

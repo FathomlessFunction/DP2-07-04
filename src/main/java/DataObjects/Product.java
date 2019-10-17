@@ -29,6 +29,15 @@ public class Product {
         this.productCategory = productCategory;
     }
 
+    /**
+     * the product category that is chosen
+     * when we don't want a product category filter.
+     * @return
+     */
+    public static String getNoProductCat(){
+        return "No Product Filter";
+    }
+
     public int getProductID() {
         return productID;
     }
@@ -59,13 +68,20 @@ public class Product {
 
     @Override
     public String toString(){
+        // for appropriate string display in drop-down
+        return toProductFilterString();
+        /*
         String toReturn = "Product( ";
         toReturn += "\nproductID = "+ productID;
         toReturn += "\nproductName = "+productName;
         toReturn += "\npricePerUnit = $"+pricePerUnit;
         toReturn += "\nproductCategory = "+productCategory;
         toReturn += ")";
-        return toReturn;
+        return toReturn;*/
+    }
+
+    public String toProductFilterString(){
+        return productID +  " - " + productName;
     }
 
 }
