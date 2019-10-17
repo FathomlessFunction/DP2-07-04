@@ -52,8 +52,8 @@ public class AddProductPage extends JPanel {
                     FormEventAddProduct formEvent = new FormEventAddProduct(this);
 
                     formEvent.setProductName(productNameField.getText());
-                    formEvent.setPricePerUnit(/*Float.valueOf(pricePerUnit.getText())*/(float)69.69);
-                    formEvent.setProductCategory(productCategory.getText());
+                    formEvent.setPricePerUnit(Float.valueOf(pricePerUnitField.getText()));
+                    formEvent.setProductCategory(productCategoryField.getText());
 
                     if (formListener != null) {
                         formListener.formReceived(formEvent);

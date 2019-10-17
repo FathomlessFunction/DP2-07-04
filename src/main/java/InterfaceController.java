@@ -114,6 +114,7 @@ public class InterfaceController extends JFrame {
                 // in non-home pages, home button will be visible
 
                 if (selection == HomePage.MenuSelections.ADD_RECORD) {
+                    addRecordPage = new AddRecordPage();
                     changePage(addRecordPage, false);
 
                 } else if (selection == HomePage.MenuSelections.ADD_PRODUCT) {
