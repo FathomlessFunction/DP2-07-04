@@ -1,9 +1,13 @@
 package InterfaceObjects;
 
+import DataObjects.DerbyTableWrapper;
+import DataObjects.Product;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.List;
 
 public class AddRecordPage extends JPanel {
 
@@ -15,7 +19,7 @@ public class AddRecordPage extends JPanel {
     private JLabel saleStatusLabel;
 
     private JTextField saleIDField;
-    private JTextField productIDField;
+    private JComboBox<Product> productIDDropDown;
     private JTextField dateOfSaleField;
     private JTextField numberSoldField;
     private JTextField amountPaidField;
@@ -36,8 +40,25 @@ public class AddRecordPage extends JPanel {
         amountPaidLabel = new JLabel("Amount Paid: ");
         saleStatusLabel = new JLabel("Sale Status: ");
 
+        /*// drop down menu setup
+        // grab products from table.
+        DerbyTableWrapper wrapper = new DerbyTableWrapper();
+        List<String> productCats = new LinkedList<String>();
+        // add default option to list
+        productCats.add(Product.getNoProductCat());
+        productCats.addAll(wrapper.getProductCategories());
+        productIDDropDown = new JComboBox(productCats.toArray());
+        productIDDropDown.setVisible(true);
+        add(productIDDropDown);*/
+
+        // set up product ID drop down box
+        // grab products from table
+        DerbyTableWrapper wrapper = new DerbyTableWrapper();
+        List<Product> products = wrapper.getProducts();
+
         saleIDField = new JTextField(fieldWidth);
-        productIDField = new JTextField(fieldWidth);
+        productIDDropDown = new JComboBox(products.toArray());
+        productIDDropDown.setVisible(true);
         dateOfSaleField = new JTextField(fieldWidth);
         numberSoldField = new JTextField(fieldWidth);
         amountPaidField = new JTextField(fieldWidth);
@@ -53,9 +74,8 @@ public class AddRecordPage extends JPanel {
         submitButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent event) {
 
-                if (!checkInt(productIDField.getText())) {
-                    JOptionPane.showMessageDialog(null, "The product ID must be a number.");
-                } else if (!(dateOfSaleField.getText()).matches("\\d{2}-\\d{2}-\\d{4}")) {
+                // no checking of product ID drop down as a product will always be selected
+                if (!(dateOfSaleField.getText()).matches("\\d{2}-\\d{2}-\\d{4}")) {
                     JOptionPane.showMessageDialog(null, "Date is of the incorrect format.\n Expected format: DD-MM-YYYY \n");
                 } else if (!checkInt(numberSoldField.getText())) {
                     JOptionPane.showMessageDialog(null, "The amount sold must be a number.");
@@ -65,7 +85,7 @@ public class AddRecordPage extends JPanel {
                     FormEvent formEvent = new FormEvent(this);
 
                     formEvent.setSaleID(saleIDField.getText());
-                    formEvent.setProductID(Integer.valueOf(productIDField.getText()));
+                    formEvent.setProductID(((Product)productIDDropDown.getSelectedItem()).getProductID());
                     formEvent.setDateOfSale(dateOfSaleField.getText());
                     formEvent.setNumberSold(Integer.valueOf(numberSoldField.getText()));
                     formEvent.setAmountPaid(Float.valueOf(amountPaidField.getText()));
@@ -76,7 +96,7 @@ public class AddRecordPage extends JPanel {
                     }
 
                     saleIDField.setText("");
-                    productIDField.setText("");
+                    //productIDField.setText("");
                     dateOfSaleField.setText("");
                     numberSoldField.setText("");
                     amountPaidField.setText("");
@@ -127,7 +147,7 @@ public class AddRecordPage extends JPanel {
         add(saleIDField, bagConstraints);
 
         bagConstraints.gridy = 2;
-        add(productIDField, bagConstraints);
+        add(productIDDropDown, bagConstraints);
 
         bagConstraints.gridy = 3;
         add(dateOfSaleField, bagConstraints);
