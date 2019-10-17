@@ -19,7 +19,6 @@ public class AddRecordPage extends JPanel {
     private JLabel saleStatusLabel;
 
     private JTextField saleIDField;
-    //private JTextField productIDField;
     private JComboBox<Product> productIDDropDown;
     private JTextField dateOfSaleField;
     private JTextField numberSoldField;
@@ -60,7 +59,6 @@ public class AddRecordPage extends JPanel {
         saleIDField = new JTextField(fieldWidth);
         productIDDropDown = new JComboBox(products.toArray());
         productIDDropDown.setVisible(true);
-        //productIDField = new JTextField(fieldWidth);
         dateOfSaleField = new JTextField(fieldWidth);
         numberSoldField = new JTextField(fieldWidth);
         amountPaidField = new JTextField(fieldWidth);
@@ -87,7 +85,6 @@ public class AddRecordPage extends JPanel {
                     FormEvent formEvent = new FormEvent(this);
 
                     formEvent.setSaleID(saleIDField.getText());
-                    //formEvent.setProductID(Integer.valueOf(productIDField.getText()));
                     formEvent.setProductID(((Product)productIDDropDown.getSelectedItem()).getProductID());
                     formEvent.setDateOfSale(dateOfSaleField.getText());
                     formEvent.setNumberSold(Integer.valueOf(numberSoldField.getText()));
@@ -150,7 +147,6 @@ public class AddRecordPage extends JPanel {
         add(saleIDField, bagConstraints);
 
         bagConstraints.gridy = 2;
-        //add(productIDField, bagConstraints);
         add(productIDDropDown, bagConstraints);
 
         bagConstraints.gridy = 3;
