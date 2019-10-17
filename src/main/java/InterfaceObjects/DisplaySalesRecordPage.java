@@ -4,15 +4,19 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.lang.reflect.Array;
 
 public class DisplaySalesRecordPage extends JPanel implements ActionListener {
 
     private JComboBox<Integer> recordSelect;
-    private JLabel title, DDLable;
+    private JLabel title, DDLable,totalSalesText,totalReturnsText,totalPriceText;
     private JButton editButton;
     private JButton csvButton;
     private Object [][] array;
     private Object [] tmp;
+    private Integer totalReturns;
+    private Integer totalSales;
+    private Double totalPrice;
 
     private EditListener editListener;
     private CSVListener csvListener;
@@ -24,7 +28,12 @@ public class DisplaySalesRecordPage extends JPanel implements ActionListener {
     public DisplaySalesRecordPage(Object [][] salesArray, String length) {
         //this is here for debugging
         array = salesArray;
+        //initialise values
+        totalSales = array.length;
+        totalPrice  = 0.00;
+        totalReturns = 0;
 
+        //transfer array to be implemented into swing
         Object[][] tmpArray = new Object[array.length][7];
         for (int i = 0; i < array.length; i++) {
             tmpArray[i][0] = array[i][0];
@@ -34,8 +43,15 @@ public class DisplaySalesRecordPage extends JPanel implements ActionListener {
             tmpArray[i][4] = array[i][4];
             tmpArray[i][5] = array[i][5];
             tmpArray[i][6] = array[i][6];
+            //increments if the item has been returned
+            if (array[i][6].equals("RETURNED")){
+                totalReturns++;
+            }
+            //adds all the prices together of each sale
+            totalPrice = totalPrice + Double.parseDouble(array[i][5].toString());
         }
 
+        //set title of page
         DDLable = new JLabel("EntryID Selection: ");
         if (length == "week"){
             title = new JLabel("Weekly sales record display");
@@ -44,15 +60,17 @@ public class DisplaySalesRecordPage extends JPanel implements ActionListener {
         } else {
             title = new JLabel("Date Range sales record display");
         }
+        //set text for JLabels
+        totalSalesText = new JLabel("Total Sales: " + totalSales);
+        totalReturnsText = new JLabel("Total Returns: " + totalReturns);
+        totalPriceText = new JLabel("Total Price: $" + totalPrice.floatValue());
 
+        //create drop down menu to select which entry to edit
         recordSelect = new JComboBox<Integer>();
         for (int i = 0; i < salesArray.length; i++){
             recordSelect.addItem(Integer.parseInt(salesArray[i][0].toString()));
         }
 
-        //add(recordSelect);
-
-        //add(new JLabel(this.getClass().getSimpleName()));
         //sets the column names
         String[] columnNames = {"Entry ID",
                 "Sale ID",
@@ -85,7 +103,10 @@ public class DisplaySalesRecordPage extends JPanel implements ActionListener {
         layout.setHorizontalGroup(
                 layout.createParallelGroup(GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(title))
+                        .addComponent(title)
+                        .addComponent(totalSalesText)
+                        .addComponent(totalReturnsText)
+                        .addComponent(totalPriceText))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(DDLable)
                         .addComponent(recordSelect)
@@ -96,7 +117,11 @@ public class DisplaySalesRecordPage extends JPanel implements ActionListener {
         );
         layout.setVerticalGroup(
                 layout.createSequentialGroup()
-                    .addComponent(title)
+                    .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                        .addComponent(title)
+                        .addComponent(totalSalesText)
+                        .addComponent(totalReturnsText)
+                        .addComponent(totalPriceText))
                     .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                         .addComponent(DDLable)
                         .addComponent(recordSelect)
@@ -105,9 +130,6 @@ public class DisplaySalesRecordPage extends JPanel implements ActionListener {
                     .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                         .addComponent(scrollPane))
         );
-
-        //add scroll
-        //add(scrollPane);
     }
 
     public void setEditListener(EditListener listener) { this.editListener = listener; }

@@ -253,6 +253,7 @@ public class InterfaceController extends JFrame {
 
     private Object[][] getList(DerbyTableWrapper tableWrapper, String length)  {
 
+        //get dates from display record menu
         LocalDate[] dates = displayRecordMenu.getDates();
 
         //set end date range to either +6 days or +1 month
