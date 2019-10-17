@@ -1,3 +1,4 @@
+import DataObjects.DerbyTableWrapper;
 import DataObjects.Product;
 import DataObjects.Sale;
 import org.junit.Assert;
@@ -7,7 +8,7 @@ import org.junit.Test;
 import java.util.List;
 
 /**
- * For testing Create, Retrieve, Update and Delete operations via DerbyTableWrapper
+ * For testing Create, Retrieve, Update and Delete operations via DataObjects.DerbyTableWrapper
  *
  * note: this deletes and re-creates tables.
  */

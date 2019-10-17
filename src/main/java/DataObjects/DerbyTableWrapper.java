@@ -1,3 +1,5 @@
+package DataObjects;
+
 import DataObjects.Product;
 import DataObjects.Sale;
 
@@ -259,6 +261,20 @@ public class DerbyTableWrapper {
     public List<Product> getProducts() {
         String selectProductSQL = "SELECT * FROM "+getProductsTableName();
         return getProductWithSQLString(selectProductSQL);
+    }
+
+    /**
+     * returns a list containing all product categories in the table at present.
+     * @return
+     */
+    public List<String> getProductCategories(){
+        List<String> productCats = new LinkedList<String>();
+        for (Product product : getProducts()){
+            if (!productCats.contains(product.getProductCategory())){
+                productCats.add(product.getProductCategory());
+            }
+        }
+        return productCats;
     }
 
     /**
