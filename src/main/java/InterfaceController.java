@@ -269,6 +269,7 @@ public class InterfaceController extends JFrame {
     // filterProduct == null if we want no filter.
     private Object[][] getList(DerbyTableWrapper tableWrapper, String length, String productCategoryFilter)  {
 
+        //get dates from display record menu
         LocalDate[] dates = displayRecordMenu.getDates();
 
         //set end date range to either +6 days or +1 month
