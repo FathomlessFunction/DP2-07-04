@@ -22,6 +22,7 @@ public class InterfaceController extends JFrame {
 
     //these are still blank, skeleton classes, which now all have a constructor and their name on them.
     private AddRecordPage addRecordPage;
+    private AddProductPage addProductPage;
     private DisplaySalesRecordPage displaySalesRecordPage;
     private SalesPredictionPage salesPredictionPage;
     private EditRecordPage editRecordPage;
@@ -68,6 +69,7 @@ public class InterfaceController extends JFrame {
         //These are here so that they're immediately usable, also reduces loading times later down the line
         homePage = new HomePage();
         addRecordPage = new AddRecordPage();
+        addProductPage = new AddProductPage();
         displayRecordMenu = new DisplayRecordMenu();
         predictSalesMenu = new PredictSalesMenu();
         editRecordPage = new EditRecordPage();
@@ -113,6 +115,9 @@ public class InterfaceController extends JFrame {
 
                 if (selection == HomePage.MenuSelections.ADD_RECORD) {
                     changePage(addRecordPage, false);
+
+                } else if (selection == HomePage.MenuSelections.ADD_PRODUCT) {
+                    changePage(addProductPage, false);
 
                 } else if (selection == HomePage.MenuSelections.DISPLAY_RECORD) {
                     displayRecordMenu = new DisplayRecordMenu();
@@ -228,6 +233,19 @@ public class InterfaceController extends JFrame {
                 derbyTableWrapper.addSale(saleToAdd);
 
                 JOptionPane.showMessageDialog(null, "Record has been added successfully.");
+            }
+        });
+
+        addProductPage.setFormListener(new FormListenerAddProduct() {
+            public void formReceived(FormEventAddProduct event) {
+                String productName = event.getProductName();
+                float pricePerUnit = event.getPricePerUnit();
+                String productCategory = event.getProductCategory();
+
+                Product productToAdd = new Product(productName, pricePerUnit, productCategory);
+                derbyTableWrapper.addProduct(productToAdd);
+
+                JOptionPane.showMessageDialog(null, "Product has been added successfully.");
             }
         });
     }

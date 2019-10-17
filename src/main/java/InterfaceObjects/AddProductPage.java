@@ -9,60 +9,31 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
 
-public class AddRecordPage extends JPanel {
+public class AddProductPage extends JPanel {
 
-    private JLabel saleIDLabel;
-    private JLabel productIDLabel;
-    private JLabel dateOfSaleLabel;
-    private JLabel numberSoldLabel;
-    private JLabel amountPaidLabel;
-    private JLabel saleStatusLabel;
+    private JLabel productName;
+    private JLabel pricePerUnit;
+    private JLabel productCategory;
 
-    private JTextField saleIDField;
-    private JComboBox<Product> productIDDropDown;
-    private JTextField dateOfSaleField;
-    private JTextField numberSoldField;
-    private JTextField amountPaidField;
-    private JTextField saleStatusField;
+    private JTextField productNameField;
+    private JTextField pricePerUnitField;
+    private JTextField productCategoryField;
 
     private JButton submitButton;
 
-    private FormListener formListener;
+    private FormListenerAddProduct formListener;
 
-    public AddRecordPage() {
+    public AddProductPage() {
 
         int fieldWidth = 10;
 
-        saleIDLabel = new JLabel("Sale ID: ");
-        productIDLabel = new JLabel("Product ID: ");
-        dateOfSaleLabel = new JLabel("Date of Sale: ");
-        numberSoldLabel = new JLabel("Quantity Sold: ");
-        amountPaidLabel = new JLabel("Amount Paid: ");
-        saleStatusLabel = new JLabel("Sale Status: ");
+        productName = new JLabel("Product Name: ");
+        pricePerUnit = new JLabel("Price Per Unit: ");
+        productCategory = new JLabel("Product Category: ");
 
-        /*// drop down menu setup
-        // grab products from table.
-        DerbyTableWrapper wrapper = new DerbyTableWrapper();
-        List<String> productCats = new LinkedList<String>();
-        // add default option to list
-        productCats.add(Product.getNoProductCat());
-        productCats.addAll(wrapper.getProductCategories());
-        productIDDropDown = new JComboBox(productCats.toArray());
-        productIDDropDown.setVisible(true);
-        add(productIDDropDown);*/
-
-        // set up product ID drop down box
-        // grab products from table
-        DerbyTableWrapper wrapper = new DerbyTableWrapper();
-        List<Product> products = wrapper.getProducts();
-
-        saleIDField = new JTextField(fieldWidth);
-        productIDDropDown = new JComboBox(products.toArray());
-        productIDDropDown.setVisible(true);
-        dateOfSaleField = new JTextField(fieldWidth);
-        numberSoldField = new JTextField(fieldWidth);
-        amountPaidField = new JTextField(fieldWidth);
-        saleStatusField = new JTextField(fieldWidth);
+        productNameField = new JTextField(fieldWidth);
+        pricePerUnitField = new JTextField(fieldWidth);
+        productCategoryField = new JTextField(fieldWidth);
 
         submitButton = new JButton("Submit");
 
@@ -75,32 +46,22 @@ public class AddRecordPage extends JPanel {
             public void actionPerformed(ActionEvent event) {
 
                 // no checking of product ID drop down as a product will always be selected
-                if (!(dateOfSaleField.getText()).matches("\\d{2}-\\d{2}-\\d{4}")) {
-                    JOptionPane.showMessageDialog(null, "Date is of the incorrect format.\n Expected format: DD-MM-YYYY \n");
-                } else if (!checkInt(numberSoldField.getText())) {
-                    JOptionPane.showMessageDialog(null, "The amount sold must be a number.");
-                } else if (!checkFloat(amountPaidField.getText()) ) {
-                    JOptionPane.showMessageDialog(null, "The amount paid must be a number.");
+                if (!checkFloat(pricePerUnitField.getText())) {
+                    JOptionPane.showMessageDialog(null, "The price per unit must be a number.");
                 } else {
-                    FormEvent formEvent = new FormEvent(this);
+                    FormEventAddProduct formEvent = new FormEventAddProduct(this);
 
-                    formEvent.setSaleID(saleIDField.getText());
-                    formEvent.setProductID(((Product)productIDDropDown.getSelectedItem()).getProductID());
-                    formEvent.setDateOfSale(dateOfSaleField.getText());
-                    formEvent.setNumberSold(Integer.valueOf(numberSoldField.getText()));
-                    formEvent.setAmountPaid(Float.valueOf(amountPaidField.getText()));
-                    formEvent.setSaleStatus(saleStatusField.getText());
+                    formEvent.setProductName(productNameField.getText());
+                    formEvent.setPricePerUnit(/*Float.valueOf(pricePerUnit.getText())*/(float)69.69);
+                    formEvent.setProductCategory(productCategory.getText());
 
                     if (formListener != null) {
                         formListener.formReceived(formEvent);
                     }
 
-                    saleIDField.setText("");
-                    //productIDField.setText("");
-                    dateOfSaleField.setText("");
-                    numberSoldField.setText("");
-                    amountPaidField.setText("");
-                    saleStatusField.setText("");
+                    productNameField.setText("");
+                    pricePerUnitField.setText("");
+                    productCategoryField.setText("");
                 }
             }
         });
@@ -121,48 +82,24 @@ public class AddRecordPage extends JPanel {
 
         bagConstraints.anchor = GridBagConstraints.LINE_END;
         bagConstraints.gridy = 1;
-        add(saleIDLabel, bagConstraints);
+        add(productName, bagConstraints);
 
         bagConstraints.gridy = 2;
-        add(productIDLabel, bagConstraints);
+        add(pricePerUnit, bagConstraints);
 
         bagConstraints.gridy = 3;
-        add(dateOfSaleLabel, bagConstraints);
-
-        bagConstraints.gridy = 4;
-        add(numberSoldLabel, bagConstraints);
-
-        bagConstraints.gridy = 5;
-        add(amountPaidLabel, bagConstraints);
-
-        bagConstraints.gridy = 6;
-        add(saleIDLabel, bagConstraints);
-
-        bagConstraints.gridy = 7;
-        add(saleStatusLabel, bagConstraints);
+        add(productCategory, bagConstraints);
 
         bagConstraints.gridx = 1;
         bagConstraints.gridy = 1;
         bagConstraints.anchor = GridBagConstraints.LINE_START;
-        add(saleIDField, bagConstraints);
+        add(productNameField, bagConstraints);
 
         bagConstraints.gridy = 2;
-        add(productIDDropDown, bagConstraints);
+        add(pricePerUnitField, bagConstraints);
 
         bagConstraints.gridy = 3;
-        add(dateOfSaleField, bagConstraints);
-
-        bagConstraints.gridy = 4;
-        add(numberSoldField, bagConstraints);
-
-        bagConstraints.gridy = 5;
-        add(amountPaidField, bagConstraints);
-
-        bagConstraints.gridy = 6;
-        add(saleIDField, bagConstraints);
-
-        bagConstraints.gridy = 7;
-        add(saleStatusField, bagConstraints);
+        add(productCategoryField, bagConstraints);
 
         bagConstraints.gridy = 8;
         bagConstraints.weighty = 5;
@@ -191,7 +128,7 @@ public class AddRecordPage extends JPanel {
         }
     }
 
-    public void setFormListener(FormListener listener) {
+    public void setFormListener(FormListenerAddProduct listener) {
         this.formListener = listener;
     }
 
