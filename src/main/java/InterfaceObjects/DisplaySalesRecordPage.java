@@ -44,9 +44,10 @@ public class DisplaySalesRecordPage extends JPanel implements ActionListener {
             //increments if the item has been returned
             if (array[i][6].equals("RETURNED")){
                 totalReturns++;
+            } else {
+                //adds all the prices together of each sale
+                totalPrice = totalPrice + Double.parseDouble(array[i][5].toString());
             }
-            //adds all the prices together of each sale
-            totalPrice = totalPrice + Double.parseDouble(array[i][5].toString());
         }
 
         //set title of page
