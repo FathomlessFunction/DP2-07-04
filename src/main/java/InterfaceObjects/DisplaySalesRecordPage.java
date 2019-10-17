@@ -19,10 +19,6 @@ public class DisplaySalesRecordPage extends JPanel implements ActionListener {
     private EditListener editListener;
     private CSVListener csvListener;
 
-    public DisplaySalesRecordPage() {
-
-    }
-
     public DisplaySalesRecordPage(Object [][] salesArray, String length, String filterString) {
         //this is here for debugging
         array = salesArray;
