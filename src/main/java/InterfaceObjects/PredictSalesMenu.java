@@ -16,7 +16,6 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.time.LocalDate;
-import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -30,7 +29,7 @@ public class PredictSalesMenu extends JPanel implements ActionListener {
     private JButton weeklyButton;
     private JButton monthlyButton;
     private JButton dateRangeButton;
-    private DatePicker fmPicker;
+    private DatePicker fromPicker;
     private DatePicker toPicker;
     private LocalDate fromDate;
     private LocalDate toDate;
@@ -93,10 +92,10 @@ public class PredictSalesMenu extends JPanel implements ActionListener {
         // From and to date pickers
 
         Label pickLabel1 = new Label("From date:");
-        fmPicker = new DatePicker(LocalDate.now());
-        fmPicker.setEditable(false);
+        fromPicker = new DatePicker(LocalDate.now());
+        fromPicker.setEditable(false);
         grid.add(pickLabel1, 0, 1);
-        grid.add(fmPicker, 1, 1);
+        grid.add(fromPicker, 1, 1);
 
         Label pickLabel2 = new Label("To date:");
         toPicker = new DatePicker(LocalDate.now());
@@ -129,7 +128,7 @@ public class PredictSalesMenu extends JPanel implements ActionListener {
 
         String selectedProductFilter = (String)productIDDropDown.getSelectedItem();
 
-        fromDate = fmPicker.getValue();
+        fromDate = fromPicker.getValue();
         toDate = toPicker.getValue();
         System.out.println(fromDate);
         System.out.println(toDate);

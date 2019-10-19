@@ -1,7 +1,4 @@
-import DataObjects.CSVReport;
-import DataObjects.DerbyTableWrapper;
-import DataObjects.Product;
-import DataObjects.Sale;
+import DataObjects.*;
 import InterfaceObjects.*;
 
 import javax.swing.*;
@@ -9,8 +6,11 @@ import java.awt.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.time.LocalDate;
+import java.time.Period;
 import java.util.ArrayList;
 import java.util.List;
+
+import static java.time.temporal.ChronoUnit.DAYS;
 
 public class InterfaceController extends JFrame {
 
@@ -28,6 +28,7 @@ public class InterfaceController extends JFrame {
     private EditRecordPage editRecordPage;
 
     private DerbyTableWrapper derbyTableWrapper;
+    private AveragePredictor averagePredictor;
 
     //getList now saves the current saleList as a private variable, for the CSV reports.
     private List<Sale> saleList;
@@ -74,6 +75,7 @@ public class InterfaceController extends JFrame {
         predictSalesMenu = new PredictSalesMenu();
         editRecordPage = new EditRecordPage();
         returnHomeHotbar = new ReturnHomeHotbar();
+        averagePredictor = new AveragePredictor();
 
         previousPage = new ArrayList<JPanel>();
 
@@ -130,13 +132,13 @@ public class InterfaceController extends JFrame {
                             if (selection == DisplayRecordMenu.MenuSelections.WEEKLY_RECORDS) {
                                 //need to create a new table with new data each call
                                 //getList function returns an array of sales
-                                displaySalesRecordPage = new DisplaySalesRecordPage(getList(tableWrapper, "week", productCategoryFilter), "week", productCategoryFilter);
+                                displaySalesRecordPage = new DisplaySalesRecordPage(getListForRecords(tableWrapper, "week", productCategoryFilter), "week", productCategoryFilter);
                             } else if (selection == DisplayRecordMenu.MenuSelections.MONTHLY_RECORDS) {
                                 //same as weekly
-                                displaySalesRecordPage = new DisplaySalesRecordPage(getList(tableWrapper, "month", productCategoryFilter), "month", productCategoryFilter);
+                                displaySalesRecordPage = new DisplaySalesRecordPage(getListForRecords(tableWrapper, "month", productCategoryFilter), "month", productCategoryFilter);
                             } else if (selection == DisplayRecordMenu.MenuSelections.DATE_RANGE) {
                                 //same as weekly
-                                displaySalesRecordPage = new DisplaySalesRecordPage(getList(tableWrapper, "range", productCategoryFilter), "range", productCategoryFilter);
+                                displaySalesRecordPage = new DisplaySalesRecordPage(getListForRecords(tableWrapper, "range", productCategoryFilter), "range", productCategoryFilter);
                             }
 
                             displaySalesRecordPage.setEditListener(new EditListener() {
@@ -201,16 +203,20 @@ public class InterfaceController extends JFrame {
                         public void menuSelection(Enum selection, String productCategoryFilter) {
                             //I've adapted the same system we used for the displaySalesMenu for this, as it'll do the same thing.
                             if (selection == PredictSalesMenu.MenuSelections.WEEKLY_PREDICTION) {
-                                salesPredictionPage = new SalesPredictionPage(getList(tableWrapper, "week", productCategoryFilter), "week", productCategoryFilter);
+                                List<Sale> weeklySaleList = getListForPrediction(tableWrapper, "week", productCategoryFilter);
+                                Prediction weeklyPrediction = averagePredictor.predictWeekly(weeklySaleList);
+                                salesPredictionPage = new SalesPredictionPage(weeklySaleList, weeklyPrediction, "Weekly", productCategoryFilter);
                             } else if (selection == PredictSalesMenu.MenuSelections.MONTHLY_PREDICTION) {
-                                //same as weekly
-                                salesPredictionPage = new SalesPredictionPage(getList(tableWrapper, "month", productCategoryFilter), "month", productCategoryFilter);
+                                List<Sale> monthlySaleList = getListForPrediction(tableWrapper, "month", productCategoryFilter);
+                                Prediction monthlyPrediction = averagePredictor.predictMonthly(monthlySaleList);
+                                salesPredictionPage = new SalesPredictionPage(monthlySaleList, monthlyPrediction, "Monthly", productCategoryFilter);
                             } else if (selection == PredictSalesMenu.MenuSelections.DATE_RANGE) {
-                                //same as weekly
-                                salesPredictionPage = new SalesPredictionPage(getList(tableWrapper, "range", productCategoryFilter), "range", productCategoryFilter);
+                                List<Sale> rangeSaleList = getListForPrediction(tableWrapper, "range", productCategoryFilter);
+                                Prediction rangePrediction = averagePredictor.predict(rangeSaleList, getPredictionRange());
+                                salesPredictionPage = new SalesPredictionPage(rangeSaleList, rangePrediction, "Range (" + getPredictionRange() + " days)", productCategoryFilter);
                             }
 
-
+                            changePage(salesPredictionPage, false);
                         }
                     });
                 }
@@ -286,7 +292,58 @@ public class InterfaceController extends JFrame {
     }*/
 
     // filterProduct == null if we want no filter.
-    private Object[][] getList(DerbyTableWrapper tableWrapper, String length, String productCategoryFilter)  {
+
+    //this fetches the amount of days between the given dates from the prediction menu, so that the
+    //average predictor can use the same range.
+    private int getPredictionRange() {
+        LocalDate[] dates = predictSalesMenu.getDates();
+
+        long daysBetween = DAYS.between(dates[0], dates[1]);
+        int range = (int)daysBetween;
+
+        System.out.println(range);
+
+        return range;
+    }
+
+    private List<Sale> getListForPrediction(DerbyTableWrapper tableWrapper, String length, String productCategoryFilter) {
+
+        LocalDate[] dates = predictSalesMenu.getDates();
+
+        //set end date range to either +6 days or +1 month
+        if (length == "week"){
+            dates[1] = dates[1].plusWeeks(1);
+        } else if (length =="month"){
+            dates[1] = dates[1].plusMonths(1);
+        }
+
+        String startDate;
+        String endDate;
+
+        String[] splitStart;
+        String[] splitEnd;
+        splitStart = dates[0].toString().split("-");
+        splitEnd = dates[1].toString().split("-");
+
+        startDate = splitStart[2]+"-"+splitStart[1]+"-"+splitStart[0];
+        endDate = splitEnd[2]+"-"+splitEnd[1]+"-"+splitEnd[0];
+        //System.out.println(endDate);
+
+        //gets list within date range
+        if (productCategoryFilter == null || productCategoryFilter.equals(Product.getNoProductCat())){
+            System.out.println("No product filter.");
+            saleList = tableWrapper.getSalesByDateRange(startDate,endDate);
+            System.out.println("resulting sales number: "+saleList.size());
+        } else {
+            System.out.println("Product filter!"+productCategoryFilter);
+            saleList = tableWrapper.getSalesByProductCategoryAndDateRange(productCategoryFilter, startDate, endDate);
+            System.out.println("resulting sales number: "+saleList.size());
+        }
+
+        return saleList;
+    }
+
+    private Object[][] getListForRecords(DerbyTableWrapper tableWrapper, String length, String productCategoryFilter)  {
 
         //get dates from display record menu
         LocalDate[] dates = displayRecordMenu.getDates();
